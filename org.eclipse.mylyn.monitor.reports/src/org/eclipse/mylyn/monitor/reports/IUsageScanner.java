@@ -10,20 +10,20 @@
  *******************************************************************************/
 package org.eclipse.mylar.monitor.reports;
 
+import java.util.Set;
 import org.eclipse.mylar.core.InteractionEvent;
 
-/**
- * @author Gail Murphy
- *
- */
 
 /**
  * A usage scanner will see all events for a user before any consumers
+ * @author Gail Murphy
  */
 public interface IUsageScanner {
 	
 	public void scanEvent(InteractionEvent event, int userId);
 	
 	public boolean accept( int userId );
-
+	
+	public Set<Integer> acceptedUsers();
+ 
 }
