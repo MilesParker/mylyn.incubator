@@ -9,27 +9,26 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.reports;
-
-import java.util.Comparator;
-
-import org.eclipse.mylar.core.InteractionEvent;
+package org.eclipse.mylar.internal.sandbox.misc;
 
 /**
- * Comparator of InteractionEvents
+ * Check against the system clock--doesn't need to run as thread.
  * 
- * @author Gail Murphy
- * 
+ * @author Mik Kersten
  */
-public class InteractionEventComparator implements Comparator<InteractionEvent> {
+public class PassiveTimer {
 
-	public int compare(InteractionEvent arg0, InteractionEvent arg1) {
-		if (arg0.equals(arg1)) {
-			return 0;
-		}
-		if (arg0.getDate().before(arg1.getDate())) {
-			return -1;
-		}
-		return 1;
+	private long elapsed = 0;
+
+	private long lastStartTime = System.currentTimeMillis();
+
+	public void restart() {
+		lastStartTime = System.currentTimeMillis();
+		elapsed = 0;
+	}
+
+	public long getElapsedInSeconds() {
+		elapsed = System.currentTimeMillis() - lastStartTime;
+		return elapsed / 1000;
 	}
 }

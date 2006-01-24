@@ -8,28 +8,32 @@
  * Contributors:
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
+/*
+ * Created on Feb 4, 2005
+ */
+package org.eclipse.mylar.internal.sandbox.viz;
 
-package org.eclipse.mylar.monitor.reports;
-
-import java.util.Comparator;
-
-import org.eclipse.mylar.core.InteractionEvent;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
 
 /**
- * Comparator of InteractionEvents
- * 
- * @author Gail Murphy
- * 
+ * @author Mik Kersten
  */
-public class InteractionEventComparator implements Comparator<InteractionEvent> {
+public class MylarControlPanelView extends ViewPart {
 
-	public int compare(InteractionEvent arg0, InteractionEvent arg1) {
-		if (arg0.equals(arg1)) {
-			return 0;
-		}
-		if (arg0.getDate().before(arg1.getDate())) {
-			return -1;
-		}
-		return 1;
+	public MylarControlPanelView() {
+		super();
 	}
+
+	@Override
+	public void createPartControl(Composite parent) {
+		new MylarControlPanel(this, parent, SWT.NONE);
+	}
+
+	@Override
+	public void setFocus() {
+		// don't need to set the focus
+	}
+
 }

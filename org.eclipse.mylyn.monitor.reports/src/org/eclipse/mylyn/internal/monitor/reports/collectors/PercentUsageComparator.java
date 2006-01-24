@@ -9,27 +9,23 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.reports;
+package org.eclipse.mylar.internal.monitor.reports.collectors;
 
 import java.util.Comparator;
 
-import org.eclipse.mylar.core.InteractionEvent;
-
 /**
- * Comparator of InteractionEvents
- * 
- * @author Gail Murphy
- * 
+ * @author Mik Kersten and Leah Findlater
  */
-public class InteractionEventComparator implements Comparator<InteractionEvent> {
-
-	public int compare(InteractionEvent arg0, InteractionEvent arg1) {
-		if (arg0.equals(arg1)) {
+class PercentUsageComparator implements Comparator<String> {
+	public int compare(String o1, String o2) {
+		int index1 = o1.indexOf('%');
+		int index2 = o2.indexOf('%');
+		if (index1 != -1 && index2 != -1) {
+			String s1 = o1.substring(0, index1 - 1);
+			String s2 = o2.substring(0, index2 - 1);
+			return (-1) * new Float(s1).compareTo(new Float(s2));
+		} else {
 			return 0;
 		}
-		if (arg0.getDate().before(arg1.getDate())) {
-			return -1;
-		}
-		return 1;
 	}
 }
