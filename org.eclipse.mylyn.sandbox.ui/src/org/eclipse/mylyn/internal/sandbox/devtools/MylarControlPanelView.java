@@ -8,27 +8,32 @@
  * Contributors:
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
+/*
+ * Created on Feb 4, 2005
+ */
+package org.eclipse.mylar.internal.sandbox.devtools;
 
-package org.eclipse.mylar.internal.sandbox.misc;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
 
 /**
- * Check against the system clock--doesn't need to run as thread.
- * 
  * @author Mik Kersten
  */
-public class PassiveTimer {
+public class MylarControlPanelView extends ViewPart {
 
-	private long elapsed = 0;
-
-	private long lastStartTime = System.currentTimeMillis();
-
-	public void restart() {
-		lastStartTime = System.currentTimeMillis();
-		elapsed = 0;
+	public MylarControlPanelView() {
+		super();
 	}
 
-	public long getElapsedInSeconds() {
-		elapsed = System.currentTimeMillis() - lastStartTime;
-		return elapsed / 1000;
+	@Override
+	public void createPartControl(Composite parent) {
+		new MylarControlPanel(this, parent, SWT.NONE);
 	}
+
+	@Override
+	public void setFocus() {
+		// don't need to set the focus
+	}
+
 }
