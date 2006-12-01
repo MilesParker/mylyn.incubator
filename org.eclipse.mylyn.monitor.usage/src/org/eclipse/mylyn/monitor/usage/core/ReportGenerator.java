@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.reports;
+package org.eclipse.mylar.monitor.usage.core;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -26,11 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.mylar.context.core.InteractionEvent;
 import org.eclipse.mylar.context.core.MylarStatusHandler;
-import org.eclipse.mylar.internal.monitor.reports.ui.views.UsageStatisticsSummary;
 import org.eclipse.mylar.internal.monitor.usage.InteractionEventLogger;
-import org.eclipse.mylar.monitor.reports.IUsageCollector;
-import org.eclipse.mylar.monitor.reports.IUsageScanner;
-import org.eclipse.mylar.monitor.reports.InteractionEventComparator;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
 

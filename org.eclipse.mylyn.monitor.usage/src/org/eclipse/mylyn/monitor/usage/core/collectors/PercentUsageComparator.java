@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.reports.collectors;
+package org.eclipse.mylar.monitor.usage.core.collectors;
 
 import java.util.Comparator;
 

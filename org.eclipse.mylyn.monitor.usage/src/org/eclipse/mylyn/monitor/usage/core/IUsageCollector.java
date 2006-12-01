@@ -9,23 +9,34 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.reports;
+package org.eclipse.mylar.monitor.usage.core;
 
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.mylar.context.core.InteractionEvent;
 
 /**
- * A usage scanner will see all events for a user before any consumers
- * 
- * @author Gail Murphy
+ * @author Mik Kersten
+ * @author Leah Findlater
  */
-public interface IUsageScanner {
+public interface IUsageCollector {
 
-	public void scanEvent(InteractionEvent event, int userId);
+	public String getReportTitle();
 
-	public boolean accept(int userId);
+	public abstract void consumeEvent(InteractionEvent event, int userId);
 
-	public Set<Integer> acceptedUsers();
+	/**
+	 * TODO: return report as HTML
+	 * 
+	 * @return a list corresponding to all of the lines of the report
+	 */
+	public abstract List<String> getReport();
 
+	/**
+	 * Implementors will need to generate a unique filename given the directory
+	 * in which to place the file
+	 * 
+	 * @param directory
+	 */
+	public abstract void exportAsCSVFile(String directory);
 }

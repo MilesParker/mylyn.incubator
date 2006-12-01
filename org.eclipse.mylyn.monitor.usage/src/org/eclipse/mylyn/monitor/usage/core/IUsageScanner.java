@@ -9,27 +9,23 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.reports;
+package org.eclipse.mylar.monitor.usage.core;
 
-import java.util.Comparator;
+import java.util.Set;
 
 import org.eclipse.mylar.context.core.InteractionEvent;
 
 /**
- * Comparator of InteractionEvents
+ * A usage scanner will see all events for a user before any consumers
  * 
  * @author Gail Murphy
- * 
  */
-public class InteractionEventComparator implements Comparator<InteractionEvent> {
+public interface IUsageScanner {
 
-	public int compare(InteractionEvent arg0, InteractionEvent arg1) {
-		if (arg0.equals(arg1)) {
-			return 0;
-		}
-		if (arg0.getDate().before(arg1.getDate())) {
-			return -1;
-		}
-		return 1;
-	}
+	public void scanEvent(InteractionEvent event, int userId);
+
+	public boolean accept(int userId);
+
+	public Set<Integer> acceptedUsers();
+
 }

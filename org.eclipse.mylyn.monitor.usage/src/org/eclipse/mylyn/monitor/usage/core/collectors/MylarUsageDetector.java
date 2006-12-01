@@ -8,7 +8,7 @@
  * Contributors:
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
-package org.eclipse.mylar.internal.monitor.reports.collectors;
+package org.eclipse.mylar.monitor.usage.core.collectors;
 
 import org.eclipse.mylar.context.core.InteractionEvent;
 import org.eclipse.mylar.internal.tasks.ui.actions.TaskActivateAction;

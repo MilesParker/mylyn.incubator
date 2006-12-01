@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.reports.collectors;
+package org.eclipse.mylar.monitor.usage.core.collectors;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.mylar.context.core.InteractionEvent;
-import org.eclipse.mylar.monitor.reports.IUsageCollector;
+import org.eclipse.mylar.monitor.usage.core.IUsageCollector;
 import org.eclipse.mylar.monitor.workbench.PerspectiveChangeMonitor;
 
 /**

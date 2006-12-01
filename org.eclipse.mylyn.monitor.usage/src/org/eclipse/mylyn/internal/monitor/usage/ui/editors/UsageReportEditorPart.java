@@ -6,13 +6,14 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.sandbox;
+package org.eclipse.mylar.internal.monitor.usage.ui.editors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.eclipse.mylar.context.core.MylarStatusHandler;
-import org.eclipse.mylar.internal.monitor.reports.ui.views.UsageEditorPart;
 import org.eclipse.mylar.internal.monitor.usage.ui.FileDisplayDialog;
 import org.eclipse.mylar.monitor.usage.MylarUsageMonitorPlugin;
 import org.eclipse.swt.SWT;
@@ -25,9 +26,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author Meghan Allen
