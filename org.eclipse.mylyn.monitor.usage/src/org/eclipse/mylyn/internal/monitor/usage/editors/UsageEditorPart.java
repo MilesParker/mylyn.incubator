@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.usage.ui.editors;
+package org.eclipse.mylar.internal.monitor.usage.editors;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylar.core.MylarStatusHandler;
-import org.eclipse.mylar.monitor.core.collection.IUsageCollector;
+import org.eclipse.mylar.internal.monitor.core.collection.IUsageCollector;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.Browser;

@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.usage.ui.wizards;
+package org.eclipse.mylar.internal.monitor.usage.wizards;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import java.util.List;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.mylar.core.MylarStatusHandler;
+import org.eclipse.mylar.internal.monitor.core.collection.IUsageCollector;
 import org.eclipse.mylar.internal.monitor.usage.MylarUsageMonitorPlugin;
-import org.eclipse.mylar.internal.monitor.usage.ui.editors.UsageStatsEditorInput;
-import org.eclipse.mylar.monitor.core.collection.IUsageCollector;
-import org.eclipse.mylar.monitor.usage.core.ReportGenerator;
-import org.eclipse.mylar.monitor.usage.core.collectors.MylarViewUsageCollector;
-import org.eclipse.mylar.monitor.usage.core.collectors.PerspectiveUsageCollector;
+import org.eclipse.mylar.internal.monitor.usage.collectors.MylarViewUsageCollector;
+import org.eclipse.mylar.internal.monitor.usage.collectors.PerspectiveUsageCollector;
+import org.eclipse.mylar.internal.monitor.usage.editors.UsageStatsEditorInput;
+import org.eclipse.mylar.monitor.usage.ReportGenerator;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;

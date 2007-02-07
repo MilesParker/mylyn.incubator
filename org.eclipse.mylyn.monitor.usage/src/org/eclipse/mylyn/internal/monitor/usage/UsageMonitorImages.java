@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.usage.ui;
+package org.eclipse.mylar.internal.monitor.usage;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,13 +17,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylar.internal.monitor.usage.MylarUsageMonitorPlugin;
 import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Mik Kersten
  */
-public class MonitorImages {
+public class UsageMonitorImages {
 
 	private static Map<ImageDescriptor, Image> imageMap = new HashMap<ImageDescriptor, Image>();
 

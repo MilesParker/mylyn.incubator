@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.usage.ui.wizards;
+package org.eclipse.mylar.internal.monitor.usage.wizards;
 
 import java.net.URL;
 

@@ -9,14 +9,14 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.usage.core.collectors;
+package org.eclipse.mylar.internal.monitor.usage.collectors;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.mylar.internal.monitor.core.collection.CommandUsageCollector;
+import org.eclipse.mylar.internal.monitor.core.collection.DelegatingUsageCollector;
 import org.eclipse.mylar.monitor.core.InteractionEvent;
-import org.eclipse.mylar.monitor.core.collection.CommandUsageCollector;
-import org.eclipse.mylar.monitor.core.collection.DelegatingUsageCollector;
 
 /**
  * @author Mik Kersten

@@ -9,13 +9,13 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.usage.core;
+package org.eclipse.mylar.monitor.usage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.mylar.monitor.core.collection.IUsageCollector;
-import org.eclipse.mylar.monitor.core.collection.InteractionEventSummary;
+import org.eclipse.mylar.internal.monitor.core.collection.IUsageCollector;
+import org.eclipse.mylar.internal.monitor.core.collection.InteractionEventSummary;
 
 /**
  * Container for statistics

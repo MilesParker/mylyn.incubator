@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.usage.core.collectors;
+package org.eclipse.mylar.internal.monitor.usage.collectors;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import org.eclipse.mylar.internal.core.util.DateUtil;
 import org.eclipse.mylar.internal.tasks.ui.actions.TaskActivateAction;
 import org.eclipse.mylar.internal.tasks.ui.actions.TaskDeactivateAction;
 import org.eclipse.mylar.monitor.core.InteractionEvent;
-import org.eclipse.mylar.monitor.usage.core.ReportGenerator;
+import org.eclipse.mylar.monitor.usage.ReportGenerator;
 
 /**
  * Delagates to other collectors for additional info.

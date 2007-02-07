@@ -9,14 +9,14 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.internal.monitor.usage.ui.editors;
+package org.eclipse.mylar.internal.monitor.usage.editors;
 
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylar.monitor.core.collection.InteractionEventSummary;
-import org.eclipse.mylar.monitor.usage.core.ReportGenerator;
+import org.eclipse.mylar.internal.monitor.core.collection.InteractionEventSummary;
+import org.eclipse.mylar.monitor.usage.ReportGenerator;
 
 /**
  * Acts as proxy to the Taskscape model.

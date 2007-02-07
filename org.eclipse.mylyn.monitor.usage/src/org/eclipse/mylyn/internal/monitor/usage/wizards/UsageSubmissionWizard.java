@@ -8,7 +8,7 @@
  * Contributors:
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
-package org.eclipse.mylar.internal.monitor.usage.ui.wizards;
+package org.eclipse.mylar.internal.monitor.usage.wizards;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,8 +41,8 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.mylar.core.MylarStatusHandler;
 import org.eclipse.mylar.internal.core.util.ZipFileUtil;
 import org.eclipse.mylar.internal.monitor.usage.MylarUsageMonitorPlugin;
-import org.eclipse.mylar.monitor.usage.core.IBackgroundPage;
-import org.eclipse.mylar.monitor.usage.core.IQuestionnairePage;
+import org.eclipse.mylar.monitor.usage.IBackgroundPage;
+import org.eclipse.mylar.monitor.usage.IQuestionnairePage;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;

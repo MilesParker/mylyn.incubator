@@ -9,7 +9,7 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylar.monitor.usage.core;
+package org.eclipse.mylar.monitor.usage;
 
 import java.io.File;
 
