@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mylar Usage Monitor Plug-in
 Bundle-SymbolicName: org.eclipse.mylar.monitor.usage;singleton:=true
-Bundle-Version: 0.8.0
+Bundle-Version: 2.0.0.v20070328-2130
 Bundle-Activator: org.eclipse.mylar.internal.monitor.usage.MylarUsageMonitorPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -15,11 +15,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.editors,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.ui.forms,
- org.eclipse.mylar.tasks.ui,
  org.eclipse.mylar.context.ui,
  org.eclipse.mylar.monitor.ui,
  org.eclipse.mylar.monitor.core,
- org.eclipse.mylar
+ org.eclipse.mylar,
+ org.eclipse.core.filesystem,
+ org.eclipse.ui.ide
 Eclipse-AutoStart: true
 Bundle-Vendor: Eclipse.org
 Export-Package: 

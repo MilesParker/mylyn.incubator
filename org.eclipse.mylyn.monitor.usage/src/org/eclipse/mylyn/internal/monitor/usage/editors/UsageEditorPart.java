@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.mylar.core.MylarStatusHandler;
 import org.eclipse.mylar.internal.monitor.core.collection.IUsageCollector;
 import org.eclipse.swt.SWT;
@@ -91,9 +92,15 @@ public class UsageEditorPart extends EditorPart {
 		sform = toolkit.createScrolledForm(parent);
 		sform.getBody().setLayout(new TableWrapLayout());
 		editorComposite = sform.getBody();
-
-		createActionSection(editorComposite, toolkit);
+		sform.setText("Usage Summary");
+//		toolkit.decorateFormHeading(sform.getForm());
 		createSummaryStatsSection(editorComposite, toolkit);
+		addSections(editorComposite, toolkit);
+		createActionSection(editorComposite, toolkit);
+	}
+
+	protected void addSections(Composite composite, FormToolkit toolkit) {
+		// none
 	}
 
 	@Override
@@ -138,27 +145,19 @@ public class UsageEditorPart extends EditorPart {
 				summarySection.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
 				Composite summaryContainer = toolkit.createComposite(summarySection);
-
+				summaryContainer.setLayout(new GridLayout());
+				GridDataFactory.fillDefaults().grab(true, false).applyTo(summaryContainer);
 				summarySection.setClient(summaryContainer);
-				TableWrapLayout layout = new TableWrapLayout();
 
-				// layout.numColumns = 2;
-				summaryContainer.setLayout(layout);
-				summaryContainer.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
-
-				Composite browserComposite = new Composite(summaryContainer, SWT.NULL);
-
-				browserComposite.setLayout(new GridLayout());
-				Browser browser = new Browser(browserComposite, SWT.NONE);
-
-				GridData browserLayout = new GridData(GridData.FILL_HORIZONTAL);
-				browserLayout.heightHint = 300;
-				browserLayout.widthHint = 800;
+				Browser browser = new Browser(summaryContainer, SWT.NONE);
+				GridData browserLayout = new GridData(GridData.FILL_BOTH);
+				browserLayout.heightHint = 50;
+				// browserLayout.widthHint = 500;
 				browser.setLayoutData(browserLayout);
-				String htmlText = "<html><head><LINK REL=STYLESHEET HREF=\"http://eclipse.org/default_style.css\" TYPE=\"text/css\"></head><body>\n";
+				String htmlText = "<html><head><LINK REL=STYLESHEET HREF=\"http://eclipse.org/default_style.css\" TYPE=\"text/css\"></head><body topmargin=0 leftmargin=0 rightmargin=0><font size=-1>\n";
 				for (String description : summary)
 					htmlText += description;
-				htmlText += "</body></html>";
+				htmlText += "</font></body></html>";
 				browser.setText(htmlText);
 				// if (description.equals(ReportGenerator.SUMMARY_SEPARATOR)) {
 				// toolkit.createLabel(summaryContainer,

@@ -153,7 +153,7 @@ public class ReportGenerator {
 
 	class GenerateStatisticsJob implements IRunnableWithProgress {
 
-		private static final String JOB_LABEL = "Mylar Usage Report Generation";
+		private static final String JOB_LABEL = "Mylar Usage Summary Generation";
 
 		private final ReportGenerator generator;
 
@@ -206,7 +206,7 @@ public class ReportGenerator {
 						String phase = getPhase(aFile);
 
 						// orderedEvents must be a set because the
-						// monitor-history.xml file contains some duplicate
+						// monitor-log.xml file contains some duplicate
 						// events and we want to be sure that we ignore the
 						// duplicates in the reporting. Sets
 						// cannot contain duplicates, so orderedEvents will only
