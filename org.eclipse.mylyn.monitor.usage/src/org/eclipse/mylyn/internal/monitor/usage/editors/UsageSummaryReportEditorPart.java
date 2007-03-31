@@ -52,7 +52,7 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 
 	public static final String ID = "org.eclipse.mylar.monitor.usage.summary.editor";
 
-	private static final long MAX_FILE_LENGTH = 1024 * 1024;
+//	private static final long MAX_FILE_LENGTH = 1024 * 1024;
 
 	private static final String URL_SERVLET_USAGE = "http://mylar.eclipse.org/monitor/upload/UsageAnalysisServlet";
 
