@@ -15,9 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
@@ -35,7 +32,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -45,7 +41,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.browser.WebBrowserPreference;
 import org.eclipse.ui.internal.browser.WorkbenchBrowserSupport;
 
@@ -57,7 +52,7 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 
 	public static final String ID = "org.eclipse.mylar.monitor.usage.summary.editor";
 
-	private static final long MAX_FILE_LENGTH = 1024 * 1024;
+//	private static final long MAX_FILE_LENGTH = 1024 * 1024;
 
 	private static final String URL_SERVLET_USAGE = "http://mylar.eclipse.org/monitor/upload/UsageAnalysisServlet";
 
@@ -178,16 +173,16 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 	private void viewFile() {
 		File monitorFile = MylarUsageMonitorPlugin.getDefault().getMonitorLogFile();
 
-		if (monitorFile.length() <= MAX_FILE_LENGTH) {
-			IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(monitorFile.getAbsolutePath()));
-			if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				try {
-					IDE.openEditorOnFileStore(page, fileStore);
-				} catch (PartInitException e) {
-				}
-			}
-		} else {
+//		if (monitorFile.length() <= MAX_FILE_LENGTH) {
+//			IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(monitorFile.getAbsolutePath()));
+//			if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
+//				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+//				try {
+//					IDE.openEditorOnFileStore(page, fileStore);
+//				} catch (PartInitException e) {
+//				}
+//			}
+//		} else {
 			boolean failed = false;
 			failed = !Program.launch(monitorFile.getAbsolutePath());
 			if (failed) {
@@ -196,7 +191,7 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 					p.execute(monitorFile.getAbsolutePath());
 				}
 			}
-		}
+//		}
 		// try {
 		// FileDisplayDialog.openShowFile(null, "Mylar - Usage History", "Up to
 		// the first " + MAX_NUM_LINES

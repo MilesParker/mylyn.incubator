@@ -2,8 +2,9 @@
 <feature
       id="org.eclipse.mylar.sandbox_feature"
       label="Mylar Sandbox"
-      version="2.0.0.v20070322-1430"
-      provider-name="Eclipse.org">
+      version="2.0.0.v20070421-0200"
+      provider-name="Eclipse.org"
+      plugin="org.eclipse.mylar">
 
    <description>
       Mylar Sandbox Tools: http://wiki.eclipse.org/index.php/Mylar_Contributor_Reference#Sandbox
@@ -212,35 +213,19 @@ Each party waives its rights to a jury trial in any resulting
 litigation.
    </license>
 
+   <url>
+      <update label="Mylar for Eclipse 3.3" url="http://download.eclipse.org/technology/mylar/update-site/e3.3"/>
+   </url>
+
    <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.ui.forms"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.search"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.mylar.context.core"/>
-      <import plugin="org.eclipse.mylar.context.ui"/>
-      <import plugin="org.eclipse.mylar.tasks.ui"/>
-      <import plugin="org.eclipse.mylar.bugzilla.core"/>
-      <import plugin="org.eclipse.mylar.bugzilla.ui"/>
-      <import plugin="org.eclipse.mylar.tasks.core"/>
-      <import plugin="org.eclipse.mylar.monitor.ui"/>
-      <import plugin="org.eclipse.mylar.java"/>
-      <import plugin="org.eclipse.mylar.monitor.core"/>
-      <import plugin="org.eclipse.mylar" version="2.0.0.v20070216" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.browser"/>
-      <import plugin="org.eclipse.ui.navigator"/>
-      <import feature="org.eclipse.mylar_feature" version="2.0.0.v20070216" match="greaterOrEqual"/>
+      <import feature="org.eclipse.mylar_feature" version="2.0.0.v20070413-1700" match="greaterOrEqual"/>
    </requires>
 
    <plugin
          id="org.eclipse.mylar.sandbox"
          download-size="0"
          install-size="0"
-         version="2.0.0.v20070322-1430"
+         version="2.0.0.v20070421-0200"
          unpack="false"/>
 
 </feature>
