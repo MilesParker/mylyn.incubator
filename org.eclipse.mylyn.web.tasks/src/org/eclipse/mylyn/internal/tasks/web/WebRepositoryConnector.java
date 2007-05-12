@@ -14,8 +14,12 @@ package org.eclipse.mylar.internal.tasks.web;
 import static org.eclipse.mylar.internal.tasks.web.Util.isPresent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,9 +46,16 @@ import org.eclipse.mylar.tasks.core.AbstractRepositoryTask;
 import org.eclipse.mylar.tasks.core.IAttachmentHandler;
 import org.eclipse.mylar.tasks.core.ITaskDataHandler;
 import org.eclipse.mylar.tasks.core.QueryHitCollector;
+import org.eclipse.mylar.tasks.core.RepositoryTaskData;
 import org.eclipse.mylar.tasks.core.TaskRepository;
 import org.eclipse.mylar.tasks.core.TaskRepositoryManager;
 import org.eclipse.mylar.tasks.ui.TasksUiPlugin;
+
+import com.sun.syndication.feed.module.DCModule;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 
 /**
  * Generic connector for web based issue tracking systems
@@ -113,7 +124,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 
 
 	@Override
-	public AbstractRepositoryTask createTaskFromExistingKey(TaskRepository repository, final String id)
+	public AbstractRepositoryTask createTaskFromExistingId(TaskRepository repository, final String id)
 			throws CoreException {
 		if (WebTask.REPOSITORY_TYPE.equals(repository.getKind())) {
 			String taskPrefix = evaluateParams(repository.getProperty(PROPERTY_TASK_URL), repository);
@@ -123,7 +134,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 			RetrieveTitleFromUrlJob job = new RetrieveTitleFromUrlJob(taskPrefix + id) {
 				@Override
 				protected void setTitle(String pageTitle) {
-					task.setDescription(id + ": " + pageTitle);
+					task.setSummary(id + ": " + pageTitle);
 					TasksUiPlugin.getTaskListManager().getTaskList().notifyLocalInfoChanged(task);
 				}
 			};
@@ -144,8 +155,8 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		// lookup repository using task prefix url
 		TaskRepositoryManager repositoryManager = TasksUiPlugin.getRepositoryManager();
 		for (TaskRepository repository : repositoryManager.getRepositories(getRepositoryType())) {
-			String start = evaluateParams(repository.getProperty(PROPERTY_TASK_URL), repository);
-			if (start != null && url.startsWith(start)) {
+			String taskUrl = evaluateParams(repository.getProperty(PROPERTY_TASK_URL), repository);
+			if (taskUrl != null && !taskUrl.equals("") && url.startsWith(taskUrl)) {
 				return repository.getUrl();
 			}
 		}
@@ -156,8 +167,9 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 				TaskRepository repository = repositoryManager.getRepository(webQuery.getRepositoryKind(), webQuery
 						.getRepositoryUrl());
 				if (repository != null) {
-					if (url.startsWith(evaluateParams(webQuery.getTaskPrefix(), webQuery.getQueryParameters(),
-							repository))) {
+					String queryUrl = evaluateParams(webQuery.getTaskPrefix(), //
+							webQuery.getQueryParameters(), repository);
+					if (queryUrl != null && !queryUrl.equals("") && url.startsWith(queryUrl)) {
 						return webQuery.getRepositoryUrl();
 					}
 				}
@@ -204,14 +216,12 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 			String taskPrefix = evaluateParams(webQuery.getTaskPrefix(), queryParameters, repository);
 
 			try {
-				// if (regexp != null && regexp.trim().length() > 0) {
-				return performQuery(fetchResource(queryUrl, queryParameters, repository), queryPattern, taskPrefix,
-						monitor, resultCollector, repository);
-				// } else {
-				// return performRssQuery(queryUrl, taskPrefix, repositoryUrl,
-				// repositoryUser, repositoryPassword,
-				// monitor, resultCollector);
-				// }
+				if (queryPattern != null && queryPattern.trim().length() > 0) {
+					return performQuery(fetchResource(queryUrl, queryParameters, repository), queryPattern, taskPrefix,
+							monitor, resultCollector, repository);
+				 } else {
+					return performRssQuery(queryUrl, monitor, resultCollector, repository);
+				}
 
 			} catch (IOException ex) {
 				return new Status(IStatus.OK, TasksUiPlugin.PLUGIN_ID, IStatus.OK, "Could not fetch resource: "
@@ -245,7 +255,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 	}
 
 	@Override
-	public void updateTask(TaskRepository repository, AbstractRepositoryTask repositoryTask) throws CoreException {
+	public void updateTaskFromRepository(TaskRepository repository, AbstractRepositoryTask repositoryTask) throws CoreException {
 	}
 
 
@@ -269,13 +279,8 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 				if (matcher.groupCount() >= 1) {
 					String id = matcher.group(1);
 					String description = matcher.groupCount() > 1 ? cleanup(matcher.group(2), repository) : null;
-					try {
-						collector.accept(new WebQueryHit(TasksUiPlugin.getTaskListManager().getTaskList(), repository
-								.getUrl(), description, id, taskPrefix));
-					} catch (CoreException e) {
-						return new Status(IStatus.ERROR, TasksUiPlugin.PLUGIN_ID, IStatus.ERROR,
-								"Unable collect results.", e);
-					}
+					collector.accept(new WebQueryHit(TasksUiPlugin.getTaskListManager().getTaskList(), repository
+							.getUrl(), description, id, taskPrefix));
 				}
 			} while (matcher.find() && !monitor.isCanceled());
 
@@ -312,47 +317,45 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 	}
 
 
-//	 public static IStatus performRssQuery(String queryUrl, String taskPrefix, String repositoryUrl,
-//			String repositoryUser, String repositoryPassword, IProgressMonitor monitor, QueryHitCollector collector) {
-//		SyndFeedInput input = new SyndFeedInput();
-//		try {
-//			SyndFeed feed = input.build(new XmlReader(new URL(queryUrl)));
-//
-//			SimpleDateFormat df = new SimpleDateFormat("MMM dd, HH:mm");
-//
-//			for (Iterator it = feed.getEntries().iterator(); it.hasNext();) {
-//				SyndEntry entry = (SyndEntry) it.next();
-//
-//				Date date = entry.getUpdatedDate();
-//				if (date == null) {
-//					date = entry.getPublishedDate();
-//				}
-//				if (date == null) {
-//					DCModule module = (DCModule) entry.getModule("http://purl.org/dc/elements/1.1/");
-//					date = module.getDate();
-//				}
-//				if (date == null) {
-//					// TODO
-//				}
-//
-//				String entryUri = entry.getUri();
-//				if (entryUri.startsWith(taskPrefix)) {
-//					String taskId = df.format(date); // entryUri.substring(taskPrefix.length());
-//
-//					try {
-//						collector.accept(new WebQueryHit(taskId, taskId + ": " + entry.getTitle(), taskPrefix, repositoryUrl));
-//					} catch (CoreException e) {
-//						return new Status(IStatus.ERROR, TasksUiPlugin.PLUGIN_ID, IStatus.ERROR,
-//								"Unable collect results.", e);
-//					}
-//				}
-//			}
-//			return Status.OK_STATUS;
-//		} catch (Exception ex) {
-//			return new Status(IStatus.OK, TasksUiPlugin.PLUGIN_ID, IStatus.OK, "Could not fetch resource: " + queryUrl,
-//					ex);
-//		}
-//	}
+	public static IStatus performRssQuery(String queryUrl, IProgressMonitor monitor, QueryHitCollector collector,
+			TaskRepository repository) {
+		SyndFeedInput input = new SyndFeedInput();
+		try {
+			SyndFeed feed = input.build(new XmlReader(new URL(queryUrl)));
+
+			SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm");
+
+			@SuppressWarnings("unchecked") Iterator it;
+			for (it = feed.getEntries().iterator(); it.hasNext();) {
+				SyndEntry entry = (SyndEntry) it.next();
+
+				Date date = entry.getUpdatedDate();
+				if (date == null) {
+					date = entry.getPublishedDate();
+				}
+				if (date == null) {
+					DCModule module = (DCModule) entry.getModule("http://purl.org/dc/elements/1.1/");
+					date = module.getDate();
+				}
+
+				String entryUri = entry.getLink();
+				if(entryUri==null) {
+					entryUri = entry.getUri();
+				}
+
+				String entrTitle = entry.getTitle();
+
+				collector.accept(new WebQueryHit(TasksUiPlugin.getTaskListManager().getTaskList(), //
+						repository.getUrl(), // 
+						(date == null ? "" : df.format(date) + " - ") + entrTitle, //
+						entryUri, ""));
+			}
+			return Status.OK_STATUS;
+		} catch (Exception ex) {
+			return new Status(IStatus.OK, TasksUiPlugin.PLUGIN_ID, IStatus.OK, "Could not fetch resource: " + queryUrl,
+					ex);
+		}
+	}
 
 	public static String fetchResource(String url, Map<String, String> params, TaskRepository repository)
 			throws IOException {
@@ -513,6 +516,16 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 			vars.add(m.group(1));
 		}
 		return vars;
+	}
+
+	@Override
+	protected AbstractRepositoryTask makeTask(String repositoryUrl, String id, String summary) {
+		return null;
+	}
+
+	@Override
+	public void updateTaskFromTaskData(TaskRepository repository, AbstractRepositoryTask repositoryTask, RepositoryTaskData taskData, boolean retrieveSubTasks) {
+		// ignore
 	}
 
 }

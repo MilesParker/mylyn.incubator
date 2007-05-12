@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -48,7 +49,7 @@ public class InteractionEventLogger extends AbstractMonitorLog implements IInter
 
 	private int eventAccumulartor = 0;
 
-	private List<InteractionEvent> queue = new ArrayList<InteractionEvent>();
+	private List<InteractionEvent> queue = new CopyOnWriteArrayList<InteractionEvent>();
 
 	private InteractionEventObfuscator handleObfuscator = new InteractionEventObfuscator();
 
@@ -59,7 +60,7 @@ public class InteractionEventLogger extends AbstractMonitorLog implements IInter
 	}
 
 	public synchronized void interactionObserved(InteractionEvent event) {
-		// System.err.println("> " + event);
+//		 System.err.println("> " + event);
 		if (MylarUsageMonitorPlugin.getDefault().isObfuscationEnabled()) {
 			String obfuscatedHandle = handleObfuscator.obfuscateHandle(event.getStructureKind(), event
 					.getStructureHandle());
@@ -70,7 +71,7 @@ public class InteractionEventLogger extends AbstractMonitorLog implements IInter
 			if (started) {
 				String xml = getXmlForEvent(event);
 				outputStream.write(xml.getBytes());
-			} else {
+			} else if (event != null) {
 				queue.add(event);
 			}
 			eventAccumulartor++;

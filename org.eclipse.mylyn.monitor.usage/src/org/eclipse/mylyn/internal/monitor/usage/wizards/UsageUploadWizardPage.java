@@ -30,8 +30,8 @@ import org.eclipse.swt.widgets.Text;
  */
 public class UsageUploadWizardPage extends WizardPage {
 
-//	private static final int MAX_NUM_LINES = 1000;
-	
+	// private static final int MAX_NUM_LINES = 1000;
+
 	/** A text box to hold the address of the server */
 	private Text serverAddrText;
 
@@ -60,7 +60,7 @@ public class UsageUploadWizardPage extends WizardPage {
 			}
 		}
 
-		setDescription("The usage file listed below will be uploaded. If you would to view the file first you may do so now.\n"
+		setDescription("The usage file listed below will be uploaded along with the archived files you selected (there may not have been any to select from).\n"
 				+ "Information about program elements that you worked with is obfuscated to ensure privacy.");
 		// setDescription(
 		// "The files listed below will be uploaded. Information about program
@@ -76,8 +76,13 @@ public class UsageUploadWizardPage extends WizardPage {
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
-		layout.numColumns = 2;
-		layout.verticalSpacing = 9;
+		layout.numColumns = 1;
+
+		Composite topContainer = new Composite(container, SWT.NULL);
+		GridLayout topContainerLayout = new GridLayout();
+		topContainer.setLayout(topContainerLayout);
+		topContainerLayout.numColumns = 2;
+		topContainerLayout.verticalSpacing = 9;
 
 		Label label;
 		if (MylarUsageMonitorPlugin.getDefault().getCustomizingPlugin() != null) {
@@ -86,24 +91,32 @@ public class UsageUploadWizardPage extends WizardPage {
 			label.setText(MylarUsageMonitorPlugin.getDefault().getCustomizedByMessage());
 		}
 
-		label = new Label(container, SWT.NULL);
+		label = new Label(topContainer, SWT.NULL);
 		label.setText("Upload URL:");
 
-		serverAddrText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		serverAddrText = new Text(topContainer, SWT.BORDER | SWT.SINGLE);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		serverAddrText.setLayoutData(gd);
 		serverAddrText.setEditable(false);
 		serverAddrText.setText(MylarUsageMonitorPlugin.getDefault().getStudyParameters().getServletUrl());
 
-		label = new Label(container, SWT.NULL);
+		label = new Label(topContainer, SWT.NULL);
 		label.setText("Usage file location:");
 
-		usageFileText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		usageFileText = new Text(topContainer, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		usageFileText.setLayoutData(gd);
 		usageFileText.setEditable(false);
 
 		usageFileText.setText(wizard.getMonitorFileName());
+
+		Composite bottomContainer = new Composite(container, SWT.NULL);
+		GridLayout bottomContainerLayout = new GridLayout();
+		bottomContainer.setLayout(bottomContainerLayout);
+		bottomContainerLayout.numColumns = 2;
+
+		Label submissionLabel = new Label(bottomContainer, SWT.NONE);
+		submissionLabel.setText("Only events from org.eclipse.* packages will be submitted to Eclipse.org");
 
 		// label = new Label(container, SWT.NULL);
 		// label.setText("Log file location:");
@@ -115,40 +128,44 @@ public class UsageUploadWizardPage extends WizardPage {
 		//		
 		// logFileText.setText(wizard.getLogFileName());
 
-//		label = new Label(container, SWT.NULL);
-//		label.setText("User study ID:");
-//
-//		idText = new Text(container, SWT.BORDER | SWT.SINGLE);
-//		gd = new GridData(GridData.FILL_HORIZONTAL);
-//		idText.setLayoutData(gd);
-//		idText.setEditable(false);
-//		idText.setText(wizard.getUid() + "");
-//
-//		Button b = new Button(container, SWT.PUSH);
-//		gd = new GridData(GridData.FILL_HORIZONTAL);
-//		b.setLayoutData(gd);
-//		b.setText("View File");
-//		b.addSelectionListener(new SelectionListener() {
-//
-//			public void widgetSelected(SelectionEvent e) {
-//				String filename = wizard.getMonitorFileName();
-//				File file = new File(filename);
-//				try {
-//					
-//					FileDisplayDialog.openShowFile(null, "Mylar - Usage History", "Up to the first " + MAX_NUM_LINES
-//							+ " lines of the file are displayed, if you'd like to see the entire file, it is located at "
-//							+ MylarUsageMonitorPlugin.getDefault().getMonitorLogFile().getAbsolutePath() + ".", file, MAX_NUM_LINES);
-//					
-//				} catch (FileNotFoundException fnfe) {
-//					MylarStatusHandler.log(this.getClass().toString(), fnfe);
-//				}
-//			}
-//
-//			public void widgetDefaultSelected(SelectionEvent e) {
-//				// don't care about default selected
-//			}
-//
-//		});
+		// label = new Label(container, SWT.NULL);
+		// label.setText("User study ID:");
+		//
+		// idText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		// gd = new GridData(GridData.FILL_HORIZONTAL);
+		// idText.setLayoutData(gd);
+		// idText.setEditable(false);
+		// idText.setText(wizard.getUid() + "");
+		//
+		// Button b = new Button(container, SWT.PUSH);
+		// gd = new GridData(GridData.FILL_HORIZONTAL);
+		// b.setLayoutData(gd);
+		// b.setText("View File");
+		// b.addSelectionListener(new SelectionListener() {
+		//
+		// public void widgetSelected(SelectionEvent e) {
+		// String filename = wizard.getMonitorFileName();
+		// File file = new File(filename);
+		// try {
+		//					
+		// FileDisplayDialog.openShowFile(null, "Mylar - Usage History", "Up to
+		// the first " + MAX_NUM_LINES
+		// + " lines of the file are displayed, if you'd like to see the entire
+		// file, it is located at "
+		// +
+		// MylarUsageMonitorPlugin.getDefault().getMonitorLogFile().getAbsolutePath()
+		// + ".", file, MAX_NUM_LINES);
+		//					
+		// } catch (FileNotFoundException fnfe) {
+		// MylarStatusHandler.log(this.getClass().toString(), fnfe);
+		// }
+		// }
+		//
+		// public void widgetDefaultSelected(SelectionEvent e) {
+		// // don't care about default selected
+		// }
+		//
+		// });
 
 		setControl(container);
 	}

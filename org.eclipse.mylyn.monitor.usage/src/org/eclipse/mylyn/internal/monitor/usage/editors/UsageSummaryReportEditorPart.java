@@ -30,6 +30,7 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.PartInitException;
@@ -100,13 +101,19 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 		section.setText("Actions");
 		section.setLayout(new TableWrapLayout());
 		section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
-		Composite container = toolkit.createComposite(section);
-		section.setClient(container);
-		TableWrapLayout layout = new TableWrapLayout();
-		layout.numColumns = 3;
-		container.setLayout(layout);
 
-		Button submitData = toolkit.createButton(container, "Submit to Eclipse.org", SWT.PUSH | SWT.CENTER);
+		Composite topContainer = toolkit.createComposite(section);
+		TableWrapLayout topContainerLayout = new TableWrapLayout();
+		topContainerLayout.numColumns = 1;
+		topContainer.setLayout(topContainerLayout);
+		section.setClient(topContainer);
+
+		Composite buttonContainer = toolkit.createComposite(topContainer);
+		TableWrapLayout buttonContainerLayout = new TableWrapLayout();
+		buttonContainerLayout.numColumns = 3;
+		buttonContainer.setLayout(buttonContainerLayout);
+
+		Button submitData = toolkit.createButton(buttonContainer, "Submit to Eclipse.org", SWT.PUSH | SWT.CENTER);
 		submitData.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -114,7 +121,7 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 			}
 		});
 
-		Button viewFile = toolkit.createButton(container, "View File", SWT.PUSH | SWT.CENTER);
+		Button viewFile = toolkit.createButton(buttonContainer, "View File", SWT.PUSH | SWT.CENTER);
 		viewFile.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -122,13 +129,19 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 			}
 		});
 
-		Button viewStats = toolkit.createButton(container, "View Community Statistics", SWT.PUSH | SWT.CENTER);
+		Button viewStats = toolkit.createButton(buttonContainer, "View Community Statistics", SWT.PUSH | SWT.CENTER);
 		viewStats.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewStats();
 			}
 		});
+		Composite labelContainer = toolkit.createComposite(topContainer);
+		TableWrapLayout labelContainerLayout = new TableWrapLayout();
+		labelContainerLayout.numColumns = 1;
+		labelContainer.setLayout(labelContainerLayout);
+		Label submissionLabel = new Label(labelContainer, SWT.NONE);
+		submissionLabel.setText("Only usage of org.eclipse.* IDs will be submitted to Eclipse.org");
 	}
 
 	/**

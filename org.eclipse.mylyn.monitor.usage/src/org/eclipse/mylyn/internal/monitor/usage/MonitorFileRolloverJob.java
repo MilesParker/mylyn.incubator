@@ -24,6 +24,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.mylar.core.MylarStatusHandler;
 import org.eclipse.mylar.internal.monitor.core.collection.IUsageCollector;
@@ -44,7 +46,7 @@ import org.eclipse.ui.PlatformUI;
  *         org.eclipse.mylar.internal.tasks.ui.util.TaskDataExportJob)
  * 
  */
-public class MonitorFileRolloverJob extends Job {
+public class MonitorFileRolloverJob extends Job implements IJobChangeListener {
 
 	private static final String JOB_LABEL = "Mylar Monitor Log Rollover";
 
@@ -54,11 +56,17 @@ public class MonitorFileRolloverJob extends Job {
 
 	private static final String DIRECTORY_MONITOR_BACKUP = "monitor";
 
-	private static final String BACKUP_FILE_PREFIX = "monitor-log";
-
 	private static final String ZIP_EXTENSION = ".zip";
 
-	List<IUsageCollector> collectors;
+	private List<IUsageCollector> collectors = null;
+
+	private ReportGenerator generator = null;
+
+	private IEditorInput input = null;
+
+	private boolean forceSyncForTesting = false;
+	
+	public static final String BACKUP_FILE_SUFFIX = "monitor-log";
 
 	public MonitorFileRolloverJob(List<IUsageCollector> collectors) {
 		super(JOB_LABEL);
@@ -69,6 +77,10 @@ public class MonitorFileRolloverJob extends Job {
 	@SuppressWarnings("deprecation")
 	private String getYear(InteractionEvent event) {
 		return "" + (event.getDate().getYear() + 1900);
+	}
+
+	public void forceSyncForTesting(boolean forceSync) {
+		this.forceSyncForTesting = forceSync;
 	}
 
 	private String getMonth(int month) {
@@ -103,6 +115,11 @@ public class MonitorFileRolloverJob extends Job {
 		}
 	}
 
+	public static String getZippedMonitorFileDirPath() {
+		return ResourcesPlugin.getWorkspace().getRoot().getLocation().toString() + File.separatorChar
+		+ NAME_DATA_DIR + File.separatorChar + DIRECTORY_MONITOR_BACKUP;
+	}
+	
 	@SuppressWarnings("deprecation")
 	public IStatus run(final IProgressMonitor progressMonitor) {
 
@@ -120,10 +137,9 @@ public class MonitorFileRolloverJob extends Job {
 		if (events.size() > 0 && events.get(0).getDate().getMonth() != nowMonth) {
 			int currMonth = events.get(0).getDate().getMonth();
 
-			String fileName = getYear(events.get(0)) + "-" + getMonth(currMonth) + "-" + BACKUP_FILE_PREFIX;
+			String fileName = getYear(events.get(0)) + "-" + getMonth(currMonth) + "-" + BACKUP_FILE_SUFFIX;
 
-			File dir = new File(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString() + File.separatorChar
-					+ NAME_DATA_DIR + File.separatorChar + DIRECTORY_MONITOR_BACKUP);
+			File dir = new File(getZippedMonitorFileDirPath());
 
 			if (!dir.exists()) {
 				dir.mkdir();
@@ -154,7 +170,7 @@ public class MonitorFileRolloverJob extends Job {
 						zipFileStream.closeEntry();
 						zipFileStream.close();
 
-						fileName = getYear(event) + "-" + getMonth(monthOfCurrEvent) + "-" + BACKUP_FILE_PREFIX;
+						fileName = getYear(event) + "-" + getMonth(monthOfCurrEvent) + "-" + BACKUP_FILE_SUFFIX;
 						currBackupZipFile = new File(dir, fileName + ZIP_EXTENSION);
 						if (!currBackupZipFile.exists()) {
 
@@ -169,10 +185,9 @@ public class MonitorFileRolloverJob extends Job {
 						zipFileStream.write(xml.getBytes());
 					} else if (monthOfCurrEvent == nowMonth) {
 						// if these events are from the current event, just put
-						// them
-						// back in the current log (first clear the log, since
-						// we are
-						// putting them all back)
+						// them back in the current log (first clear the log,
+						// since we are putting them all back)
+
 						logger.clearInteractionHistory(false);
 						logger.interactionObserved(event);
 					}
@@ -190,8 +205,53 @@ public class MonitorFileRolloverJob extends Job {
 		progressMonitor.worked(1);
 		logger.startMonitoring();
 
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+		generator = new ReportGenerator(MylarUsageMonitorPlugin.getDefault().getInteractionLogger(), collectors, this,
+				forceSyncForTesting);
 
+		progressMonitor.worked(1);
+		final List<File> files = new ArrayList<File>();
+
+		files.add(monitorFile);
+		input = new UsageStatsEditorInput(files, generator);
+
+		progressMonitor.done();
+
+		if (forceSyncForTesting) {
+			try {
+				final IEditorInput input = this.input;
+
+				IWorkbenchPage page = MylarUsageMonitorPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow()
+						.getActivePage();
+				if (page == null) {
+					return new Status(Status.ERROR, MylarUsageMonitorPlugin.PLUGIN_ID, Status.OK, "Mylar Usage Summary", null);
+				}
+				if (input != null) {
+					page.openEditor(input, UsageSummaryReportEditorPart.ID);
+				}
+
+			} catch (PartInitException e1) {
+				MylarStatusHandler.fail(e1, "Could not show usage summary", true);
+			}
+
+		}
+
+		return Status.OK_STATUS;
+	}
+
+	public void aboutToRun(IJobChangeEvent event) {
+		// ignore
+
+	}
+
+	public void awake(IJobChangeEvent event) {
+		// ignore
+
+	}
+
+	public void done(IJobChangeEvent event) {
+
+
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				try {
 					final IWorkbenchPage page = MylarUsageMonitorPlugin.getDefault().getWorkbench()
@@ -199,25 +259,33 @@ public class MonitorFileRolloverJob extends Job {
 					if (page == null) {
 						return;
 					}
-
-					ReportGenerator generator = new ReportGenerator(MylarUsageMonitorPlugin.getDefault()
-							.getInteractionLogger(), collectors);
-					progressMonitor.worked(1);
-					List<File> files = new ArrayList<File>();
-
-					files.add(monitorFile);
-					final IEditorInput input = new UsageStatsEditorInput(files, generator);
-
-					page.openEditor(input, UsageSummaryReportEditorPart.ID);
-					progressMonitor.worked(1);
+				
+					if (input != null) {
+						page.openEditor(input, UsageSummaryReportEditorPart.ID);
+					}
+				
 				} catch (PartInitException e1) {
 					MylarStatusHandler.fail(e1, "Could not show usage summary", true);
 				}
 
 			}
 		});
-		progressMonitor.done();
-		return Status.OK_STATUS;
+		
+	}
+
+	public void running(IJobChangeEvent event) {
+		// ignore
+		
+	}
+
+	public void scheduled(IJobChangeEvent event) {
+		// ignore
+		
+	}
+
+	public void sleeping(IJobChangeEvent event) {
+		// ignore
+		
 	}
 
 }
