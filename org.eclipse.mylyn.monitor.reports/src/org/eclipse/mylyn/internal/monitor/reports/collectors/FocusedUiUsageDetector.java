@@ -14,7 +14,7 @@ import org.eclipse.mylyn.internal.tasks.ui.actions.TaskActivateAction;
 import org.eclipse.mylyn.internal.tasks.ui.actions.TaskDeactivateAction;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
-public abstract class MylarUsageDetector {
+public abstract class FocusedUiUsageDetector {
 
 	public static boolean isAMylarActivateCommand(InteractionEvent event) {
 		if (event.getKind().equals(InteractionEvent.Kind.COMMAND)) {

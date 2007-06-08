@@ -18,7 +18,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Mik Kersten
  */
-public class MylarReportsPlugin extends AbstractUIPlugin {
+public class MonitorReportsPlugin extends AbstractUIPlugin {
 
 	public static final String REPORT_SUMMARY_ID = "org.eclipse.mylyn.monitor.ui.reports.ui.actions.monitorSummaryReport";
 
@@ -26,9 +26,9 @@ public class MylarReportsPlugin extends AbstractUIPlugin {
 
 	public static final String SHARED_TASK_DATA_ROOT_DIR = "org.eclipse.mylyn.monitor.ui.reports.preferences.sharedTaskDataRootDir";
 
-	private static MylarReportsPlugin plugin;
+	private static MonitorReportsPlugin plugin;
 
-	public MylarReportsPlugin() {
+	public MonitorReportsPlugin() {
 		plugin = this;
 	}
 
@@ -43,7 +43,7 @@ public class MylarReportsPlugin extends AbstractUIPlugin {
 		plugin = null;
 	}
 
-	public static MylarReportsPlugin getDefault() {
+	public static MonitorReportsPlugin getDefault() {
 		return plugin;
 	}
 

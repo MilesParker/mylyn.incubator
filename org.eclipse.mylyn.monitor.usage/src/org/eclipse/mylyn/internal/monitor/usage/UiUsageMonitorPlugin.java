@@ -70,7 +70,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Mik Kersten
  */
-public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartup {
+public class UiUsageMonitorPlugin extends AbstractUIPlugin implements IStartup {
 
 	public static final String PREF_USER_ID = "org.eclipse.mylyn.user.id";
 
@@ -130,7 +130,7 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 
 	// private BrowserMonitor browserMonitor;
 
-	private static MylarUsageMonitorPlugin plugin;
+	private static UiUsageMonitorPlugin plugin;
 
 	private List<IActionExecutionListener> actionExecutionListeners = new ArrayList<IActionExecutionListener>();
 
@@ -217,7 +217,7 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 		}
 	};
 
-	public MylarUsageMonitorPlugin() {
+	public UiUsageMonitorPlugin() {
 		plugin = this;
 
 	}
@@ -350,7 +350,7 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 	}
 
 	public boolean isObfuscationEnabled() {
-		return MylarUsageMonitorPlugin.getPrefs().getBoolean(MonitorPreferenceConstants.PREF_MONITORING_OBFUSCATE);
+		return UiUsageMonitorPlugin.getPrefs().getBoolean(MonitorPreferenceConstants.PREF_MONITORING_OBFUSCATE);
 	}
 
 	public void stopMonitoring() {
@@ -504,7 +504,7 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 	/**
 	 * Returns the shared instance.
 	 */
-	public static MylarUsageMonitorPlugin getDefault() {
+	public static UiUsageMonitorPlugin getDefault() {
 		return plugin;
 	}
 
@@ -513,7 +513,7 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 	 * found.
 	 */
 	public static String getResourceString(String key) {
-		ResourceBundle bundle = MylarUsageMonitorPlugin.getDefault().getResourceBundle();
+		ResourceBundle bundle = UiUsageMonitorPlugin.getDefault().getResourceBundle();
 		try {
 			return (bundle != null) ? bundle.getString(key) : key;
 		} catch (MissingResourceException e) {
@@ -667,7 +667,7 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 	}
 
 	public static void setPerformingUpload(boolean performingUpload) {
-		MylarUsageMonitorPlugin.performingUpload = performingUpload;
+		UiUsageMonitorPlugin.performingUpload = performingUpload;
 	}
 
 	public InteractionEventLogger getInteractionLogger() {
@@ -776,11 +776,11 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 						studyParameters.setQuestionnairePage(page);
 					}
 				} else {
-					MylarUsageMonitorPlugin.getDefault().setQuestionnaireEnabled(false);
+					UiUsageMonitorPlugin.getDefault().setQuestionnaireEnabled(false);
 				}
 			} catch (CoreException throwable) {
 				MylarStatusHandler.fail(throwable, "could not load questionnaire", false);
-				MylarUsageMonitorPlugin.getDefault().setQuestionnaireEnabled(false);
+				UiUsageMonitorPlugin.getDefault().setQuestionnaireEnabled(false);
 			}
 
 			try {
@@ -789,14 +789,14 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 					if (backgroundObject instanceof IBackgroundPage) {
 						IBackgroundPage page = (IBackgroundPage) backgroundObject;
 						studyParameters.setBackgroundPage(page);
-						MylarUsageMonitorPlugin.getDefault().setBackgroundEnabled(true);
+						UiUsageMonitorPlugin.getDefault().setBackgroundEnabled(true);
 					}
 				} else {
-					MylarUsageMonitorPlugin.getDefault().setBackgroundEnabled(false);
+					UiUsageMonitorPlugin.getDefault().setBackgroundEnabled(false);
 				}
 			} catch (CoreException throwable) {
 				MylarStatusHandler.fail(throwable, "could not load background page", false);
-				MylarUsageMonitorPlugin.getDefault().setBackgroundEnabled(false);
+				UiUsageMonitorPlugin.getDefault().setBackgroundEnabled(false);
 			}
 
 			studyParameters.setFormsConsent("/" + element.getAttribute(ELEMENT_UI_CONSENT_FORM));
@@ -826,7 +826,7 @@ public class MylarUsageMonitorPlugin extends AbstractUIPlugin implements IStartu
 	}
 
 	public String getCustomizedByMessage() {
-		String customizedBy = MylarUsageMonitorPlugin.getDefault().getCustomizingPlugin();
+		String customizedBy = UiUsageMonitorPlugin.getDefault().getCustomizingPlugin();
 		String message = "NOTE: You have previously downloaded the Mylar monitor and a user study plug-in with id: "
 				+ customizedBy + "\n" + "If you are not familiar with this plug-in do not upload data.";
 		return message;

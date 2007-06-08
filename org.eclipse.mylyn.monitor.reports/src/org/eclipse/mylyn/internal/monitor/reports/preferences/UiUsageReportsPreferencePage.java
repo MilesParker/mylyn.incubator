@@ -11,7 +11,7 @@
 package org.eclipse.mylyn.internal.monitor.reports.preferences;
 
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.mylyn.internal.monitor.reports.MylarReportsPlugin;
+import org.eclipse.mylyn.internal.monitor.reports.MonitorReportsPlugin;
 import org.eclipse.mylyn.tasks.ui.TasksUiPlugin;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -32,15 +32,15 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * 
  * @author Wesley Coelho
  */
-public class MylarReportsPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+public class UiUsageReportsPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	private Text mylarDataDirectory = null;
 
 	private Button browse = null;
 
-	public MylarReportsPreferencePage() {
+	public UiUsageReportsPreferencePage() {
 		super();
-		setPreferenceStore(MylarReportsPlugin.getDefault().getPreferenceStore());
+		setPreferenceStore(MonitorReportsPlugin.getDefault().getPreferenceStore());
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class MylarReportsPreferencePage extends PreferencePage implements IWorkb
 	public boolean performOk() {
 		String taskDirectory = mylarDataDirectory.getText();
 		taskDirectory = taskDirectory.replaceAll("\\\\", "/");
-		getPreferenceStore().setValue(MylarReportsPlugin.SHARED_TASK_DATA_ROOT_DIR, taskDirectory);
+		getPreferenceStore().setValue(MonitorReportsPlugin.SHARED_TASK_DATA_ROOT_DIR, taskDirectory);
 		return true;
 	}
 
@@ -80,7 +80,7 @@ public class MylarReportsPreferencePage extends PreferencePage implements IWorkb
 		taskDirComposite.setText("Shared Task Data Root Directory");
 		taskDirComposite.setLayout(new GridLayout(2, false));
 		taskDirComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		String taskDirectory = getPreferenceStore().getString(MylarReportsPlugin.SHARED_TASK_DATA_ROOT_DIR);
+		String taskDirectory = getPreferenceStore().getString(MonitorReportsPlugin.SHARED_TASK_DATA_ROOT_DIR);
 		if (taskDirectory.trim().equals("")) {
 			taskDirectory = TasksUiPlugin.getDefault().getDataDirectory();
 			// getPreferenceStore().getString(ContextCorePlugin.PREF_DATA_DIR);

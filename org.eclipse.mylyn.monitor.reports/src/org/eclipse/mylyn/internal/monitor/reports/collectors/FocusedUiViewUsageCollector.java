@@ -27,7 +27,7 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 /**
  * @author Mik Kersten
  */
-public class MylarViewUsageCollector extends ViewUsageCollector {
+public class FocusedUiViewUsageCollector extends ViewUsageCollector {
 
 	private Set<Integer> mylarUserIds = new HashSet<Integer>();
 

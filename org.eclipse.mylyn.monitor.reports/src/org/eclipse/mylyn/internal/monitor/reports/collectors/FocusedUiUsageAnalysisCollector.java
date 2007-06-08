@@ -32,7 +32,7 @@ import org.eclipse.mylyn.monitor.usage.ReportGenerator;
  * 
  * @author Mik Kersten
  */
-public class MylarUsageAnalysisCollector extends AbstractMylarUsageCollector {
+public class FocusedUiUsageAnalysisCollector extends AbstractMylarUsageCollector {
 
 	// public static final int BASELINE_EDITS_THRESHOLD = 400;
 	// private static final int MYLAR_EDITS_THRESHOLD = 1200;
@@ -87,9 +87,9 @@ public class MylarUsageAnalysisCollector extends AbstractMylarUsageCollector {
 
 	private Map<Integer, Long> timeBaseline = new HashMap<Integer, Long>();
 
-	private MylarViewUsageCollector viewUsageCollector = new MylarViewUsageCollector();
+	private FocusedUiViewUsageCollector viewUsageCollector = new FocusedUiViewUsageCollector();
 
-	public MylarUsageAnalysisCollector() {
+	public FocusedUiUsageAnalysisCollector() {
 		viewUsageCollector.setMaxViewsToReport(NUM_VIEWS_REPORTED);
 		super.getDelegates().add(viewUsageCollector);
 	}
