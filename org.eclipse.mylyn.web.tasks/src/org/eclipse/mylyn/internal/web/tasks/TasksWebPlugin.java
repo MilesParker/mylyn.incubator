@@ -1,4 +1,4 @@
-package org.eclipse.mylyn.tasks.web;
+package org.eclipse.mylyn.internal.web.tasks;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

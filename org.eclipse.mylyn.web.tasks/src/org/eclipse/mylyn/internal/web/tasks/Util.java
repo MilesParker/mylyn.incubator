@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.eclipse.mylyn.internal.tasks.web;
+package org.eclipse.mylyn.internal.web.tasks;
 
 /**
  * Utility methods

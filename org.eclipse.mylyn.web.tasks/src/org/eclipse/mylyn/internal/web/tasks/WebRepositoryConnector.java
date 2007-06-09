@@ -9,9 +9,9 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.internal.tasks.web;
+package org.eclipse.mylyn.internal.web.tasks;
 
-import static org.eclipse.mylyn.internal.tasks.web.Util.isPresent;
+import static org.eclipse.mylyn.internal.web.tasks.Util.isPresent;
 
 import java.io.IOException;
 import java.net.URL;

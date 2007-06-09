@@ -9,10 +9,10 @@
  *     University Of British Columbia - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.internal.tasks.web;
+package org.eclipse.mylyn.internal.web.tasks;
 
-import static org.eclipse.mylyn.internal.tasks.web.Util.isPresent;
-import static org.eclipse.mylyn.internal.tasks.web.Util.nvl;
+import static org.eclipse.mylyn.internal.web.tasks.Util.isPresent;
+import static org.eclipse.mylyn.internal.web.tasks.Util.nvl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
