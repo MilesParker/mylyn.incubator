@@ -13,9 +13,9 @@ package org.eclipse.mylyn.internal.sandbox.views;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.mylyn.tasks.core.AbstractTaskListElement;
-import org.eclipse.mylyn.tasks.core.DateRangeActivityDelegate;
-import org.eclipse.mylyn.tasks.core.DateRangeContainer;
+import org.eclipse.mylyn.internal.tasks.core.DateRangeActivityDelegate;
+import org.eclipse.mylyn.internal.tasks.core.DateRangeContainer;
+import org.eclipse.mylyn.tasks.core.AbstractTaskContainer;
 import org.eclipse.mylyn.tasks.core.AbstractTask;
 import org.eclipse.mylyn.tasks.core.AbstractTask.PriorityLevel;
 import org.eclipse.ui.IMemento;
@@ -150,7 +150,7 @@ public class TaskActivityViewSorter extends ViewerSorter {
 				return -1;
 			}
 		} else if (o1 instanceof AbstractTask) {
-			if (o2 instanceof AbstractTaskListElement) {
+			if (o2 instanceof AbstractTaskContainer) {
 				return -1;
 			} else if (o2 instanceof DateRangeActivityDelegate) {
 				DateRangeActivityDelegate task1 = (DateRangeActivityDelegate) o1;

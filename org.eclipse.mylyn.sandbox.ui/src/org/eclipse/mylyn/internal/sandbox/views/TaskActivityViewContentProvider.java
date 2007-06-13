@@ -14,7 +14,7 @@ package org.eclipse.mylyn.internal.sandbox.views;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylyn.tasks.core.DateRangeContainer;
+import org.eclipse.mylyn.internal.tasks.core.DateRangeContainer;
 import org.eclipse.mylyn.tasks.ui.TaskListManager;
 
 /**

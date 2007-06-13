@@ -37,6 +37,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.mylyn.internal.tasks.core.DateRangeActivityDelegate;
+import org.eclipse.mylyn.internal.tasks.core.DateRangeContainer;
 import org.eclipse.mylyn.internal.tasks.ui.TaskListColorsAndFonts;
 import org.eclipse.mylyn.internal.tasks.ui.actions.ActivityReportAction;
 import org.eclipse.mylyn.internal.tasks.ui.actions.OpenTaskListElementAction;
@@ -44,9 +46,7 @@ import org.eclipse.mylyn.internal.tasks.ui.planner.ReminderCellEditor;
 import org.eclipse.mylyn.internal.tasks.ui.views.TaskActivityLabelProvider;
 import org.eclipse.mylyn.internal.tasks.ui.views.TaskElementLabelProvider;
 import org.eclipse.mylyn.internal.tasks.ui.views.TaskListView;
-import org.eclipse.mylyn.tasks.core.AbstractTaskListElement;
-import org.eclipse.mylyn.tasks.core.DateRangeActivityDelegate;
-import org.eclipse.mylyn.tasks.core.DateRangeContainer;
+import org.eclipse.mylyn.tasks.core.AbstractTaskContainer;
 import org.eclipse.mylyn.tasks.core.AbstractTask;
 import org.eclipse.mylyn.tasks.core.ITaskActivityListener;
 import org.eclipse.mylyn.tasks.core.ITaskListChangeListener;
@@ -165,7 +165,7 @@ public class TaskActivityView extends ViewPart {
 			localInfoChanged(task);
 		}
 
-		public void taskMoved(AbstractTask task, AbstractTaskListElement fromContainer, AbstractTaskListElement toContainer) {
+		public void taskMoved(AbstractTask task, AbstractTaskContainer fromContainer, AbstractTaskContainer toContainer) {
 			// ignore
 		}
 
@@ -173,11 +173,11 @@ public class TaskActivityView extends ViewPart {
 			// ignore
 		}
 
-		public void containerAdded(AbstractTaskListElement container) {
+		public void containerAdded(AbstractTaskContainer container) {
 			// ignore
 		}
 
-		public void containerDeleted(AbstractTaskListElement container) {
+		public void containerDeleted(AbstractTaskContainer container) {
 			// ignore
 		}
 
@@ -185,7 +185,7 @@ public class TaskActivityView extends ViewPart {
 			// ignore
 		}
 
-		public void containerInfoChanged(AbstractTaskListElement container) {
+		public void containerInfoChanged(AbstractTaskContainer container) {
 			// ignore
 		}
 	};
@@ -359,7 +359,7 @@ public class TaskActivityView extends ViewPart {
 				Object selectedObject = ((IStructuredSelection) TaskListView.getFromActivePerspective().getViewer()
 						.getSelection()).getFirstElement();
 
-				if (selectedObject instanceof AbstractTaskListElement) {
+				if (selectedObject instanceof AbstractTaskContainer) {
 					return false;
 				}
 
