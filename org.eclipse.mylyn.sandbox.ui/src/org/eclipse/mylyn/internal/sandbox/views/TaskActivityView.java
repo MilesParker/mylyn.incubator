@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -50,6 +51,7 @@ import org.eclipse.mylyn.tasks.core.AbstractTaskContainer;
 import org.eclipse.mylyn.tasks.core.AbstractTask;
 import org.eclipse.mylyn.tasks.core.ITaskActivityListener;
 import org.eclipse.mylyn.tasks.core.ITaskListChangeListener;
+import org.eclipse.mylyn.tasks.core.TaskContainerDelta;
 import org.eclipse.mylyn.tasks.ui.TaskListManager;
 import org.eclipse.mylyn.tasks.ui.TasksUiPlugin;
 import org.eclipse.swt.SWT;
@@ -157,36 +159,8 @@ public class TaskActivityView extends ViewPart {
 
 	private ITaskListChangeListener TASK_CHANGE_LISTENER = new ITaskListChangeListener() {
 
-		public void localInfoChanged(final AbstractTask updateTask) {
-			refresh();
-		}
-
-		public void repositoryInfoChanged(AbstractTask task) {
-			localInfoChanged(task);
-		}
-
-		public void taskMoved(AbstractTask task, AbstractTaskContainer fromContainer, AbstractTaskContainer toContainer) {
-			// ignore
-		}
-
-		public void taskDeleted(AbstractTask task) {
-			// ignore
-		}
-
-		public void containerAdded(AbstractTaskContainer container) {
-			// ignore
-		}
-
-		public void containerDeleted(AbstractTaskContainer container) {
-			// ignore
-		}
-
-		public void taskAdded(AbstractTask task) {
-			// ignore
-		}
-
-		public void containerInfoChanged(AbstractTaskContainer container) {
-			// ignore
+		public void containersChanged(Set<TaskContainerDelta> containers) {
+			refresh();	
 		}
 	};
 
