@@ -16,9 +16,13 @@ import java.io.File;
 import org.eclipse.jface.wizard.IWizardPage;
 
 /**
+ * Extend to provide a custom background page.
+ * 
+ * @author Leah Findlater
  * @author Mik Kersten
+ * @since	2.0
  */
-public interface IQuestionnairePage extends IWizardPage {
+public abstract class AbstractStudyBackgroundPage implements IWizardPage {
 
 	public abstract File createFeedbackFile();
 }
