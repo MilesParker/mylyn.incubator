@@ -50,7 +50,7 @@ public class TaskActivityViewSorter extends ViewerSorter {
 	private int sortColumn = LAST_ACTIVE;
 
 	final static int[] DEFAULT_DIRECTIONS = { ASCENDING, ASCENDING, ASCENDING, DESCENDING, DESCENDING, DESCENDING,
-		DESCENDING };
+			DESCENDING };
 
 	public TaskActivityViewSorter() {
 		resetState();
@@ -121,12 +121,12 @@ public class TaskActivityViewSorter extends ViewerSorter {
 			if (task1.getScheduledForDate() != null && task2.getScheduledForDate() != null) {
 				long reminder1 = task1.getScheduledForDate().getTime();
 				long reminder2 = task2.getScheduledForDate().getTime();
-				result = new Long(reminder1).compareTo(new Long(reminder2));				
+				result = new Long(reminder1).compareTo(new Long(reminder2));
 			} else if (task1.getScheduledForDate() != null) {
 				result = 1;
 			} else if (task2.getScheduledForDate() != null) {
 				result = -1;
-			}			
+			}
 			return result * directions[sortColumn];
 		}
 		case LAST_ACTIVE: {
@@ -145,7 +145,7 @@ public class TaskActivityViewSorter extends ViewerSorter {
 			if (o2 instanceof ScheduledTaskContainer) {
 				ScheduledTaskContainer dateRangeTaskContainer1 = (ScheduledTaskContainer) o1;
 				ScheduledTaskContainer dateRangeTaskContainer2 = (ScheduledTaskContainer) o2;
-				return -1*dateRangeTaskContainer2.getStart().compareTo(dateRangeTaskContainer1.getStart());
+				return -1 * dateRangeTaskContainer2.getStart().compareTo(dateRangeTaskContainer1.getStart());
 			} else {
 				return -1;
 			}

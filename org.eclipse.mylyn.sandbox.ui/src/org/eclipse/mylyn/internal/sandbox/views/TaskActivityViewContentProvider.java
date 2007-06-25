@@ -38,7 +38,7 @@ public class TaskActivityViewContentProvider implements IStructuredContentProvid
 //			DateRangeActivityDelegate dateRangeTaskWrapper = (DateRangeActivityDelegate) child;
 //			return dateRangeTaskWrapper.getParent();
 //		} else {
-			return null;
+		return null;
 //		}
 	}
 
@@ -54,7 +54,8 @@ public class TaskActivityViewContentProvider implements IStructuredContentProvid
 	public boolean hasChildren(Object parent) {
 		if (parent instanceof ScheduledTaskContainer) {
 			ScheduledTaskContainer dateRangeTaskCategory = (ScheduledTaskContainer) parent;
-			return dateRangeTaskCategory.getDateRangeDelegates() != null && dateRangeTaskCategory.getDateRangeDelegates().size() > 0;
+			return dateRangeTaskCategory.getDateRangeDelegates() != null
+					&& dateRangeTaskCategory.getDateRangeDelegates().size() > 0;
 		} else {
 			return false;
 		}
