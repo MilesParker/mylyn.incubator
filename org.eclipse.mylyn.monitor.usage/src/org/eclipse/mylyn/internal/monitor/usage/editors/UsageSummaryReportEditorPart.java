@@ -192,16 +192,16 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 	private void viewFile() {
 		File monitorFile = UiUsageMonitorPlugin.getDefault().getMonitorLogFile();
 
-		if (monitorFile.length() <= MAX_FILE_LENGTH) {
-			IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(monitorFile.getAbsolutePath()));
-			if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				try {
-					IDE.openEditorOnFileStore(page, fileStore);
-				} catch (PartInitException e) {
-				}
-			}
-		} else {
+//		if (monitorFile.length() <= MAX_FILE_LENGTH) {
+//			IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(monitorFile.getAbsolutePath()));
+//			if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
+//				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+//				try {
+//					IDE.openEditorOnFileStore(page, fileStore);
+//				} catch (PartInitException e) {
+//				}
+//			}
+//		} else {
 			boolean failed = false;
 			failed = !Program.launch(monitorFile.getAbsolutePath());
 			if (failed) {
@@ -210,7 +210,7 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 					p.execute(monitorFile.getAbsolutePath());
 				}
 			}
-		}
+//		}
 		// try {
 		// FileDisplayDialog.openShowFile(null, "Mylar - Usage History", "Up to
 		// the first " + MAX_NUM_LINES

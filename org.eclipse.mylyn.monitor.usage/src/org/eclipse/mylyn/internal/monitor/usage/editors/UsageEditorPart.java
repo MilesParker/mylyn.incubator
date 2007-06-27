@@ -87,7 +87,7 @@ public class UsageEditorPart extends EditorPart {
 		sForm.getBody().setLayout(new GridLayout());// TableWrapLayout());
 		editorComposite = sForm.getBody();
 		sForm.setText("Usage Summary");
-		toolkit.decorateFormHeading(sForm.getForm());
+//		toolkit.decorateFormHeading(sForm.getForm());
 		createSummaryStatsSection(editorComposite, toolkit);
 		addSections(editorComposite, toolkit);
 		createActionSection(editorComposite, toolkit);

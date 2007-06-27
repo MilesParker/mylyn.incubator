@@ -186,7 +186,7 @@ public class BugzillaSearchEngine {
 				monitor.done();
 			}
 			collector.done();
-			try {
+			try { 
 				if (in != null)
 					in.close();
 			} catch (IOException e) {
