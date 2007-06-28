@@ -15,9 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
@@ -38,7 +35,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -46,7 +42,6 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.browser.WebBrowserPreference;
 import org.eclipse.ui.internal.browser.WorkbenchBrowserSupport;
 
@@ -58,7 +53,7 @@ public class UsageSummaryReportEditorPart extends UsageEditorPart {
 
 	public static final String ID = "org.eclipse.mylyn.monitor.usage.summary.editor";
 
-	private static final long MAX_FILE_LENGTH = 1024 * 1024;
+//	private static final long MAX_FILE_LENGTH = 1024 * 1024;
 
 	private static final String URL_USAGE_PAGE = "http://mylyn.eclipse.org/monitor/upload/usageSummary.html";
 
