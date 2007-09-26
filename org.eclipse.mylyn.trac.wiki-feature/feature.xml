@@ -22,6 +22,23 @@
       <update label="Mylyn Trac Connector Wiki Integration (Experimental)" url="http://download.eclipse.org/tools/mylyn/update/experimental"/>
    </url>
 
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.team.core"/>
+      <import plugin="org.eclipse.team.ui"/>
+      <import plugin="org.eclipse.mylyn.monitor.core"/>
+      <import plugin="org.eclipse.mylyn.tasks.ui"/>
+      <import plugin="org.eclipse.mylyn.tasks.core"/>
+      <import plugin="org.eclipse.mylyn.trac.core"/>
+      <import plugin="org.eclipse.mylyn.trac.ui"/>
+      <import feature="org.eclipse.mylyn_feature" version="2.1.0.v20070926-1230" match="greaterOrEqual"/>
+   </requires>
+
    <plugin
          id="org.eclipse.mylyn.trac.wiki"
          download-size="0"
