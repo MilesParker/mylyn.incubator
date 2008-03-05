@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -60,7 +61,6 @@ import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Section;
 
 /**
  * Wizard page for configuring and preview web query
@@ -142,8 +142,8 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 		gridData1.minimumHeight = 90;
 		parametersEditor.setLayoutData(gridData1);
 
-		ExpandableComposite expComposite = toolkit.createExpandableComposite(composite, Section.COMPACT
-				| Section.TWISTIE);
+		ExpandableComposite expComposite = toolkit.createExpandableComposite(composite, ExpandableComposite.COMPACT
+				| ExpandableComposite.TWISTIE);
 		expComposite.setFont(parent.getFont());
 		GridData gridData_1 = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gridData_1.heightHint = 150;
@@ -385,9 +385,6 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 	
 	@Override
 	public boolean isPageComplete() {
-		if (getErrorMessage() != null) {
-			return false;
-		}
 		return super.isPageComplete();
 	}
 
@@ -395,15 +392,13 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 		previewTable.setInput(tasks);
 
 		if (queryStatus.isOK()) {
-			setErrorMessage(null);
-			setPageComplete(true);
+			setMessage(null, IMessageProvider.WARNING);
 		} else {
 			StringBuffer sb = new StringBuffer();
 			for (IStatus status : queryStatus.getChildren()) {
 				sb.append(status.getMessage()).append("\n");
 			}
-			setErrorMessage(sb.toString());
-			setPageComplete(false);
+			setMessage(sb.toString(), IMessageProvider.WARNING);
 		}
 	}
 
