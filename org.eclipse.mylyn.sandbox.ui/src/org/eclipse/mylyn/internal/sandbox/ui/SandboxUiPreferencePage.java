@@ -562,12 +562,6 @@ public class SandboxUiPreferencePage extends PreferencePage implements IWorkbenc
 			return h1.getHighlightKind().compareTo(h2.getHighlightKind());
 		}
 
-		/**
-		 * getCriteria
-		 */
-		public int getCriteria() {
-			return criteria;
-		}
 	}
 
 	private void createTableViewer() {
