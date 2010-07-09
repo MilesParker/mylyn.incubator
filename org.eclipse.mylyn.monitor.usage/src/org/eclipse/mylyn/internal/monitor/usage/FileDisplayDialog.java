@@ -36,7 +36,9 @@ import org.eclipse.swt.widgets.Text;
  * Dialog that displays the contents of a file to the user
  * 
  * @author Shawn Minto
+ * @deprecated this class is no longer used and will be removed in 3.5
  */
+@Deprecated
 public class FileDisplayDialog extends MessageDialog {
 
 	private static String contents;
