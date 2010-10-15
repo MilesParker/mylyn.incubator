@@ -33,12 +33,11 @@ import org.eclipse.mylyn.internal.sandbox.ui.views.ActiveSearchView;
 import org.eclipse.mylyn.java.tests.AbstractJavaContextTest;
 import org.eclipse.mylyn.java.tests.search.SearchPluginTestHelper;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.Perspective;
-import org.eclipse.ui.internal.WorkbenchPage;
 
 /**
  * @author Mik Kersten
@@ -91,13 +90,15 @@ public class ActiveSearchTest extends AbstractJavaContextTest {
 		for (AbstractRelationProvider provider : ContextCorePlugin.getDefault().getRelationProviders()) {
 			assertTrue(provider.getCurrentDegreeOfSeparation() > 0);
 		}
-		JavaPlugin.getActivePage().showView("org.eclipse.ui.views.ProblemView");
+		IViewPart viewPart = JavaPlugin.getActivePage().showView("org.eclipse.ui.views.ProblemView");
 
-		Perspective perspective = ((WorkbenchPage) JavaPlugin.getActivePage()).getActivePerspective();
+		// XXX e4.0 IPerspectiveDescriptor API has changed 
+//		IPerspectiveDescriptor perspective = ((WorkbenchPage) JavaPlugin.getActivePage()).getPerspective();
 		IViewReference reference = JavaPlugin.getActivePage().findViewReference(ActiveSearchView.ID);
 		assertNotNull(reference);
 //		assertTrue(perspective.canCloseView(view));
-		assertTrue(perspective.hideView(reference));
+//		assertTrue(perspective.hideView(reference));
+		JavaPlugin.getActivePage().hideView(viewPart);
 
 		for (AbstractRelationProvider provider : ContextCorePlugin.getDefault().getRelationProviders()) {
 			assertFalse(provider.isEnabled());
