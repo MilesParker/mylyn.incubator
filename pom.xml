@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.eclipse.mylyn</groupId>
+    <artifactId>mylyn-parent</artifactId>
+    <version>3.5.0-SNAPSHOT</version>
+    <relativePath>../org.eclipse.mylyn/org.eclipse.mylyn.releng</relativePath>
+  </parent>
+  <groupId>org.eclipse.mylyn.incubator</groupId>
+  <artifactId>mylyn-incubator-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>org.eclipse.mylyn.examples.monitor.study</module>
+    <module>org.eclipse.mylyn.ide.capabilities</module>
+    <module>org.eclipse.mylyn.ide.dev</module>
+    <module>org.eclipse.mylyn.monitor-feature</module>
+    <module>org.eclipse.mylyn.monitor.reports</module>
+    <module>org.eclipse.mylyn.monitor.usage</module>
+    <module>org.eclipse.mylyn.sandbox.dev</module>
+    <module>org.eclipse.mylyn.sandbox.dev-feature</module>
+    <module>org.eclipse.mylyn.sandbox.tests</module>
+    <module>org.eclipse.mylyn.sandbox.ui</module>
+    <module>org.eclipse.mylyn.sandbox.ui-feature</module>
+    <module>org.eclipse.mylyn.trac.wiki</module>
+    <module>org.eclipse.mylyn.trac.wiki-feature</module>
+    <module>org.eclipse.mylyn.web.tasks</module>
+    <module>org.eclipse.mylyn.web.tasks-feature</module>
+    <module>org.eclipse.mylyn.wikitext.sandbox-feature</module>
+    <module>org.eclipse.mylyn.wikitext.sandbox.ui</module>
+    <module>org.eclipse.mylyn.experimental-sdk-feature</module>
+  </modules>
+</project>
