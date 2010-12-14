@@ -33,9 +33,9 @@
    </url>
 
    <requires>
-      <import feature="org.eclipse.mylyn.context_feature" version="3.5.0.mylynQualifier" match="equivalent"/>
-      <import feature="org.eclipse.mylyn.pde_feature" version="3.5.0.mylynQualifier" match="equivalent"/>
-      <import feature="org.eclipse.mylyn.java_feature" version="3.5.0.mylynQualifier" match="equivalent"/>
+      <import feature="org.eclipse.mylyn.context_feature" version="3.5.0" match="equivalent"/>
+      <import feature="org.eclipse.mylyn.pde_feature" version="3.5.0" match="equivalent"/>
+      <import feature="org.eclipse.mylyn.java_feature" version="3.5.0" match="equivalent"/>
    </requires>
 
    <plugin
