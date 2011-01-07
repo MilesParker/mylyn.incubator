@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Eugene Kuleshov - initial API and implementation
+ *     Tasktop Technologies - fixes for bug 331168
  *******************************************************************************/
 
 package org.eclipse.mylyn.internal.sandbox.ui;
@@ -14,6 +15,7 @@ package org.eclipse.mylyn.internal.sandbox.ui;
 import java.util.TreeMap;
 
 import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
+import org.eclipse.mylyn.internal.tasks.core.AbstractTaskCategory;
 import org.eclipse.mylyn.internal.tasks.core.TaskGroup;
 import org.eclipse.mylyn.internal.tasks.ui.views.TaskListContentProvider;
 import org.eclipse.mylyn.internal.tasks.ui.views.TaskListView;
@@ -23,6 +25,7 @@ import org.eclipse.mylyn.tasks.core.ITask;
 
 /**
  * @author Eugene Kuleshov
+ * @author Sam Davis
  */
 public class GroupedTaskListContentProvider extends TaskListContentProvider {
 
@@ -39,7 +42,9 @@ public class GroupedTaskListContentProvider extends TaskListContentProvider {
 	public Object[] getChildren(Object parent) {
 		Object[] children = super.getChildren(parent);
 
-		if ((parent instanceof IRepositoryQuery) && groupBy != GroupBy.None) {
+		if ((parent instanceof IRepositoryElement)
+				&& ((parent instanceof IRepositoryQuery) || (parent instanceof AbstractTaskCategory))
+				&& groupBy != GroupBy.None) {
 			return getGroups((IRepositoryElement) parent, children);
 		} else if (parent instanceof TaskGroup) {
 			return ((TaskGroup) parent).getChildren().toArray();
