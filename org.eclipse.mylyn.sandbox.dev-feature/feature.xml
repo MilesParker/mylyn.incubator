@@ -28,10 +28,6 @@
       %license
    </license>
 
-   <url>
-      <update label="Mylyn Incubator for Eclipse 3.3 and 3.4" url="http://download.eclipse.org/tools/mylyn/update/incubator"/>
-   </url>
-
    <requires>
       <import feature="org.eclipse.mylyn.context_feature" version="3.5.0" match="equivalent"/>
    </requires>

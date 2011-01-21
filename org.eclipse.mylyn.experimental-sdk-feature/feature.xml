@@ -28,10 +28,6 @@
       %license
    </license>
 
-   <url>
-      <update label="%updateSiteName" url="http://download.eclipse.org/tools/mylyn/update/incubator"/>
-   </url>
-
    <requires>
       <import feature="org.eclipse.mylyn.monitor_feature" version="3.4.0"/>
       <import feature="org.eclipse.mylyn.sandbox.ui_feature" version="3.4.0"/>

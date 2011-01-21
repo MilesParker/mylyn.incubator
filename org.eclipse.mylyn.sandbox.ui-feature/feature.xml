@@ -16,7 +16,7 @@
       provider-name="%providerName"
       plugin="org.eclipse.mylyn">
 
-   <description url="http://wiki.eclipse.org/index.php/Mylyn_Contributor_Reference#Sandbox">
+   <description>
       %description
    </description>
 
@@ -27,10 +27,6 @@
    <license url="license.html">
       %license
    </license>
-
-   <url>
-      <update label="%updateSiteName" url="http://download.eclipse.org/tools/mylyn/update/incubator"/>
-   </url>
 
    <requires>
       <import feature="org.eclipse.mylyn.context_feature" version="3.5.0" match="equivalent"/>
