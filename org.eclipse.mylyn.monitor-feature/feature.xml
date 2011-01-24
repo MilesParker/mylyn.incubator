@@ -31,7 +31,7 @@
    <requires>
       <import plugin="org.eclipse.mylyn.commons.core" version="3.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.mylyn.commons.net" version="3.4.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.rcp" version="3.3.0" match="compatible"/>
+      <import feature="org.eclipse.rcp" version="3.3.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
