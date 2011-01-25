@@ -33,6 +33,7 @@ public class AllSandboxTests {
 		suite.addTestSuite(ActiveSearchTest.class);
 		suite.addTestSuite(StatisticsReportingTest.class);
 		suite.addTestSuite(EclipseTaskRepositoryLinkProviderTest.class);
+		suite.addTestSuite(RelationProviderTest.class);
 
 		// web connector tests
 		suite.addTestSuite(NamedPatternTest.class);
