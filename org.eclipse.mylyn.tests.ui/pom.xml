@@ -13,13 +13,19 @@
   <packaging>eclipse-test-plugin</packaging>
   <properties>
     <mylyn-ui-test-suite>org.eclipse.mylyn.tests.ui.AllUiTests</mylyn-ui-test-suite>
-    <mylyn-ui-test-skip>${maven.test.skip}</mylyn-ui-test-skip>
+    <mylyn-skip-ui-test>${maven.test.skip}</mylyn-skip-ui-test>
   </properties>
   <profiles>
     <profile>
       <id>heartbeat</id>
       <properties>
-        <mylyn-ui-test-skip>true</mylyn-ui-test-skip>
+        <mylyn-skip-ui-test>true</mylyn-skip-ui-test>
+      </properties>
+    </profile>
+    <profile>
+      <id>incubator</id>
+      <properties>
+        <mylyn-skip-ui-test>true</mylyn-skip-ui-test>
       </properties>
     </profile>
   </profiles>
@@ -30,6 +36,7 @@
         <artifactId>maven-osgi-test-plugin</artifactId>
         <version>${tycho-version}</version>
         <configuration>
+          <skip>${mylyn-skip-ui-test}</skip> 
           <useUIHarness>true</useUIHarness>
           <useUIThread>false</useUIThread>
           <forkedProcessTimeoutInSeconds>7200</forkedProcessTimeoutInSeconds>
@@ -37,7 +44,6 @@
           <testClass>${mylyn-ui-test-suite}</testClass>
           <argLine>-Xmx1024m -XX:MaxPermSize=256m -Djava.io.tmpdir=${project.build.directory} ${mylyn-test-args}</argLine>
           <appArgLine>${mylyn-test-app-args}</appArgLine>
-          <skip>${mylyn-ui-test-skip}</skip> 
         </configuration>
       </plugin>
       <plugin>
