@@ -14,6 +14,14 @@ package org.eclipse.mylyn.sandbox.tests;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.mylyn.monitor.reports.tests.AllMonitorReportTests;
+import org.eclipse.mylyn.monitor.tests.InteractionEventExternalizationTest;
+import org.eclipse.mylyn.monitor.tests.InteractionLoggerTest;
+import org.eclipse.mylyn.monitor.tests.MonitorPackagingTest;
+import org.eclipse.mylyn.monitor.tests.MonitorTest;
+import org.eclipse.mylyn.monitor.tests.MultiWindowMonitorTest;
+import org.eclipse.mylyn.monitor.tests.StatisticsLoggingTest;
+import org.eclipse.mylyn.monitor.usage.tests.AllMonitorUsageTests;
 import org.eclipse.mylyn.tasks.tests.web.HtmlDecodeEntityTest;
 import org.eclipse.mylyn.tasks.tests.web.NamedPatternTest;
 import org.eclipse.mylyn.tasks.tests.web.WebRepositoryConnectorTest;
@@ -40,6 +48,16 @@ public class AllSandboxTests {
 		suite.addTestSuite(HtmlDecodeEntityTest.class);
 		suite.addTestSuite(WebRepositoryTest.class);
 		suite.addTestSuite(WebRepositoryConnectorTest.class);
+
+		// monitor tests
+		suite.addTest(AllMonitorUsageTests.suite());
+		suite.addTest(AllMonitorReportTests.suite());
+		suite.addTestSuite(InteractionLoggerTest.class);
+		suite.addTestSuite(StatisticsLoggingTest.class);
+		suite.addTestSuite(MonitorTest.class);
+		suite.addTestSuite(InteractionEventExternalizationTest.class);
+		suite.addTestSuite(MonitorPackagingTest.class);
+		suite.addTestSuite(MultiWindowMonitorTest.class);
 
 		return suite;
 	}
