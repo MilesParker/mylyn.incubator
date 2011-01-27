@@ -44,6 +44,13 @@
           <testClass>${mylyn-ui-test-suite}</testClass>
           <argLine>-Xmx1024m -XX:MaxPermSize=256m -Djava.io.tmpdir=${project.build.directory} ${mylyn-test-args}</argLine>
           <appArgLine>${mylyn-test-app-args}</appArgLine>
+          <dependencies>
+            <dependency>
+              <type>p2-installable-unit</type>
+              <artifactId>org.eclipse.sdk.feature.group</artifactId>
+              <version>${platform-version}</version>
+            </dependency>
+          </dependencies>
         </configuration>
       </plugin>
       <plugin>
