@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.mylyn.experimental_sdk_feature"
       label="%featureName"
-      version="3.4.2.qualifier"
+      version="3.4.3.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.mylyn">
 
@@ -27,10 +27,6 @@
    <license url="license.html">
       %license
    </license>
-
-   <url>
-      <update label="%updateSiteName" url="http://download.eclipse.org/tools/mylyn/update/incubator"/>
-   </url>
 
    <requires>
       <import feature="org.eclipse.mylyn.monitor_feature" version="3.4.0"/>
