@@ -52,8 +52,6 @@ public class Messages extends NLS {
 
 	public static String UiUsageMonitorPlugin_Send_Usage_Feedback;
 
-	public static String UsageUploadManager_Error_Getting_Uid;
-
 	public static String UsageUploadManager_Error_Getting_Uid_Http_Response;
 
 	public static String UsageUploadManager_Error_Getting_Uid_No_Network;
@@ -63,8 +61,6 @@ public class Messages extends NLS {
 	public static String UsageUploadManager_Error_Getting_Uid_X_Y;
 
 	public static String UsageUploadManager_Error_Getting_UidX_Y;
-
-	public static String UsageUploadManager_Error_Uploading;
 
 	public static String UsageUploadManager_Error_Uploading_Http_Response;
 
@@ -76,7 +72,6 @@ public class Messages extends NLS {
 
 	public static String UsageUploadManager_Error_Uploading_X_Y;
 
-	public static String UsageUploadManager_Unable_To_Upload_X;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
