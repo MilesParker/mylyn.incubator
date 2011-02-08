@@ -13,10 +13,15 @@ package org.eclipse.mylyn.tasks.tests.web;
 
 import junit.framework.TestCase;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.commons.net.AuthenticationCredentials;
 import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.internal.web.tasks.WebRepositoryConnector;
+import org.eclipse.mylyn.tasks.core.IRepositoryQuery;
+import org.eclipse.mylyn.tasks.core.ITaskMapping;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
+import org.eclipse.mylyn.tasks.tests.util.TestTaskDataCollector;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.eclipse.mylyn.tests.util.TestUtil;
 import org.eclipse.mylyn.tests.util.TestUtil.Credentials;
@@ -51,41 +56,39 @@ public class WebRepositoryTest extends TestCase {
 //		init(url, null);
 //	}
 
-	// FIXME re-enable
-//	public void testAuthentication() {
-//		init(TEST_URL_AUTHENTICATED, PrivilegeLevel.USER);
-//
-//		IRepositoryQuery query = TasksUi.getRepositoryModel().createRepositoryQuery(taskRepository);
-//		query.setUrl(TEST_URL_AUTHENTICATED);
-//		query.setAttribute(WebRepositoryConnector.KEY_QUERY_TEMPLATE, "${serverUrl}");
-//		query.setAttribute(WebRepositoryConnector.KEY_QUERY_PATTERN, "(\\d{3})\\s+([A-Za-z ]+)");
-//		query.setAttribute(WebRepositoryConnector.KEY_TASK_PREFIX, "task url");
-//		TestTaskDataCollector collector = new TestTaskDataCollector();
-//
-//		IStatus status = connector.performQuery(taskRepository, query, collector, null, null);
-//		assertEquals(Status.OK_STATUS, status);
-//		assertEquals(1, collector.results.size());
-//		ITaskMapping task = connector.getTaskMapping(collector.results.get(0));
-//		assertEquals("200", task.getTaskData().getTaskId());
-//		assertEquals("Success", task.getSummary());
-//	}
+	public void testAuthentication() {
+		init(TEST_URL_AUTHENTICATED, PrivilegeLevel.USER);
 
-	// FIXME re-enable
-//	public void testAuthenticationRss() {
-//		init(TEST_URL_AUTHENTICATED, PrivilegeLevel.USER);
-//
-//		IRepositoryQuery query = TasksUi.getRepositoryModel().createRepositoryQuery(taskRepository);
-//		query.setUrl(TEST_URL_AUTHENTICATED + "/rss.html");
-//		query.setAttribute(WebRepositoryConnector.KEY_QUERY_TEMPLATE, "${serverUrl}");
-//		query.setAttribute(WebRepositoryConnector.KEY_QUERY_PATTERN, "(\\d{3})\\s+([A-Za-z ]+)");
-//		TestTaskDataCollector collector = new TestTaskDataCollector();
-//
-//		IStatus status = connector.performQuery(taskRepository, query, collector, null, null);
-//		assertEquals(Status.OK_STATUS, status);
-//		assertEquals(1, collector.results.size());
-//		ITaskMapping task = connector.getTaskMapping(collector.results.get(0));
-//		assertEquals("rss", task.getTaskData().getTaskId());
-//		assertEquals("Success", task.getSummary());
-//	}
+		IRepositoryQuery query = TasksUi.getRepositoryModel().createRepositoryQuery(taskRepository);
+		query.setUrl(TEST_URL_AUTHENTICATED);
+		query.setAttribute(WebRepositoryConnector.KEY_QUERY_TEMPLATE, "${serverUrl}");
+		query.setAttribute(WebRepositoryConnector.KEY_QUERY_PATTERN, "(\\d{3})\\s+([A-Za-z ]+)");
+		query.setAttribute(WebRepositoryConnector.KEY_TASK_PREFIX, "task url");
+		TestTaskDataCollector collector = new TestTaskDataCollector();
+
+		IStatus status = connector.performQuery(taskRepository, query, collector, null, null);
+		assertEquals(Status.OK_STATUS, status);
+		assertEquals(1, collector.results.size());
+		ITaskMapping task = connector.getTaskMapping(collector.results.get(0));
+		assertEquals("200", task.getTaskData().getTaskId());
+		assertEquals("Success", task.getSummary());
+	}
+
+	public void testAuthenticationRss() {
+		init(TEST_URL_AUTHENTICATED, PrivilegeLevel.USER);
+
+		IRepositoryQuery query = TasksUi.getRepositoryModel().createRepositoryQuery(taskRepository);
+		query.setUrl(TEST_URL_AUTHENTICATED + "/rss.html");
+		query.setAttribute(WebRepositoryConnector.KEY_QUERY_TEMPLATE, "${serverUrl}");
+		query.setAttribute(WebRepositoryConnector.KEY_QUERY_PATTERN, "(\\d{3})\\s+([A-Za-z ]+)");
+		TestTaskDataCollector collector = new TestTaskDataCollector();
+
+		IStatus status = connector.performQuery(taskRepository, query, collector, null, null);
+		assertEquals(Status.OK_STATUS, status);
+		assertEquals(1, collector.results.size());
+		ITaskMapping task = connector.getTaskMapping(collector.results.get(0));
+		assertEquals("rss", task.getTaskData().getTaskId());
+		assertEquals("Success", task.getSummary());
+	}
 
 }
