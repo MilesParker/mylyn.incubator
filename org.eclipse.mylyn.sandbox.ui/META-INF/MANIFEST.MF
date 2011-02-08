@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Mylyn Sandbox Experimental UI
+Bundle-Name: Mylyn Incubator (Incubation)
 Bundle-SymbolicName: org.eclipse.mylyn.sandbox.ui;singleton:=true
 Bundle-Version: 3.5.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.internal.sandbox.ui.SandboxUiPlugin
