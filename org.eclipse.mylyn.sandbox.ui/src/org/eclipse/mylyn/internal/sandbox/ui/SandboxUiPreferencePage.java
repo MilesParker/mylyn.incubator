@@ -42,8 +42,6 @@ public class SandboxUiPreferencePage extends PreferencePage implements IWorkbenc
 
 	private Button activateOnOpen;
 
-	private Button showTaskTrimButton;
-
 	private Button useStrikethrough;
 
 	public SandboxUiPreferencePage() {
@@ -56,7 +54,6 @@ public class SandboxUiPreferencePage extends PreferencePage implements IWorkbenc
 		GridLayout layout = new GridLayout(1, false);
 		container.setLayout(layout);
 
-		createTaskNavigationGroup(container);
 		createTaskListGroup(container);
 		createJavaGroup(container);
 
@@ -65,20 +62,6 @@ public class SandboxUiPreferencePage extends PreferencePage implements IWorkbenc
 
 	public void init(IWorkbench workbench) {
 		// ignore
-	}
-
-	private void createTaskNavigationGroup(Composite parent) {
-		Group navigationGroup = new Group(parent, SWT.NONE);
-		navigationGroup.setText("Task Navigation");
-		navigationGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		navigationGroup.setLayout(new GridLayout());
-
-		IPreferenceStore uiPreferenceStore = TasksUiPlugin.getDefault().getPreferenceStore();
-
-		showTaskTrimButton = new Button(navigationGroup, SWT.CHECK);
-		showTaskTrimButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
-		showTaskTrimButton.setText("Show Task Trim widget");
-		showTaskTrimButton.setSelection(uiPreferenceStore.getBoolean(ITasksUiPreferenceConstants.SHOW_TRIM));
 	}
 
 	private void createTaskListGroup(Composite parent) {
@@ -111,15 +94,14 @@ public class SandboxUiPreferencePage extends PreferencePage implements IWorkbenc
 
 		enableErrorInterest = new Button(group, SWT.CHECK);
 		enableErrorInterest.setText("Enable predicted interest of errors (significantly increases view refresh).");
-		enableErrorInterest.setSelection(SandboxUiPlugin.getDefault().getPreferenceStore().getBoolean(
-				InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS));
+		enableErrorInterest.setSelection(SandboxUiPlugin.getDefault()
+				.getPreferenceStore()
+				.getBoolean(InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS));
 	}
 
 	@Override
 	public boolean performOk() {
 		IPreferenceStore uiPreferenceStore = TasksUiPlugin.getDefault().getPreferenceStore();
-
-		uiPreferenceStore.setValue(ITasksUiPreferenceConstants.SHOW_TRIM, showTaskTrimButton.getSelection());
 
 		uiPreferenceStore.setValue(ITasksUiPreferenceConstants.USE_STRIKETHROUGH_FOR_COMPLETED,
 				useStrikethrough.getSelection());
@@ -129,33 +111,37 @@ public class SandboxUiPreferencePage extends PreferencePage implements IWorkbenc
 		uiPreferenceStore.setValue(ITasksUiPreferenceConstants.OVERLAYS_INCOMING_TIGHT,
 				incomingOverlaysButton.getSelection());
 
-		SandboxUiPlugin.getDefault().getPreferenceStore().setValue(
-				InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS, enableErrorInterest.getSelection());
+		SandboxUiPlugin.getDefault()
+				.getPreferenceStore()
+				.setValue(InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS, enableErrorInterest.getSelection());
 		return true;
 	}
 
 	@Override
 	public boolean performCancel() {
-		enableErrorInterest.setSelection(SandboxUiPlugin.getDefault().getPreferenceStore().getBoolean(
-				InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS));
+		enableErrorInterest.setSelection(SandboxUiPlugin.getDefault()
+				.getPreferenceStore()
+				.getBoolean(InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS));
 
-		useStrikethrough.setSelection(TasksUiPlugin.getDefault().getPreferenceStore().getBoolean(
-				ITasksUiPreferenceConstants.USE_STRIKETHROUGH_FOR_COMPLETED));
+		useStrikethrough.setSelection(TasksUiPlugin.getDefault()
+				.getPreferenceStore()
+				.getBoolean(ITasksUiPreferenceConstants.USE_STRIKETHROUGH_FOR_COMPLETED));
 
 		IPreferenceStore uiPreferenceStore = TasksUiPlugin.getDefault().getPreferenceStore();
 		activateOnOpen.setSelection(uiPreferenceStore.getBoolean(ITasksUiPreferenceConstants.ACTIVATE_WHEN_OPENED));
-		showTaskTrimButton.setSelection(uiPreferenceStore.getBoolean(ITasksUiPreferenceConstants.SHOW_TRIM));
 		return true;
 	}
 
 	@Override
 	public void performDefaults() {
 		super.performDefaults();
-		enableErrorInterest.setSelection(SandboxUiPlugin.getDefault().getPreferenceStore().getDefaultBoolean(
-				InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS));
+		enableErrorInterest.setSelection(SandboxUiPlugin.getDefault()
+				.getPreferenceStore()
+				.getDefaultBoolean(InterestInducingProblemListener.PREDICTED_INTEREST_ERRORS));
 
-		useStrikethrough.setSelection(TasksUiPlugin.getDefault().getPreferenceStore().getDefaultBoolean(
-				ITasksUiPreferenceConstants.USE_STRIKETHROUGH_FOR_COMPLETED));
+		useStrikethrough.setSelection(TasksUiPlugin.getDefault()
+				.getPreferenceStore()
+				.getDefaultBoolean(ITasksUiPreferenceConstants.USE_STRIKETHROUGH_FOR_COMPLETED));
 	}
 
 }
