@@ -91,7 +91,7 @@
 	<repository>
 	  <id>eclipse-orbit</id>
 	  <layout>p2</layout>
-	  <url>http://download.eclipse.org/tools/orbit/committers/drops/S20110124210048/repository/</url>
+	  <url>http://download.eclipse.org/tools/orbit/downloads/drops/S20110124210048/repository/</url>
 	</repository>
   </repositories>
 
