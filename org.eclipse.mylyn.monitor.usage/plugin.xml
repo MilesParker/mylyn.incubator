@@ -26,7 +26,7 @@
          name="Usage Data"
          class="org.eclipse.mylyn.internal.monitor.usage.preferences.UsageDataPreferencePage"
          id="org.eclipse.mylyn.monitor.ui.ui.preferences"
-		 category="org.eclipse.mylyn.tasks.ui.preferences">
+		 category="org.eclipse.mylyn.preferencePages.Mylyn">
          <keywordReference id="org.eclipse.mylyn.monitor.ui.keywords"/>
       </page> 
    </extension>

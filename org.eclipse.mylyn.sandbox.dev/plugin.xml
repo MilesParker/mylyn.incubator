@@ -69,16 +69,18 @@
   <extension
          point="org.eclipse.ui.views">
       <view
-            name="Repository Spy"
+            name="Repository Spy (Experimental)"
             icon="icons/repositories.gif"
-            category="org.eclipse.mylyn.sandbox"
+            category="org.eclipse.mylyn.ui"
             class="org.eclipse.mylyn.internal.sandbox.dev.views.RepositorySpyView"
             id="org.eclipse.mylyn.tasks.spy.views.RepositorySpyView">
       </view>
+      <!--
       <category
             id="org.eclipse.mylyn.sandbox"
             name="Experimental">
       </category>
+      -->
    </extension>
    <extension
          point="org.eclipse.core.runtime.adapters">

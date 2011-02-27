@@ -12,17 +12,13 @@
 
 <plugin>
     <extension-point id="resourceHyperlinkExtensions" name="Resource Hyperlink Extension" schema="schema/resourceHyperlinkExtensions.exsd"/>
-    
-	<extension point="org.eclipse.ui.views">
-     	<category name="Experimental" id="org.eclipse.mylyn.sandbox"/>
-    </extension>
-
+	
     <extension point="org.eclipse.ui.preferencePages">
       <page 
          name="Experimental"
          class="org.eclipse.mylyn.internal.sandbox.ui.SandboxUiPreferencePage"
          id="org.eclipse.mylyn.sandbox.ui.preferences"
-         category="org.eclipse.mylyn.tasks.ui.preferences">
+         category="org.eclipse.mylyn.preferencePages.Mylyn">
          <keywordReference id="org.eclipse.mylyn.java.keywords"/>
       </page> 
     </extension>
@@ -225,30 +221,32 @@
             id="org.eclipse.mylyn.java.keywords"/>
    </extension>
 
-   <extension point="org.eclipse.ui.views"> 
+   <extension point="org.eclipse.ui.views">
+      <category name="Experimental" id="org.eclipse.mylyn.sandbox"/>
+    
    	  <view
           allowMultiple="false"
-          category="org.eclipse.mylyn.sandbox"
+          category="org.eclipse.mylyn.ui"
           class="org.eclipse.mylyn.internal.sandbox.ui.views.ActiveSearchView"
           icon="icons/eview16/active-search.gif"
           id="org.eclipse.mylyn.ui.views.active.search"
-          name="Context Search"/>
+          name="Context Search (Experimental)"/>
           
 	  <view
             allowMultiple="false"
-            category="org.eclipse.mylyn.sandbox"
+            category="org.eclipse.mylyn.ui"
             class="org.eclipse.mylyn.internal.sandbox.ui.views.ContextHierarchyView"
             icon="icons/eview16/active-hierarchy.gif"
             id="org.eclipse.mylyn.ui.views.active.hierarchy"
-            name="Context Hierarchy"/>
+            name="Context Hierarchy (Experimental)"/>
             
-            <view
+      <view
             allowMultiple="false"
-            category="org.eclipse.mylyn.sandbox"
+            category="org.eclipse.mylyn.ui"
             class="org.eclipse.mylyn.internal.sandbox.ui.views.TaskActivityView"
             icon="icons/eview16/task-activity.gif"
             id="org.eclipse.mylyn.tasklist.activity"
-            name="Task Activity"/>
+            name="Task Activity (Experimental)"/>
    </extension>
    
     <extension point="org.eclipse.ui.actionSets">
