@@ -19,6 +19,7 @@ import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
 import org.eclipse.mylyn.internal.tasks.core.AbstractTaskContainer;
 import org.eclipse.mylyn.internal.tasks.core.Person;
 import org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin;
+import org.eclipse.mylyn.internal.tasks.ui.util.TasksUiInternal;
 import org.eclipse.mylyn.internal.tasks.ui.views.TaskListContentProvider;
 import org.eclipse.mylyn.internal.tasks.ui.views.TaskListView;
 import org.eclipse.mylyn.tasks.core.ITask;
@@ -43,7 +44,7 @@ public class IncomingTaskListContentProvider extends TaskListContentProvider {
 		} else {
 			for (ITaskContainer container : applyFilter(TasksUiPlugin.getTaskList().getRootElements())) {
 				for (ITask task : getAllTasks(container.getChildren())) {
-					if (task.getOwner() != null && task.getSynchronizationState().isIncoming()) {
+					if (task.getOwner() != null && TasksUiInternal.shouldShowIncoming(task)) {
 						people.add(new Person(task.getOwner(), task.getConnectorKind(), task.getRepositoryUrl()));
 					}
 				}
@@ -76,7 +77,7 @@ public class IncomingTaskListContentProvider extends TaskListContentProvider {
 			for (ITaskContainer container : applyFilter(TasksUiPlugin.getTaskList().getRootElements())) {
 				for (ITask task : getAllTasks(container.getChildren())) {
 					if (task.getOwner() != null && task.getOwner().equals(((Person) parent).getHandleIdentifier())
-							&& task.getSynchronizationState().isIncoming()) {
+							&& TasksUiInternal.shouldShowIncoming(task)) {
 						children.add(task);
 					}
 				}
