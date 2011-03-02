@@ -22,6 +22,7 @@
   <name>Mylyn Incubator</name>
   <properties>
     <qualifier>${project.unqualifiedVersion}</qualifier>
+    <sign-dir>tools/mylyn/hudson/signing/incubator</sign-dir>
   </properties>
   <build>
     <plugins>
@@ -81,9 +82,21 @@
 				<ant antfile="pack-and-sign/build.xml">
 				  <property name="localRepository" value="${settings.localRepository}"/>
 				  <property name="projectDir" value="${project.build.directory}"/>
+				  <property name="signDir" value="${sign-dir}"/>
+				  <property name="archiveDir" value="${mylyn-archive}"/>
+				  <property name="siteDir" value="${mylyn-site}"/>
+				  
+				  <property name="dist" value="mylyn"/>
+				  <property name="filter" value="mylyn"/>
 				  <property name="repositoryName" value="${mylyn-incubator-repository}"/>
 				  <property name="pack200" value="${mylyn-pack200}"/>
+				  
 				  <property name="skipSign" value="${mylyn-skip-sign}"/>
+				  <property name="skipPack" value="${mylyn-skip-pack}"/>
+				  <property name="skipPromote" value="${mylyn-skip-promote}"/>
+				  
+				  <property name="version" value="${unqualifiedVersion}"/>
+				  <property name="qualifier" value="${buildQualifier}"/>
 				</ant>
 				<echo file="${project.build.directory}/version.properties">
 				  <![CDATA[

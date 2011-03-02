@@ -2,37 +2,42 @@
 
   <dirname property="scriptdir" file="${ant.file.pack-and-sign}"/>
   <property name="pack200" value="${java.home}/bin"/>
+  <property name="filter" value=""/>
 
   <target name="pack-and-sign">
 	<fail unless="localRepository">Required property localRepository not set</fail>
 	<fail unless="projectDir">Required property projectDir not set</fail>
 	<fail unless="repositoryName">Required property repositoryName not set</fail>
+	<fail unless="signDir">Required property signDir not set</fail>
+	<fail unless="dist">Required property dist not set</fail>
 
 	<echo>Running on ${os.name} ${os.version} (${os.arch}) / ${ant.version} / ${java.vendor} ${java.vm.name} ${java.version}</echo>
 
-	<!-- sign -->
-
 	<condition property="sign.skip" value="true"><equals arg1="${skipSign}" arg2="true"/></condition>
+	<condition property="pack.skip" value="true"><equals arg1="${skipPack}" arg2="true"/></condition>
+  	<condition property="promote.skip" value="true"><equals arg1="${skipPromote}" arg2="true"/></condition>
+
+  	<!-- sign -->
 
 	<antcall target="sign"/>
 
 	<!-- condition jars -->
 
-	<delete dir="${projectDir}/condition"/>
-	<copy todir="${projectDir}/condition">
+	<delete dir="${projectDir}/conditioner"/>
+	<copy todir="${projectDir}/conditioner">
 	  <fileset dir="${projectDir}/site">
-		<include name="**/*mylyn*.jar"/>
+		<include name="**/*${filter}*.jar"/>
 	  </fileset>
 	</copy>
 
 	<antcall target="pack">
 	  <param name="args" value="-processAll -repack"/>
-	  <param name="site" value="${projectDir}/condition"/>
+	  <param name="site" value="${projectDir}/conditioner"/>
 	</antcall>
 
 	<copy todir="${projectDir}/site">
-	  <fileset dir="${projectDir}/condition">
-		<include name="**/*mylyn*.jar"/>
+	  <fileset dir="${projectDir}/conditioner">
+		<include name="**/*${filter}*.jar"/>
 	  </fileset>
 	</copy>
 
@@ -62,16 +67,36 @@
 		<include name="**/*"/>
 	  </fileset>
 	</zip>
+  	
+  	<!-- promote -->
+
+	<antcall target="promote"/>
+
   </target>
 
   <target name="sign" unless="sign.skip">	
 	<chmod perm="755" file="${scriptdir}/sign-and-wait.sh"/>
 	<exec executable="${scriptdir}/sign-and-wait.sh" failonerror="true">
 	  <arg value="${projectDir}/site"/>
+	  <arg value="${signDir}"/>
+	  <arg value="${filter}"/>
 	</exec>
   </target>
 
-  <target name="pack">	
+  <target name="promote" unless="promote.skip">	
+	<chmod perm="755" file="${scriptdir}/promote.sh"/>
+  	<chmod perm="755" file="${scriptdir}/update-composite.sh"/>
+	<exec executable="${scriptdir}/promote.sh" dir="${scriptdir}" failonerror="true">
+	  <arg value="${dist}"/>
+	  <arg value="${version}"/>
+	  <arg value="${qualifier}"/>
+	  <arg value="${projectDir}"/>	
+	  <arg value="${archiveDir}"/>
+	  <arg value="${siteDir}"/>
+	</exec>
+  </target>
+
+  <target name="pack" unless="pack.skip">	
 	<delete file="${site}/content.jar" />
 	<delete file="${site}/artifacts.jar" />
 	
