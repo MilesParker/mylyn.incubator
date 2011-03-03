@@ -24,7 +24,7 @@ import org.hamcrest.Description;
 public class HasId<T extends Widget> extends AbstractMatcher<T> {
 
 	private String key;
-	
+
 	public HasId(String key) {
 		super();
 		this.key = key;
@@ -43,6 +43,5 @@ public class HasId<T extends Widget> extends AbstractMatcher<T> {
 	public void describeTo(Description description) {
 		description.appendText("with key (").appendText(key).appendText(")"); //$NON-NLS-1$ //$NON-NLS-2$	
 	}
-
 
 }

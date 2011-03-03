@@ -172,11 +172,13 @@ public class OpenWikiPageAction extends Action implements IViewActionDelegate {
 
 		@Override
 		protected IDialogSettings getDialogSettings() {
-			IDialogSettings settings = TracWikiPlugin.getDefault().getDialogSettings().getSection(
-					OPEN_WIKI_PAGE_DIALOG_DIALOG_SETTINGS);
+			IDialogSettings settings = TracWikiPlugin.getDefault()
+					.getDialogSettings()
+					.getSection(OPEN_WIKI_PAGE_DIALOG_DIALOG_SETTINGS);
 			if (settings == null) {
-				settings = TracWikiPlugin.getDefault().getDialogSettings().addNewSection(
-						OPEN_WIKI_PAGE_DIALOG_DIALOG_SETTINGS);
+				settings = TracWikiPlugin.getDefault()
+						.getDialogSettings()
+						.addNewSection(OPEN_WIKI_PAGE_DIALOG_DIALOG_SETTINGS);
 			}
 			return settings;
 		}

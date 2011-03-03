@@ -319,8 +319,10 @@ public class TracWikiPageEditor extends FormEditor {
 				protected IStatus run(IProgressMonitor monitor) {
 					try {
 						monitor.beginTask("Uploading wiki page", IProgressMonitor.UNKNOWN);
-						TracCorePlugin.getDefault().getConnector().getWikiHandler().postWikiPage(repository, page,
-								monitor);
+						TracCorePlugin.getDefault()
+								.getConnector()
+								.getWikiHandler()
+								.postWikiPage(repository, page, monitor);
 						jobStatus = Status.OK_STATUS;
 					} catch (CoreException e) {
 						TasksUiInternal.displayStatus("Submit failed", e.getStatus());
@@ -534,8 +536,10 @@ public class TracWikiPageEditor extends FormEditor {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					monitor.beginTask("Downloading wiki page", IProgressMonitor.UNKNOWN);
-					TracWikiPage newPage = TracCorePlugin.getDefault().getConnector().getWikiHandler().getWikiPage(
-							repository, page.getPageInfo().getPageName(), monitor);
+					TracWikiPage newPage = TracCorePlugin.getDefault()
+							.getConnector()
+							.getWikiHandler()
+							.getWikiPage(repository, page.getPageInfo().getPageName(), monitor);
 					if (newPage != null) {
 						((TracWikiPageEditorInput) getEditorInput()).setPage(newPage);
 					} else {
