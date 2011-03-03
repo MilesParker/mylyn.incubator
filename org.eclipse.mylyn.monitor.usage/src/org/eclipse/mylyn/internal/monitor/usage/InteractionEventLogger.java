@@ -75,7 +75,9 @@ public class InteractionEventLogger extends AbstractMonitorLog implements IInter
 		try {
 			if (started) {
 				String xml = getXmlForEvent(event);
-				outputStream.write(xml.getBytes());
+				if (outputStream != null) {
+					outputStream.write(xml.getBytes());
+				}
 			} else if (event != null) {
 				queue.add(event);
 			}
