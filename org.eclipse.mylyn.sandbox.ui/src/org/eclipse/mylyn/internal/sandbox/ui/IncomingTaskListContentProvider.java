@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.mylyn.internal.tasks.core.AbstractTask;
 import org.eclipse.mylyn.internal.tasks.core.AbstractTaskContainer;
 import org.eclipse.mylyn.internal.tasks.core.Person;
@@ -68,6 +69,11 @@ public class IncomingTaskListContentProvider extends TaskListContentProvider {
 			return alltasks;
 		}
 		return null;
+	}
+
+	@Override
+	public Object[] getChildren(TreePath parentPath) {
+		return getChildren(parentPath.getLastSegment());
 	}
 
 	@Override
