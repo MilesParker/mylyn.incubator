@@ -318,7 +318,6 @@ public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage im
 		}
 	}
 
-	@SuppressWarnings("restriction")
 	@Override
 	public void applyTo(TaskRepository repository) {
 		super.applyTo(repository);
