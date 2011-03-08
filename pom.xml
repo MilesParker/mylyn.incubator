@@ -29,7 +29,7 @@
 	<mylyn-site></mylyn-site>
 
 	<mylyn-pack200>${java.home}/bin</mylyn-pack200>
-
+	
     <!--<maven.test.skip>true</maven.test.skip>-->
     <maven.test.error.ignore>true</maven.test.error.ignore>
     <maven.test.failure.ignore>true</maven.test.failure.ignore>    
