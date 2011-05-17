@@ -47,25 +47,25 @@ public class WebContentProposalProvider implements IContentProposalProvider {
 	public IContentProposal[] getProposals(String contents, int position) {
 		ArrayList<IContentProposal> proposals = new ArrayList<IContentProposal>();
 		if (includeTemplates) {
-			addProposal(proposals, "({Id}.+?)");
-			addProposal(proposals, "({Description}.+?)");
-			addProposal(proposals, "({Owner}.+?)");
-			addProposal(proposals, "({Type}.+?)");
-			addProposal(proposals, "({Status}.+?)");
+			addProposal(proposals, "({Id}.+?)"); //$NON-NLS-1$
+			addProposal(proposals, "({Description}.+?)"); //$NON-NLS-1$
+			addProposal(proposals, "({Owner}.+?)"); //$NON-NLS-1$
+			addProposal(proposals, "({Type}.+?)"); //$NON-NLS-1$
+			addProposal(proposals, "({Status}.+?)"); //$NON-NLS-1$
 			// proposals.add("({Due}.+?)");
 			// proposals.add("({Updated}.+?)");
 			// proposals.add("({Created}.+?)");
-			addProposal(proposals, "(.+?)");
-			addProposal(proposals, ".+?");
+			addProposal(proposals, "(.+?)"); //$NON-NLS-1$
+			addProposal(proposals, ".+?"); //$NON-NLS-1$
 		}
-		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_SERVER_URL + "}");
-		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_USER_ID + "}");
-		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_PASSWORD + "}");
-		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_LOGIN_TOKEN + "}");
+		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_SERVER_URL + "}"); //$NON-NLS-1$ //$NON-NLS-2$
+		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_USER_ID + "}"); //$NON-NLS-1$ //$NON-NLS-2$
+		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_PASSWORD + "}");  //$NON-NLS-1$//$NON-NLS-2$
+		addProposal(proposals, "${" + WebRepositoryConnector.PARAM_LOGIN_TOKEN + "}"); //$NON-NLS-1$ //$NON-NLS-2$
 		for (String param : parametersEditor.getParameters().keySet()) {
-			addProposal(proposals, "${" + param.substring(WebRepositoryConnector.PARAM_PREFIX.length()) + "}");
+			addProposal(proposals, "${" + param.substring(WebRepositoryConnector.PARAM_PREFIX.length()) + "}"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		addProposal(proposals, "${}");
+		addProposal(proposals, "${}"); //$NON-NLS-1$
 		return proposals.toArray(new IContentProposal[proposals.size()]);
 	}
 
@@ -104,7 +104,7 @@ public class WebContentProposalProvider implements IContentProposalProvider {
 
 		KeyStroke keystroke = null;
 		try {
-			keystroke = KeyStroke.getInstance("Ctrl" + KeyStroke.KEY_DELIMITER + "Space");
+			keystroke = KeyStroke.getInstance("Ctrl" + KeyStroke.KEY_DELIMITER + "Space"); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (ParseException e) {
 		}
 

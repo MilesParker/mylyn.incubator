@@ -53,15 +53,15 @@ public class ParametersEditor extends Composite {
 
 		TableColumn colVariable = new TableColumn(paramsTable, SWT.NONE);
 		colVariable.setWidth(170);
-		colVariable.setText("Parameter");
+		colVariable.setText(Messages.ParametersEditor_Parameter);
 
 		TableColumn colValue = new TableColumn(paramsTable, SWT.NONE);
 		colValue.setWidth(280);
-		colValue.setText("Value");
+		colValue.setText(Messages.ParametersEditor_Value);
 
 		Button bAdd = new Button(this, SWT.NONE);
 		bAdd.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		bAdd.setText("&Add...");
+		bAdd.setText(Messages.ParametersEditor_Add_);
 		bAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -75,7 +75,7 @@ public class ParametersEditor extends Composite {
 
 		final Button bRemove = new Button(this, SWT.NONE);
 		bRemove.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		bRemove.setText("&Remove");
+		bRemove.setText(Messages.ParametersEditor_Remove_);
 		bRemove.setEnabled(false);
 		bRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -87,7 +87,7 @@ public class ParametersEditor extends Composite {
 
 		final Button bEdit = new Button(this, SWT.NONE);
 		bEdit.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, true));
-		bEdit.setText("&Edit...");
+		bEdit.setText(Messages.ParametersEditor_Edit_);
 		bEdit.setEnabled(false);
 		bEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -137,7 +137,7 @@ public class ParametersEditor extends Composite {
 				params.put(key.substring(WebRepositoryConnector.PARAM_PREFIX.length()), value);
 			}
 			for (String var : WebRepositoryConnector.getTemplateVariables(value)) {
-				variables.put(var, "");
+				variables.put(var, ""); //$NON-NLS-1$
 			}
 		}
 
@@ -147,7 +147,7 @@ public class ParametersEditor extends Composite {
 
 		for (String var : variables.keySet()) {
 			if (!params.containsKey(var)) {
-				params.put(var, "");
+				params.put(var, ""); //$NON-NLS-1$
 			}
 		}
 

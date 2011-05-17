@@ -51,7 +51,7 @@ public class NamedPattern {
 
 	private String prepare(String namedRegex) {
 		StringBuilder regex = new StringBuilder();
-		Matcher m = Pattern.compile("\\((\\{(\\S+?)})").matcher(namedRegex);
+		Matcher m = Pattern.compile("\\((\\{(\\S+?)})").matcher(namedRegex); //$NON-NLS-1$
 		int pos = 0;
 		while (m.find()) {
 			groups.add(m.group(2));

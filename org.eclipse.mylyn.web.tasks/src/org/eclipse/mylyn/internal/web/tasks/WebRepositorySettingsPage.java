@@ -49,10 +49,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
  */
 public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage implements IPropertyChangeListener {
 
-	private static final String TITLE = "Web Repository Settings";
+	private static final String TITLE = Messages.WebRepositorySettingsPage_Web_Repository_Settings;
 
-	private static final String DESCRIPTION = "Select a server template example and modify to match the settings for "
-			+ "your project, \nusually found in the query URL.  For more connectors see http://eclipse.org/mylyn";
+	private static final String DESCRIPTION = Messages.WebRepositorySettingsPage_Select_server_template_example_and_modify_to_match_settings_for_your_project;
 
 	private ParametersEditor parametersEditor;
 
@@ -204,7 +203,7 @@ public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage im
 		expComposite.setLayoutData(gridData_2);
 		expComposite.setFont(composite.getFont());
 		expComposite.setBackground(composite.getBackground());
-		expComposite.setText("Advanced &Configuration");
+		expComposite.setText(Messages.WebRepositorySettingsPage_Advanced_Configuration);
 		expComposite.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
@@ -220,14 +219,14 @@ public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage im
 		composite2.setLayout(gridLayout2);
 		expComposite.setClient(composite2);
 
-		Label taskUrlLabel = toolkit.createLabel(composite2, "&Task URL:", SWT.NONE);
+		Label taskUrlLabel = toolkit.createLabel(composite2, Messages.WebRepositorySettingsPage_Task_URL_, SWT.NONE);
 		taskUrlLabel.setLayoutData(new GridData());
 
 		taskUrlText = new Text(composite2, SWT.BORDER);
 		taskUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		decorations.add(WebContentProposalProvider.createDecoration(taskUrlText, parametersEditor, false));
 
-		Label newTaskLabel = toolkit.createLabel(composite2, "&New Task URL:", SWT.NONE);
+		Label newTaskLabel = toolkit.createLabel(composite2, Messages.WebRepositorySettingsPage_New_Task_URL_, SWT.NONE);
 		newTaskLabel.setLayoutData(new GridData());
 
 		newTaskText = new Text(composite2, SWT.BORDER);
@@ -241,7 +240,8 @@ public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage im
 		separatorLabel2.setLayoutData(gridData_4);
 		toolkit.adapt(separatorLabel2, true, true);
 
-		Label queryUrlLabel = toolkit.createLabel(composite2, "&Query Request URL:", SWT.NONE);
+		Label queryUrlLabel = toolkit.createLabel(composite2, Messages.WebRepositorySettingsPage_Query_Request_URL_,
+				SWT.NONE);
 		queryUrlLabel.setLayoutData(new GridData());
 
 		queryUrlText = new Text(composite2, SWT.BORDER);
@@ -250,14 +250,15 @@ public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage im
 
 		queryRequestMethod = new ComboViewer(composite2, SWT.BORDER | SWT.READ_ONLY);
 		queryRequestMethod.setContentProvider(new MethodTypeContentProvider());
-		queryRequestMethod.setInput("");
+		queryRequestMethod.setInput(""); //$NON-NLS-1$
 		{
 			Combo combo = queryRequestMethod.getCombo();
 			toolkit.adapt(combo, true, true);
 			combo.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 		}
 
-		Label queryPatternLabel = toolkit.createLabel(composite2, "Query &Pattern:", SWT.NONE);
+		Label queryPatternLabel = toolkit.createLabel(composite2, Messages.WebRepositorySettingsPage_Query_Pattern_,
+				SWT.NONE);
 		queryPatternLabel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
 
 		queryPatternText = new Text(composite2, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER | SWT.WRAP);
@@ -277,7 +278,7 @@ public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage im
 		final Label loginrequestUrlLabel = new Label(composite2, SWT.NONE);
 		loginrequestUrlLabel.setLayoutData(new GridData());
 		toolkit.adapt(loginrequestUrlLabel, true, true);
-		loginrequestUrlLabel.setText("Login &Request URL:");
+		loginrequestUrlLabel.setText(Messages.WebRepositorySettingsPage_Login_Request_URL_);
 
 		loginRequestUrlText = new Text(composite2, SWT.BORDER);
 		toolkit.adapt(loginRequestUrlText, true, true);
@@ -286,21 +287,23 @@ public class WebRepositorySettingsPage extends AbstractRepositorySettingsPage im
 
 		loginRequestMethod = new ComboViewer(composite2, SWT.BORDER | SWT.READ_ONLY);
 		loginRequestMethod.setContentProvider(new MethodTypeContentProvider());
-		loginRequestMethod.setInput("");
+		loginRequestMethod.setInput(""); //$NON-NLS-1$
 		{
 			Combo combo = loginRequestMethod.getCombo();
 			toolkit.adapt(combo, true, true);
 			combo.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 		}
 
-		Label loginPageLabel = toolkit.createLabel(composite2, "Login &Form URL:", SWT.NONE);
+		Label loginPageLabel = toolkit.createLabel(composite2, Messages.WebRepositorySettingsPage_Login_Form_URL_,
+				SWT.NONE);
 		loginPageLabel.setLayoutData(new GridData());
 
 		loginFormUrlText = new Text(composite2, SWT.BORDER);
 		loginFormUrlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		decorations.add(WebContentProposalProvider.createDecoration(loginFormUrlText, parametersEditor, false));
 
-		Label loginTokenLabel = toolkit.createLabel(composite2, "Login T&oken Pattern:", SWT.NONE);
+		Label loginTokenLabel = toolkit.createLabel(composite2, Messages.WebRepositorySettingsPage_Login_Token_Pattern,
+				SWT.NONE);
 		loginTokenLabel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
 
 		loginTokenPatternText = new Text(composite2, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER | SWT.WRAP);

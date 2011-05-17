@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
  */
 public class TasksWebPlugin extends AbstractUIPlugin {
 
-	public static final String ID_PLUGIN = "org.eclipse.mylyn.tasks.web";
+	public static final String ID_PLUGIN = "org.eclipse.mylyn.tasks.web"; //$NON-NLS-1$
 
 	private static TasksWebPlugin plugin;
 

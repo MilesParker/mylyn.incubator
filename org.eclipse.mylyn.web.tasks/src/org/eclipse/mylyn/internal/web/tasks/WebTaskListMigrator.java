@@ -30,17 +30,17 @@ import org.w3c.dom.NamedNodeMap;
  */
 public class WebTaskListMigrator extends AbstractTaskListMigrator {
 
-	private static final String KEY_WEB = "Web";
+	private static final String KEY_WEB = "Web"; //$NON-NLS-1$
 
 	private static final String KEY_WEB_QUERY = KEY_WEB + KEY_QUERY;
 
-	private static final String KEY_WEB_ISSUE = "WebIssue";
+	private static final String KEY_WEB_ISSUE = "WebIssue"; //$NON-NLS-1$
 
-	private static final String KEY_URL_TEMPLATE = "UrlTemplate";
+	private static final String KEY_URL_TEMPLATE = "UrlTemplate"; //$NON-NLS-1$
 
-	private static final String KEY_REGEXP = "Regexp";
+	private static final String KEY_REGEXP = "Regexp"; //$NON-NLS-1$
 
-	private static final String KEY_PREFIX = "TaskPrefix";
+	private static final String KEY_PREFIX = "TaskPrefix"; //$NON-NLS-1$
 
 	@Override
 	public String getConnectorKind() {
@@ -62,7 +62,7 @@ public class WebTaskListMigrator extends AbstractTaskListMigrator {
 		if (element.hasAttribute(KEY_PREFIX)) {
 			task.setAttribute(WebRepositoryConnector.KEY_TASK_PREFIX, element.getAttribute(KEY_PREFIX));
 		} else {
-			task.setTaskKind("RSS");
+			task.setTaskKind("RSS"); //$NON-NLS-1$
 			task.setTaskKey(null);
 		}
 	}

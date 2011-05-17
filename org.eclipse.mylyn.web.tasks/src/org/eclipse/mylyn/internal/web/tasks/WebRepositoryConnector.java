@@ -72,49 +72,49 @@ import com.sun.syndication.io.XmlReader;
  */
 public class WebRepositoryConnector extends AbstractRepositoryConnector {
 
-	public static final String REPOSITORY_TYPE = "web";
+	public static final String REPOSITORY_TYPE = "web"; //$NON-NLS-1$
 
-	public static final String PROPERTY_TASK_CREATION_URL = "taskCreationUrl";
+	public static final String PROPERTY_TASK_CREATION_URL = "taskCreationUrl"; //$NON-NLS-1$
 
-	public static final String PROPERTY_TASK_URL = "taskUrl";
+	public static final String PROPERTY_TASK_URL = "taskUrl"; //$NON-NLS-1$
 
-	public static final String PROPERTY_QUERY_URL = "queryUrl";
+	public static final String PROPERTY_QUERY_URL = "queryUrl"; //$NON-NLS-1$
 
-	public static final String PROPERTY_QUERY_METHOD = "queryMethod";
+	public static final String PROPERTY_QUERY_METHOD = "queryMethod"; //$NON-NLS-1$
 
-	public static final String PROPERTY_QUERY_REGEXP = "queryPattern";
+	public static final String PROPERTY_QUERY_REGEXP = "queryPattern"; //$NON-NLS-1$
 
-	public static final String PROPERTY_LOGIN_FORM_URL = "loginFormUrl";
+	public static final String PROPERTY_LOGIN_FORM_URL = "loginFormUrl"; //$NON-NLS-1$
 
-	public static final String PROPERTY_LOGIN_TOKEN_REGEXP = "loginTokenPattern";
+	public static final String PROPERTY_LOGIN_TOKEN_REGEXP = "loginTokenPattern"; //$NON-NLS-1$
 
-	public static final String PROPERTY_LOGIN_REQUEST_METHOD = "loginRequestMethod";
+	public static final String PROPERTY_LOGIN_REQUEST_METHOD = "loginRequestMethod"; //$NON-NLS-1$
 
-	public static final String PROPERTY_LOGIN_REQUEST_URL = "loginRequestUrl";
+	public static final String PROPERTY_LOGIN_REQUEST_URL = "loginRequestUrl"; //$NON-NLS-1$
 
-	public static final String PARAM_PREFIX = "param_";
+	public static final String PARAM_PREFIX = "param_"; //$NON-NLS-1$
 
-	public static final String PARAM_SERVER_URL = "serverUrl";
+	public static final String PARAM_SERVER_URL = "serverUrl"; //$NON-NLS-1$
 
-	public static final String PARAM_USER_ID = "userId";
+	public static final String PARAM_USER_ID = "userId"; //$NON-NLS-1$
 
-	public static final String PARAM_PASSWORD = "password";
+	public static final String PARAM_PASSWORD = "password"; //$NON-NLS-1$
 
-	public static final String PARAM_LOGIN_TOKEN = "loginToken";
+	public static final String PARAM_LOGIN_TOKEN = "loginToken"; //$NON-NLS-1$
 
-	public static final String REQUEST_POST = "POST";
+	public static final String REQUEST_POST = "POST"; //$NON-NLS-1$
 
-	public static final String REQUEST_GET = "GET";
+	public static final String REQUEST_GET = "GET"; //$NON-NLS-1$
 
-	private static final String COMPLETED_STATUSES = "completed|fixed|resolved|invalid|verified|deleted|closed|done";
+	private static final String COMPLETED_STATUSES = "completed|fixed|resolved|invalid|verified|deleted|closed|done"; //$NON-NLS-1$
 
-	public static final String KEY_TASK_PREFIX = "taskPrefix";
+	public static final String KEY_TASK_PREFIX = "taskPrefix"; //$NON-NLS-1$
 
-	public static final String KEY_QUERY_TEMPLATE = "UrlTemplate";
+	public static final String KEY_QUERY_TEMPLATE = "UrlTemplate"; //$NON-NLS-1$
 
-	public static final String KEY_QUERY_PATTERN = "Regexp";
+	public static final String KEY_QUERY_PATTERN = "Regexp"; //$NON-NLS-1$
 
-	private static final String USER_AGENT = "WebTemplatesConnector";
+	private static final String USER_AGENT = "WebTemplatesConnector"; //$NON-NLS-1$
 
 	private final static Date DEFAULT_DATE = new Date(0);
 
@@ -125,7 +125,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 
 	@Override
 	public String getLabel() {
-		return "Web Template (Advanced)";
+		return Messages.WebRepositoryConnector_Web_Template_Advanced_;
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		IRepositoryManager repositoryManager = TasksUi.getRepositoryManager();
 		for (TaskRepository repository : repositoryManager.getRepositories(getConnectorKind())) {
 			String taskUrl = evaluateParams(repository.getProperty(PROPERTY_TASK_URL), repository);
-			if (taskUrl != null && !taskUrl.equals("") && url.startsWith(taskUrl)) {
+			if (taskUrl != null && !taskUrl.equals("") && url.startsWith(taskUrl)) { //$NON-NLS-1$
 				return repository.getRepositoryUrl();
 			}
 		}
@@ -215,7 +215,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 			if (repository != null) {
 				String queryUrl = evaluateParams(query.getAttribute(KEY_TASK_PREFIX), //
 						getQueryParams(query), repository);
-				if (queryUrl != null && !queryUrl.equals("") && url.startsWith(queryUrl)) {
+				if (queryUrl != null && !queryUrl.equals("") && url.startsWith(queryUrl)) { //$NON-NLS-1$
 					return query.getRepositoryUrl();
 				}
 			}
@@ -280,7 +280,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		} catch (IOException e) {
 			String msg = e.getMessage() == null ? e.toString() : e.getMessage();
 			return new Status(IStatus.ERROR, TasksWebPlugin.ID_PLUGIN, IStatus.ERROR, //
-					"Could not fetch resource: " + queryUrl + "\n" + msg, e);
+					Messages.WebRepositoryConnector_Could_not_fetch_resource + queryUrl + "\n" + msg, e); //$NON-NLS-1$ 
 		}
 	}
 
@@ -351,16 +351,16 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 						resultCollector.accept(data);
 					}
 				} else {
-					String id = p.group("Id", matcher);
-					String description = p.group("Description", matcher);
+					String id = p.group("Id", matcher); //$NON-NLS-1$
+					String description = p.group("Description", matcher); //$NON-NLS-1$
 					if (id == null || description == null) {
 						isCorrect = false;
 					}
 					if (id != null) {
 						description = unescapeHtml(description);
 
-						String owner = unescapeHtml(cleanup(p.group("Owner", matcher), repository));
-						String type = unescapeHtml(cleanup(p.group("Type", matcher), repository));
+						String owner = unescapeHtml(cleanup(p.group("Owner", matcher), repository)); //$NON-NLS-1$
+						String type = unescapeHtml(cleanup(p.group("Type", matcher), repository)); //$NON-NLS-1$
 
 						TaskData data = createTaskData(repository, id);
 						TaskMapper mapper = new TaskMapper(data, true);
@@ -371,7 +371,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 						mapper.setOwner(owner);
 						mapper.setTaskKind(type);
 
-						String status = p.group("Status", matcher);
+						String status = p.group("Status", matcher); //$NON-NLS-1$
 						if (status != null) {
 							if (COMPLETED_STATUSES.contains(status.toLowerCase())) {
 								// TODO set actual completion date here
@@ -388,7 +388,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 				return Status.OK_STATUS;
 			} else {
 				return new Status(IStatus.ERROR, TasksWebPlugin.ID_PLUGIN, IStatus.ERROR,
-						"Require two matching groups (taskId and summary). Check query regexp", null);
+						Messages.WebRepositoryConnector_Require_two_matching_groups, null);
 			}
 		}
 	}
@@ -402,7 +402,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 
 	private static String unescapeHtml(String text) {
 		if (text == null) {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		return StringEscapeUtils.unescapeHtml(text);
 	}
@@ -419,15 +419,15 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		// // ignore
 		// }
 
-		text = text.replaceAll("<!--.+?-->", "");
+		text = text.replaceAll("<!--.+?-->", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
-		String[] tokens = text.split(" |\\t|\\n|\\r");
+		String[] tokens = text.split(" |\\t|\\n|\\r"); //$NON-NLS-1$
 		StringBuilder sb = new StringBuilder();
-		String sep = "";
+		String sep = ""; //$NON-NLS-1$
 		for (String token : tokens) {
 			if (token.length() > 0) {
 				sb.append(sep).append(token);
-				sep = " ";
+				sep = " "; //$NON-NLS-1$
 			}
 		}
 
@@ -440,7 +440,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		try {
 			SyndFeed feed = input.build(new XmlReader(new ByteArrayInputStream(content.getBytes())));
 
-			SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm");
+			SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm"); //$NON-NLS-1$
 
 			Iterator<?> it;
 			for (it = feed.getEntries().iterator(); it.hasNext();) {
@@ -448,7 +448,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 
 				String author = entry.getAuthor();
 				if (author == null) {
-					DCModule module = (DCModule) entry.getModule("http://purl.org/dc/elements/1.1/");
+					DCModule module = (DCModule) entry.getModule("http://purl.org/dc/elements/1.1/"); //$NON-NLS-1$
 					author = module.getCreator();
 				}
 
@@ -457,7 +457,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 					date = entry.getPublishedDate();
 				}
 				if (date == null) {
-					DCModule module = (DCModule) entry.getModule("http://purl.org/dc/elements/1.1/");
+					DCModule module = (DCModule) entry.getModule("http://purl.org/dc/elements/1.1/"); //$NON-NLS-1$
 					date = module.getDate();
 				}
 
@@ -468,9 +468,9 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 
 				String entrTitle = entry.getTitle();
 
-				TaskData data = createTaskData(repository, entryUri.replaceAll("-", "%2D"));
+				TaskData data = createTaskData(repository, entryUri.replaceAll("-", "%2D")); //$NON-NLS-1$ //$NON-NLS-2$
 				TaskMapper schema = new TaskMapper(data, true);
-				schema.setSummary(((date == null ? "" : df.format(date) + " - ") + entrTitle));
+				schema.setSummary(((date == null ? "" : df.format(date) + " - ") + entrTitle)); //$NON-NLS-1$ //$NON-NLS-2$
 				schema.setCreationDate(date);
 				schema.setOwner(author);
 				schema.setTaskUrl(entryUri);
@@ -480,7 +480,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		} catch (Exception e) {
 			String msg = e.getMessage() == null ? e.toString() : e.getMessage();
 			return new Status(IStatus.ERROR, TasksWebPlugin.ID_PLUGIN, IStatus.ERROR, //
-					"Failed to parse RSS feed: \"" + msg + "\"", e);
+					Messages.WebRepositoryConnector_Failed_to_parse_RSS_feed + "\"" + msg + "\"", e); //$NON-NLS-1$ //$NON-NLS-2$ 
 		}
 	}
 
@@ -542,11 +542,11 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		PostMethod postMethod = new PostMethod(requestUrl.substring(0, n));
 		// TODO this does not take into account escaped values
 		n = requestTemplate.indexOf('?');
-		String[] requestParams = requestTemplate.substring(n + 1).split("&");
+		String[] requestParams = requestTemplate.substring(n + 1).split("&"); //$NON-NLS-1$
 		for (String requestParam : requestParams) {
-			String[] nv = requestParam.split("=");
+			String[] nv = requestParam.split("="); //$NON-NLS-1$
 			if (nv.length == 1) {
-				postMethod.addParameter(nv[0], "");
+				postMethod.addParameter(nv[0], ""); //$NON-NLS-1$
 			} else {
 				String value = evaluateParams(nv[1], getParams(repository, params), false);
 				postMethod.addParameter(nv[0], value);
@@ -589,19 +589,19 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 	}
 
 	private static String getRefreshUrl(String url, HttpMethod method) {
-		Header refreshHeader = method.getResponseHeader("Refresh");
+		Header refreshHeader = method.getResponseHeader("Refresh"); //$NON-NLS-1$
 		if (refreshHeader == null) {
 			return null;
 		}
 		String value = refreshHeader.getValue();
-		int n = value.indexOf(";url=");
+		int n = value.indexOf(";url="); //$NON-NLS-1$
 		if (n == -1) {
 			return null;
 		}
 		value = value.substring(n + 5);
 		int requestPath;
 		if (value.charAt(0) == '/') {
-			int colonSlashSlash = url.indexOf("://");
+			int colonSlashSlash = url.indexOf("://"); //$NON-NLS-1$
 			requestPath = url.indexOf('/', colonSlashSlash + 3);
 		} else {
 			requestPath = url.lastIndexOf('/');
@@ -609,7 +609,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 
 		String refreshUrl;
 		if (requestPath == -1) {
-			refreshUrl = url + "/" + value;
+			refreshUrl = url + "/" + value; //$NON-NLS-1$
 		} else {
 			refreshUrl = url.substring(0, requestPath + 1) + value;
 		}
@@ -625,16 +625,16 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 	}
 
 	private static String evaluateParams(String value, Map<String, String> params, boolean encode) {
-		if (value == null || value.indexOf("${") == -1) {
+		if (value == null || value.indexOf("${") == -1) { //$NON-NLS-1$
 			return value;
 		}
 
 		int n = 0;
-		int n1 = value.indexOf("${");
+		int n1 = value.indexOf("${"); //$NON-NLS-1$
 		StringBuilder evaluatedValue = new StringBuilder(value.length());
 		while (n1 > -1) {
 			evaluatedValue.append(value.substring(n, n1));
-			int n2 = value.indexOf("}", n1);
+			int n2 = value.indexOf("}", n1); //$NON-NLS-1$
 			if (n2 > -1) {
 				String key = value.substring(n1 + 2, n2);
 				if (PARAM_SERVER_URL.equals(key) || PARAM_USER_ID.equals(key) || PARAM_PASSWORD.equals(key)) {
@@ -645,7 +645,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 				}
 			}
 			n = n2 + 1;
-			n1 = value.indexOf("${", n2);
+			n1 = value.indexOf("${", n2); //$NON-NLS-1$
 		}
 		if (n > -1) {
 			evaluatedValue.append(value.substring(n));
@@ -681,7 +681,7 @@ public class WebRepositoryConnector extends AbstractRepositoryConnector {
 		}
 
 		List<String> vars = new ArrayList<String>();
-		Matcher m = Pattern.compile("\\$\\{(.+?)\\}").matcher(value);
+		Matcher m = Pattern.compile("\\$\\{(.+?)\\}").matcher(value); //$NON-NLS-1$
 		while (m.find()) {
 			vars.add(m.group(1));
 		}

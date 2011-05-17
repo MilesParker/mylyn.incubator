@@ -44,12 +44,12 @@ public class ParameterEditorDialog extends Dialog {
 
 	public ParameterEditorDialog(Shell parent) {
 		super(parent);
-		this.title = "New Property";
+		this.title = Messages.ParameterEditorDialog_New_Property;
 	}
 
 	public ParameterEditorDialog(Shell parent, String name, String value) {
 		super(parent);
-		this.title = "Edit Property";
+		this.title = Messages.ParameterEditorDialog_Edit_Property;
 		this.name = name;
 		this.value = value;
 	}
@@ -62,7 +62,7 @@ public class ParameterEditorDialog extends Dialog {
 		composite.setLayout(gridLayout);
 
 		Label nameLabel = new Label(composite, SWT.NONE);
-		nameLabel.setText("&Name:");
+		nameLabel.setText(Messages.ParameterEditorDialog_Name_);
 
 		nameText = new Text(composite, SWT.BORDER);
 		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -71,7 +71,7 @@ public class ParameterEditorDialog extends Dialog {
 
 		Label valueLabel = new Label(composite, SWT.NONE);
 		valueLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		valueLabel.setText("&Value:");
+		valueLabel.setText(Messages.ParameterEditorDialog_Value_);
 
 		valueText = new Text(composite, SWT.BORDER);
 		GridData gridData_1 = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -99,6 +99,8 @@ public class ParameterEditorDialog extends Dialog {
 		status = new Text(composite, SWT.READ_ONLY);
 		status.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
+		applyDialogFont(composite);
+
 		return composite;
 	}
 
@@ -125,7 +127,7 @@ public class ParameterEditorDialog extends Dialog {
 
 	private boolean isValid() {
 		if (name.length() == 0 || !Character.isLetter(name.charAt(0))) {
-			status.setText("Name should be a Java identifier");
+			status.setText(Messages.ParameterEditorDialog_Name_should_be_Java_identifier);
 			return false;
 		}
 		for (int i = 1; i < name.length(); i++) {
@@ -133,10 +135,10 @@ public class ParameterEditorDialog extends Dialog {
 			if (Character.isLetterOrDigit(c) || c == '_' || c == '-') {
 				continue;
 			}
-			status.setText("Name should be a Java identifier");
+			status.setText(Messages.ParameterEditorDialog_Name_should_be_Java_identifier);
 			return false;
 		}
-		status.setText("");
+		status.setText(""); //$NON-NLS-1$
 		return true;
 	}
 

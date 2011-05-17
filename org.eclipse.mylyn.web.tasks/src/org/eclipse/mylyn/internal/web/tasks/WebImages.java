@@ -25,11 +25,11 @@ public class WebImages {
 
 	private static ImageRegistry imageRegistry;
 
-	private static final String T_OBJ = "obj16";
+	private static final String T_OBJ = "obj16"; //$NON-NLS-1$
 
-	private static final URL baseURL = TasksWebPlugin.getDefault().getBundle().getEntry("/icons/");
+	private static final URL baseURL = TasksWebPlugin.getDefault().getBundle().getEntry("/icons/"); //$NON-NLS-1$
 
-	public static final ImageDescriptor OVERLAY_TASK_WEB = create(T_OBJ, "overlay-web.gif");
+	public static final ImageDescriptor OVERLAY_TASK_WEB = create(T_OBJ, "overlay-web.gif"); //$NON-NLS-1$
 
 	public static ImageDescriptor create(String prefix, String name) {
 		try {
@@ -64,10 +64,10 @@ public class WebImages {
 	public static Image getImage(ImageDescriptor imageDescriptor) {
 		ImageRegistry imageRegistry = getImageRegistry();
 
-		Image image = imageRegistry.get("" + imageDescriptor.hashCode());
+		Image image = imageRegistry.get("" + imageDescriptor.hashCode()); //$NON-NLS-1$
 		if (image == null) {
 			image = imageDescriptor.createImage();
-			imageRegistry.put("" + imageDescriptor.hashCode(), image);
+			imageRegistry.put("" + imageDescriptor.hashCode(), image); //$NON-NLS-1$
 		}
 		return image;
 	}

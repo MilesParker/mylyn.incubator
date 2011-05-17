@@ -92,9 +92,10 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 	private Text title;
 
 	public WebQueryWizardPage(TaskRepository repository, IRepositoryQuery query) {
-		super("New web query", repository, query);
-		setTitle("Create web query");
-		setDescription("Specify query parameters for " + repository.getRepositoryUrl());
+		super(Messages.WebQueryWizardPage_New_web_query, repository, query);
+		setTitle(Messages.WebQueryWizardPage_Create_web_query);
+		setDescription(Messages.bind(Messages.WebQueryWizardPage_Specify_query_parameters_for_X,
+				repository.getRepositoryUrl()));
 	}
 
 	@Override
@@ -137,7 +138,7 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 		group.setLayoutData(gd);
 
 		Label label = new Label(group, SWT.NONE);
-		label.setText("Query Title:");
+		label.setText(Messages.WebQueryWizardPage_Query_Title_);
 
 		title = new Text(group, SWT.BORDER);
 		title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
@@ -181,7 +182,7 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 		gridData_1.minimumHeight = 150;
 		expComposite.setLayoutData(gridData_1);
 		expComposite.setBackground(parent.getBackground());
-		expComposite.setText("Advanced &Configuration");
+		expComposite.setText(Messages.WebQueryWizardPage_Advanced_Configuration);
 		expComposite.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
@@ -194,7 +195,7 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 		composite1.setLayout(new GridLayout(3, false));
 		expComposite.setClient(composite1);
 
-		toolkit.createLabel(composite1, "&Query URL:", SWT.NONE);
+		toolkit.createLabel(composite1, Messages.WebQueryWizardPage_Query_URL_, SWT.NONE);
 
 		queryUrlText = new Text(composite1, SWT.BORDER);
 		final GridData gridData_2 = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -209,7 +210,7 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 
 		Button button = new Button(composite1, SWT.NONE);
 		button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		button.setText("&Open");
+		button.setText(Messages.WebQueryWizardPage_Open);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -217,7 +218,7 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 			}
 		});
 
-		Label queryPatternLabel = toolkit.createLabel(composite1, "Query &Pattern:", SWT.NONE);
+		Label queryPatternLabel = toolkit.createLabel(composite1, Messages.WebQueryWizardPage_Query_Pattern_, SWT.NONE);
 		queryPatternLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
 
 		queryPatternText = new Text(composite1, SWT.V_SCROLL | SWT.MULTI | SWT.BORDER | SWT.WRAP);
@@ -229,7 +230,7 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 
 		Button preview = new Button(composite1, SWT.NONE);
 		preview.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		preview.setText("Previe&w");
+		preview.setText(Messages.WebQueryWizardPage_Preview);
 		preview.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -250,25 +251,25 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 
 		TableColumn colId = new TableColumn(table, SWT.NONE);
 		colId.setWidth(100);
-		colId.setText("Id");
+		colId.setText(Messages.WebQueryWizardPage_Id);
 
 		TableColumn colDescription = new TableColumn(table, SWT.NONE);
 		colDescription.setWidth(200);
-		colDescription.setText("Description");
+		colDescription.setText(Messages.WebQueryWizardPage_Description);
 
 		TableColumn colStatus = new TableColumn(table, SWT.NONE);
-		colStatus.setText("Status");
+		colStatus.setText(Messages.WebQueryWizardPage_Status);
 		colStatus.setWidth(80);
 
 		TableColumn colType = new TableColumn(table, SWT.NONE);
-		colType.setText("Type");
+		colType.setText(Messages.WebQueryWizardPage_Type);
 		colType.setWidth(80);
 
 		TableColumn colOwner = new TableColumn(table, SWT.NONE);
-		colOwner.setText("Owner");
+		colOwner.setText(Messages.WebQueryWizardPage_Owner);
 		colOwner.setWidth(120);
 
-		previewTable.setColumnProperties(new String[] { "Id", "Description", "Status", "Type", "Owner" });
+		previewTable.setColumnProperties(new String[] { "Id", "Description", "Status", "Type", "Owner" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		previewTable.setContentProvider(new IStructuredContentProvider() {
 
 			public void dispose() {
@@ -295,7 +296,8 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 				case 1:
 					return task.getSummary();
 				case 2:
-					return task.getCompletionDate() != null ? "complete" : "incomplete";
+					return task.getCompletionDate() != null ? Messages.WebQueryWizardPage_complete
+							: Messages.WebQueryWizardPage_incomplete;
 				case 3:
 					return task.getTaskKind();
 				case 4:
@@ -349,17 +351,17 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 
 	private static String addVars(LinkedHashMap<String, String> vars, String property) {
 		if (property == null) {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		for (String var : WebRepositoryConnector.getTemplateVariables(property)) {
-			vars.put(var, "");
+			vars.put(var, ""); //$NON-NLS-1$
 		}
 		return property;
 	}
 
 	synchronized void updatePreview() {
 		if (updatePreviewJob == null) {
-			updatePreviewJob = new UpdatePreviewJob("Updating preview");
+			updatePreviewJob = new UpdatePreviewJob(Messages.WebQueryWizardPage_Updating_preview);
 			updatePreviewJob.setPriority(Job.DECORATE);
 		}
 		updatePreviewJob.setParams(queryUrlText.getText(), queryPatternText.getText(), parametersEditor.getParameters());
@@ -422,7 +424,7 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 		} else {
 			StringBuffer sb = new StringBuffer();
 			for (IStatus status : queryStatus.getChildren()) {
-				sb.append(status.getMessage()).append("\n");
+				sb.append(status.getMessage()).append("\n"); //$NON-NLS-1$
 			}
 			setMessage(sb.toString(), IMessageProvider.WARNING);
 		}
@@ -460,8 +462,8 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 					WebRepositoryConnector.PROPERTY_TASK_URL), params, getTaskRepository());
 			active = true;
 			do {
-				final MultiStatus queryStatus = new MultiStatus(TasksWebPlugin.ID_PLUGIN, IStatus.OK, "Query result",
-						null);
+				final MultiStatus queryStatus = new MultiStatus(TasksWebPlugin.ID_PLUGIN, IStatus.OK,
+						Messages.WebQueryWizardPage_Query_result, null);
 				final List<TaskMapper> queryHits = new ArrayList<TaskMapper>();
 				try {
 					if (webPage == null) {
@@ -487,15 +489,15 @@ public class WebQueryWizardPage extends AbstractRepositoryQueryPage {
 						queryStatus.add(status);
 					} else if (queryHits.size() == 0) {
 						queryStatus.add(new Status(IStatus.ERROR, TasksWebPlugin.ID_PLUGIN, 0,
-								"No matching results. Check query regexp", null));
+								Messages.WebQueryWizardPage_No_matching_results_Check_query_regexp, null));
 					}
 
 				} catch (IOException ex) {
 					queryStatus.add(new Status(IStatus.ERROR, TasksWebPlugin.ID_PLUGIN, IStatus.ERROR, //
-							"Unable to fetch resource: " + ex.getMessage(), null));
+							Messages.WebQueryWizardPage_Unable_to_fetch_resource_ + ex.getMessage(), null));
 				} catch (Exception ex) {
 					queryStatus.add(new Status(IStatus.ERROR, TasksWebPlugin.ID_PLUGIN, IStatus.ERROR, //
-							"Parsing error: " + ex.getMessage(), null));
+							Messages.WebQueryWizardPage_Parsing_error_ + ex.getMessage(), null));
 				}
 
 				Display.getDefault().asyncExec(new Runnable() {

@@ -23,7 +23,7 @@ public class Util {
 	}
 
 	public static String nvl(String value) {
-		return value == null ? "" : value;
+		return value == null ? "" : value; //$NON-NLS-1$
 	}
 
 }
