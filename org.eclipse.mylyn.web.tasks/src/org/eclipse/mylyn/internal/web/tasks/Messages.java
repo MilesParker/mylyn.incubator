@@ -54,8 +54,6 @@ public class Messages extends NLS {
 
 	public static String WebQueryWizardPage_Open;
 
-	public static String WebQueryWizardPage_Opening_Browser;
-
 	public static String WebQueryWizardPage_Owner;
 
 	public static String WebQueryWizardPage_Parsing_error_;
