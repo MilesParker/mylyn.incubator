@@ -28,7 +28,7 @@
    </license>
 
    <requires>
-      <import feature="org.eclipse.mylyn.wikitext_feature" version="1.4.0" match="equivalent"/>
+      <import feature="org.eclipse.mylyn.wikitext_feature" version="1.4.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
