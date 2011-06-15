@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,14 +20,14 @@ import org.eclipse.search.ui.SearchResultEvent;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * 
  * @author David Green
  */
 class ContentProvider implements ITreeContentProvider, ISearchResultListener {
 
 	private DesktopSearchResult searchResult;
+
 	private TreeViewer viewer;
-	
+
 	public void dispose() {
 		if (searchResult != null) {
 			searchResult.removeListener(this);

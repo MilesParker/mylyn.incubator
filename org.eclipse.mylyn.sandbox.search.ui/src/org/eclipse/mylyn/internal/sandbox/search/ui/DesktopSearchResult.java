@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,16 +21,16 @@ import org.eclipse.search.ui.ISearchResult;
 import org.eclipse.search.ui.ISearchResultListener;
 
 /**
- * 
  * @author David Green
  */
 public class DesktopSearchResult implements ISearchResult {
 
 	private List<ISearchResultListener> listeners = new CopyOnWriteArrayList<ISearchResultListener>();
-	
+
 	private List<SearchResultItem> items = new ArrayList<SearchResultItem>();
+
 	private final DesktopSearchQuery searchQuery;
-	
+
 	public DesktopSearchResult(DesktopSearchQuery searchQuery) {
 		this.searchQuery = searchQuery;
 	}
@@ -40,7 +40,7 @@ public class DesktopSearchResult implements ISearchResult {
 			return items.size();
 		}
 	}
-	
+
 	public void clear() {
 		synchronized (items) {
 			items.clear();
@@ -53,10 +53,10 @@ public class DesktopSearchResult implements ISearchResult {
 			return new ArrayList<SearchResultItem>(items);
 		}
 	}
-	
-	private void fire(Kind eventKind,SearchResultItem... items) {
-		DesktopSearchResultEvent event = new DesktopSearchResultEvent(this,eventKind,items);
-		for (ISearchResultListener listener: listeners) {
+
+	private void fire(Kind eventKind, SearchResultItem... items) {
+		DesktopSearchResultEvent event = new DesktopSearchResultEvent(this, eventKind, items);
+		for (ISearchResultListener listener : listeners) {
 			listener.searchResultChanged(event);
 		}
 	}
@@ -65,9 +65,9 @@ public class DesktopSearchResult implements ISearchResult {
 		synchronized (items) {
 			items.add(item);
 		}
-		fire(Kind.ADDED,item);
+		fire(Kind.ADDED, item);
 	}
-	
+
 	public void addListener(ISearchResultListener listener) {
 		listeners.add(listener);
 	}
@@ -91,6 +91,5 @@ public class DesktopSearchResult implements ISearchResult {
 	public ISearchQuery getQuery() {
 		return searchQuery;
 	}
-
 
 }

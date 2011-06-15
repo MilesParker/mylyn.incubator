@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,16 +14,13 @@ import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
- * 
  * @author David Green
  */
 public class DesktopSearchAdapterFactory implements IAdapterFactory {
 
 	@SuppressWarnings("rawtypes")
-	private static Class[] ADAPTER_LIST = new Class[] {
-		IWorkbenchAdapter.class
-	};
-	
+	private static Class[] ADAPTER_LIST = new Class[] { IWorkbenchAdapter.class };
+
 	@SuppressWarnings("rawtypes")
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adapterType == IWorkbenchAdapter.class && adaptableObject instanceof SearchResultItem) {

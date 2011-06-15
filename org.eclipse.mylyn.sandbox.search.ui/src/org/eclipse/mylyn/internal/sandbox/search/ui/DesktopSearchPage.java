@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,44 +40,44 @@ import org.eclipse.swt.widgets.Label;
  */
 public class DesktopSearchPage extends DialogPage implements ISearchPage {
 
-	private static final String PAGE_NAME = "DesktopSearch";
-	public static final String PAGE_ID = "org.eclipse.mylyn.internal.sandbox.search.ui.desktopSearchPage";
+	private static final String PAGE_NAME = "DesktopSearch"; //$NON-NLS-1$
+
+	public static final String PAGE_ID = "org.eclipse.mylyn.internal.sandbox.search.ui.desktopSearchPage"; //$NON-NLS-1$
 
 	private static final int MAX_HISTORY = 20;
 
-	
 	private ISearchPageContainer container;
-	private Combo searchText;
-	private boolean initialized;
-	private List<SearchCriteria> searchHistory;
 
-	
+	private Combo searchText;
+
+	private boolean initialized;
+
+	private List<SearchCriteria> searchHistory;
 
 	private Combo filenamePatternText;
 
-
 	private Button caseSensitive;
 
-	
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.swtDefaults().numColumns(2).equalWidth(false).applyTo(container);
-		
+
 		addTextControls(container);
 		addFileNamePatternControls(container);
-		
+
 		Dialog.applyDialogFont(container);
 		setControl(container);
 	}
 
 	private void addTextControls(Composite container) {
-		Label searchLabel = new Label(container,SWT.LEAD);
-		searchLabel.setText("Containing text:");
+		Label searchLabel = new Label(container, SWT.LEAD);
+		searchLabel.setText(Messages.DesktopSearchPage_TextLabel);
 		GridDataFactory.swtDefaults().span(2, 1).applyTo(searchLabel);
-		
-		searchText = new Combo(container, SWT.SINGLE| SWT.BORDER);
+
+		searchText = new Combo(container, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(searchText);
 		searchText.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				searchTextSelected();
 				updateStatus();
@@ -88,18 +88,18 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 				updateStatus();
 			}
 		});
-		
-		caseSensitive = new Button(container,SWT.CHECK);
-		caseSensitive.setText("Case sensitive");
+
+		caseSensitive = new Button(container, SWT.CHECK);
+		caseSensitive.setText(Messages.DesktopSearchPage_CaseSensitive);
 		GridDataFactory.swtDefaults().applyTo(caseSensitive);
 	}
 
 	private void addFileNamePatternControls(Composite container) {
-		Label searchLabel = new Label(container,SWT.LEAD);
-		searchLabel.setText("File name patterns:");
+		Label searchLabel = new Label(container, SWT.LEAD);
+		searchLabel.setText(Messages.DesktopSearchPage_FilenamePatterns);
 		GridDataFactory.swtDefaults().span(2, 1).applyTo(searchLabel);
-		
-		filenamePatternText = new Combo(container, SWT.SINGLE| SWT.BORDER);
+
+		filenamePatternText = new Combo(container, SWT.SINGLE | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(filenamePatternText);
 		filenamePatternText.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -114,7 +114,6 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		});
 	}
 
-	
 	private void searchTextSelected() {
 		int index = searchText.getSelectionIndex();
 		if (index >= 0 && index < getSearchHistory().size()) {
@@ -129,10 +128,10 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 	public boolean performAction() {
 		SearchCriteria criteria = computeSearchCriteria();
 		getSearchHistory().remove(criteria);
-		getSearchHistory().add(0,criteria);
+		getSearchHistory().add(0, criteria);
 		saveSearchHistory();
 		NewSearchUI.runQueryInBackground(new DesktopSearchQuery(SearchProvider.instance(), criteria));
- 		return true;
+		return true;
 	}
 
 	public void setContainer(ISearchPageContainer container) {
@@ -142,6 +141,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 	public ISearchPageContainer getContainer() {
 		return container;
 	}
+
 	@Override
 	public void setVisible(boolean visible) {
 		if (!initialized) {
@@ -154,17 +154,17 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 				}
 			}
 			if (filenamePatternText.getText().isEmpty()) {
-				filenamePatternText.setText("*");
+				filenamePatternText.setText("*"); //$NON-NLS-1$
 			}
 			updateStatus();
 		}
 		super.setVisible(visible);
 	}
-	
+
 	private String[] getPreviousSearchItems() {
 		List<SearchCriteria> searchHistory = getSearchHistory();
 		List<String> items = new ArrayList<String>();
-		for (SearchCriteria item: searchHistory) {
+		for (SearchCriteria item : searchHistory) {
 			items.add(item.getText());
 		}
 		return items.toArray(new String[items.size()]);
@@ -177,24 +177,25 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		item.setCaseSensitive(caseSensitive.getSelection());
 		return item;
 	}
-	
+
 	private IDialogSettings getDialogSettings() {
 		return SearchPlugin.getDefault().getDialogSettings(PAGE_NAME);
 	}
-	
+
 	public List<SearchCriteria> getSearchHistory() {
 		if (searchHistory == null) {
 			loadSearchHistory();
 		}
 		return searchHistory;
 	}
+
 	private void loadSearchHistory() {
 		List<SearchCriteria> newSearchHistory = new ArrayList<SearchCriteria>();
-		
+
 		IDialogSettings settings = getDialogSettings();
-		final String historyPrefix = "history";
-		for (int x = 0;x<MAX_HISTORY;++x) {
-			IDialogSettings historySection = settings.getSection(historyPrefix+x);
+		final String historyPrefix = "history"; //$NON-NLS-1$
+		for (int x = 0; x < MAX_HISTORY; ++x) {
+			IDialogSettings historySection = settings.getSection(historyPrefix + x);
 			if (historySection == null) {
 				break;
 			}
@@ -204,12 +205,12 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		}
 		this.searchHistory = newSearchHistory;
 	}
-	
+
 	private void saveSearchHistory() {
 		IDialogSettings settings = getDialogSettings();
-		final String historyPrefix = "history";
-		for (int x = 0;x<MAX_HISTORY;++x) {
-			String itemName = historyPrefix+x;
+		final String historyPrefix = "history"; //$NON-NLS-1$
+		for (int x = 0; x < MAX_HISTORY; ++x) {
+			String itemName = historyPrefix + x;
 			IDialogSettings historySection = settings.getSection(itemName);
 			if (historySection == null) {
 				if (x >= searchHistory.size()) {
@@ -221,17 +222,16 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		}
 	}
 
-	
 	private void updateStatus() {
 		boolean ok = true;
 		SearchCriteria item = computeSearchCriteria();
 		if (item.getText() == null || item.getText().trim().isEmpty()) {
 			ok = false;
-			setMessage("Please specify the text to match", ERROR);
+			setMessage(Messages.DesktopSearchPage_SpecifyTextPrompt, ERROR);
 		}
 		if (ok && item.getFilenamePatterns().length == 0) {
 			ok = false;
-			setMessage("Please specify the file patterns to match, or '*' for all files", ERROR);
+			setMessage(Messages.DesktopSearchPage_SpecifyFilenamePatternsPrompt, ERROR);
 		}
 		if (ok) {
 			setMessage(null);
@@ -242,7 +242,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 	private boolean initializeSearchSettings() {
 		ISelection selection = getContainer().getSelection();
 		if (selection instanceof ITextSelection && !selection.isEmpty()) {
-			String text = ((ITextSelection)selection).getText();
+			String text = ((ITextSelection) selection).getText();
 			if (text != null && text.trim().length() > 0) {
 				SearchCriteria item = computeSearchHistoryItem(text);
 				initializeSearchSettings(item);
@@ -259,7 +259,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 	}
 
 	private SearchCriteria computeSearchHistoryItem(String text) {
-		for (SearchCriteria historyItem: getSearchHistory()) {
+		for (SearchCriteria historyItem : getSearchHistory()) {
 			if (historyItem.getText().equals(text)) {
 				return historyItem;
 			}
@@ -267,7 +267,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		// default
 		SearchCriteria historyItem = new SearchCriteria();
 		historyItem.setText(text);
-		historyItem.setFilenamePatternsAsText("*");
+		historyItem.setFilenamePatternsAsText("*"); //$NON-NLS-1$
 		historyItem.setCaseSensitive(false);
 		return historyItem;
 	}

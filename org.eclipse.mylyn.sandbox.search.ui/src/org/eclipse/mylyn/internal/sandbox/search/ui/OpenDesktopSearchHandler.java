@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,11 +21,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * 
  * @author David Green
  */
-public class OpenDesktopSearchHandler extends AbstractHandler implements
-		IHandler {
+public class OpenDesktopSearchHandler extends AbstractHandler implements IHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Display display = null;
@@ -45,7 +43,7 @@ public class OpenDesktopSearchHandler extends AbstractHandler implements
 						window = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
 					}
 				}
-				NewSearchUI.openSearchDialog(window, DesktopSearchPage.PAGE_ID);	
+				NewSearchUI.openSearchDialog(window, DesktopSearchPage.PAGE_ID);
 			}
 		});
 		return null;

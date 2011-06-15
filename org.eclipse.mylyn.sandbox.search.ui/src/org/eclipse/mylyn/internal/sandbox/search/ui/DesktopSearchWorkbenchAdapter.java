@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,19 +16,19 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
- * 
  * @author David Green
  */
 public class DesktopSearchWorkbenchAdapter implements IWorkbenchAdapter {
 
 	private static DesktopSearchWorkbenchAdapter instance = new DesktopSearchWorkbenchAdapter();
 
-
 	public ImageDescriptor getImageDescriptor(Object o) {
 		if (o instanceof SearchResultItem) {
 			SearchResultItem item = (SearchResultItem) o;
-			
-			ImageDescriptor image = PlatformUI.getWorkbench().getEditorRegistry().getImageDescriptor(item.getFile().getName(), null);
+
+			ImageDescriptor image = PlatformUI.getWorkbench()
+					.getEditorRegistry()
+					.getImageDescriptor(item.getFile().getName(), null);
 			if (image == null) {
 				image = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FILE);
 			}
@@ -44,7 +44,7 @@ public class DesktopSearchWorkbenchAdapter implements IWorkbenchAdapter {
 		}
 		return null;
 	}
-	
+
 	public Object[] getChildren(Object o) {
 		return new Object[0];
 	}

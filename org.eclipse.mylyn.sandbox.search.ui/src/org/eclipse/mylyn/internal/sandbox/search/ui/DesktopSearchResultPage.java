@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,20 +26,24 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.Page;
 
 /**
- * 
  * @author David Green
  */
 public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 
 	private String id;
+
 	private DesktopSearchResult searchResult;
+
 	private TreeViewer viewer;
+
 	private ISearchResultViewPart viewPart;
+
 	private Control control;
+
 	private ISearchResultListener listener;
 
 	public Object getUIState() {
-		return viewer==null?null:viewer.getSelection();
+		return viewer == null ? null : viewer.getSelection();
 	}
 
 	public void setInput(ISearchResult search, Object uiState) {
@@ -66,7 +70,6 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 		getViewPart().updateLabel();
 	}
 
-
 	private void changed(DesktopSearchResultEvent event) {
 		final Control control = getControl();
 		if (!control.isDisposed()) {
@@ -87,7 +90,7 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 	public ISearchResultViewPart getViewPart() {
 		return viewPart;
 	}
-	
+
 	public void restoreState(IMemento memento) {
 		// no state
 	}
@@ -100,18 +103,18 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new FillLayout());
-		
-		viewer = new TreeViewer(container,SWT.MULTI| SWT.H_SCROLL | SWT.V_SCROLL);
-		
+
+		viewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+
 		viewer.setContentProvider(new ContentProvider());
 		viewer.setLabelProvider(WorkbenchLabelProvider.getDecoratingWorkbenchLabelProvider());
-		
+
 		getSite().setSelectionProvider(viewer);
-		
+
 		// FIXME: actions, context menu
-		
+
 		control = container;
-		
+
 		getViewPart().updateLabel();
 	}
 
