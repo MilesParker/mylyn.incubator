@@ -153,7 +153,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 					initializeSearchSettings(getSearchHistory().get(0));
 				}
 			}
-			if (filenamePatternText.getText().isEmpty()) {
+			if (filenamePatternText.getText().length() == 0) {
 				filenamePatternText.setText("*"); //$NON-NLS-1$
 			}
 			updateStatus();
@@ -225,7 +225,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 	private void updateStatus() {
 		boolean ok = true;
 		SearchCriteria item = computeSearchCriteria();
-		if (item.getText() == null || item.getText().trim().isEmpty()) {
+		if (item.getText() == null || item.getText().trim().length() == 0) {
 			ok = false;
 			setMessage(Messages.DesktopSearchPage_SpecifyTextPrompt, ERROR);
 		}

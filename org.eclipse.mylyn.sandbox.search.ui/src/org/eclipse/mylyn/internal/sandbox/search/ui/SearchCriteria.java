@@ -70,7 +70,7 @@ public class SearchCriteria {
 		String text = ""; //$NON-NLS-1$
 		for (String pattern : patterns) {
 			pattern = pattern.trim();
-			if (!pattern.isEmpty()) {
+			if (pattern.length() != 0) {
 				if (text.length() > 0) {
 					text += ", "; //$NON-NLS-1$
 				}
@@ -81,7 +81,7 @@ public class SearchCriteria {
 	}
 
 	public void setFilenamePatternsAsText(String text) {
-		filenamePatterns = text == null || text.trim().isEmpty() ? new String[0] : text.trim().split(
+		filenamePatterns = text == null || text.trim().length() == 0 ? new String[0] : text.trim().split(
 				"(\\s*,\\s*)|(\\s+)"); //$NON-NLS-1$
 	}
 
@@ -110,18 +110,23 @@ public class SearchCriteria {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		SearchCriteria other = (SearchCriteria) obj;
 		if (text == null) {
-			if (other.text != null)
+			if (other.text != null) {
 				return false;
-		} else if (!text.equals(other.text))
+			}
+		} else if (!text.equals(other.text)) {
 			return false;
+		}
 		return true;
 	}
 
