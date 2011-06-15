@@ -137,7 +137,7 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 		if (searchResult != null) {
 			return searchResult.getLabel();
 		}
-		return "";
+		return Messages.DesktopSearchResultPage_EmptyLabel;
 	}
 
 }

@@ -60,7 +60,7 @@ public class DesktopSearchQuery implements ISearchQuery {
 	}
 
 	public String getLabel() {
-		return "Desktop Search";
+		return Messages.DesktopSearchQuery_Label;
 	}
 
 	public boolean canRerun() {
@@ -77,11 +77,11 @@ public class DesktopSearchQuery implements ISearchQuery {
 
 	public String getResultLabel(int size) {
 		if (size == 0) {
-			return NLS.bind("No files matching \"{0}\"",criteria.getText());
+			return NLS.bind(Messages.DesktopSearchQuery_NoFilesMatching,criteria.getText());
 		} else if (size == 1) {
-			return NLS.bind("1 file matches \"{0}\"",criteria.getText());
+			return NLS.bind(Messages.DesktopSearchQuery_OneFileMatches,criteria.getText());
 		} else {
-			return NLS.bind("{1} files matching \"{0}\"",criteria.getText(),Integer.valueOf(size));
+			return NLS.bind(Messages.DesktopSearchQuery_NFilesMatching,criteria.getText(),Integer.valueOf(size));
 		}
 	}
 

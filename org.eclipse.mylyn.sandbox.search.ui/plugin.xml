@@ -17,7 +17,7 @@
             class="org.eclipse.mylyn.internal.sandbox.search.ui.DesktopSearchPage"
             id="org.eclipse.mylyn.internal.sandbox.search.ui.desktopSearchPage"
             icon="$nl$/icons/full/elcl16/tsearch_obj.gif"
-            label="Desktop Search">
+            label="%page.label">
       </page>
    </extension>
    <extension
@@ -25,9 +25,9 @@
       <command
             categoryId="org.eclipse.search.ui.category.search"
             defaultHandler="org.eclipse.mylyn.internal.sandbox.search.ui.OpenDesktopSearchHandler"
-            description="Open the Search dialog&apos;s desktop search page"
+            description="%command.description"
             id="org.eclipse.mylyn.internal.sandbox.search.ui.openDesktopSearchCommand"
-            name="Desktop Search">
+            name="%command.name">
       </command>
    </extension>
    <extension
@@ -43,14 +43,14 @@
    		<!-- bug 213385 -->
       <actionSet
             id="org.eclipse.mylyn.internal.sandbox.search.ui.actionSet2"
-            label="Search Actions"
+            label="%actionSet.label"
             visible="true">
             <action
                   class="org.eclipse.mylyn.internal.sandbox.search.ui.OpenDesktopSearchActionDelegate"
                   definitionId="org.eclipse.mylyn.internal.sandbox.search.ui.openDesktopSearchCommand"
                   icon="$nl$/icons/full/elcl16/tsearch_obj.gif"
                   id="org.eclipse.mylyn.internal.sandbox.search.ui.action2"
-                  label="Desktop Search..."
+                  label="%action.label"
                   menubarPath="org.eclipse.search.menu/dialogGroup"
                   style="push">
             </action>

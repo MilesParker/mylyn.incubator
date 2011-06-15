@@ -21,9 +21,9 @@ import org.eclipse.jface.dialogs.IDialogSettings;
  */
 public class SearchCriteria {
 
-	private static final String KEY_FILE_NAME_PATTERNS = "filenamePatterns";
-	private static final String KEY_TEXT = "text";
-	private static final String KEY_CASE_SENSITIVE = "caseSensitive";
+	private static final String KEY_FILE_NAME_PATTERNS = "filenamePatterns"; //$NON-NLS-1$
+	private static final String KEY_TEXT = "text"; //$NON-NLS-1$
+	private static final String KEY_CASE_SENSITIVE = "caseSensitive"; //$NON-NLS-1$
 	private String text;
 	private boolean caseSensitive;
 	private String[] filenamePatterns;
@@ -58,12 +58,12 @@ public class SearchCriteria {
 
 	public String getFilenamePatternsAsText() {
 		String[] patterns = getFilenamePatterns();
-		String text = "";
+		String text = ""; //$NON-NLS-1$
 		for (String pattern: patterns) {
 			pattern = pattern.trim();
 			if (!pattern.isEmpty()) {
 				if (text.length() > 0) {
-					text += ", ";
+					text += ", "; //$NON-NLS-1$
 				}
 				text += pattern;
 			}
@@ -72,7 +72,7 @@ public class SearchCriteria {
 	}
 	
 	public void setFilenamePatternsAsText(String text) {
-		filenamePatterns = text==null||text.trim().isEmpty()?new String[0]:text.trim().split("(\\s*,\\s*)|(\\s+)");
+		filenamePatterns = text==null||text.trim().isEmpty()?new String[0]:text.trim().split("(\\s*,\\s*)|(\\s+)"); //$NON-NLS-1$
 	}
 	
 	public void load(IDialogSettings settings) {
@@ -115,8 +115,8 @@ public class SearchCriteria {
 	}
 	@Override
 	public String toString() {
-		return "SearchCriteria [text=" + text + ", filenamePatterns="
-				+ Arrays.toString(filenamePatterns) + "]";
+		return "SearchCriteria [text=" + text + ", filenamePatterns=" //$NON-NLS-1$ //$NON-NLS-2$
+				+ Arrays.toString(filenamePatterns) + "]"; //$NON-NLS-1$
 	}
 	
 }

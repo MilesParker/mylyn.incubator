@@ -23,11 +23,11 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class SearchPlugin extends AbstractUIPlugin {
 
-	private static final String ENABLED_16 = "elcl16/";
+	private static final String ENABLED_16 = "elcl16/"; //$NON-NLS-1$
 
-	private static final String ICONS_FULL = "icons/full/";
+	private static final String ICONS_FULL = "icons/full/"; //$NON-NLS-1$
 
-	public static final String IMAGE_SEARCH = ICONS_FULL+ENABLED_16+"tsearch_obj.gif";
+	public static final String IMAGE_SEARCH = ICONS_FULL+ENABLED_16+"tsearch_obj.gif"; //$NON-NLS-1$
 	
 	private static SearchPlugin instance;
 	
