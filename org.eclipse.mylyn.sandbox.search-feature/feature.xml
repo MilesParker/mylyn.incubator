@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.mylyn.sandbox.search_feature"
       label="%featureName"
-      version="0.1.0.qualifier"
+      version="3.6.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.mylyn.sandbox.search.ui"
       os="win32"
