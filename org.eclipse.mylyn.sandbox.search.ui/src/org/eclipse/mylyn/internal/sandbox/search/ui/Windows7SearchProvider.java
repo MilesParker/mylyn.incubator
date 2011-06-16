@@ -17,8 +17,15 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * @author David Green
+ * @author Raymond Lam
  */
 public class Windows7SearchProvider extends SearchProvider {
+
+	private native void performNativeSearch(SearchCriteria searchSpecification, SearchCallback callback);
+
+	//Load the library
+	static {
+		System.loadLibrary("Windows7Search");} //$NON-NLS-1$
 
 	@Override
 	public void performSearch(SearchCriteria searchSpecification, SearchCallback callback, IProgressMonitor m)
@@ -30,8 +37,7 @@ public class Windows7SearchProvider extends SearchProvider {
 			// monitor.worked(1);
 			// monitor.newChild(100);
 
-			// FIXME: implement
-
+			performNativeSearch(searchSpecification, callback);
 		} finally {
 			callback.searchCompleted();
 			monitor.done();

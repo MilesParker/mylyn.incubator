@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public abstract class SearchProvider {
 
 	public static SearchProvider instance() {
-		return new MockSearchProvider(); //new Windows7SearchProvider();
+		return new Windows7SearchProvider();
 	}
 
 	/**
