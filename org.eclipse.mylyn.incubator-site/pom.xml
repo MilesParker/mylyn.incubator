@@ -14,10 +14,10 @@
   <parent>
     <groupId>org.eclipse.mylyn.incubator</groupId>
     <artifactId>mylyn-incubator-parent</artifactId>
-    <version>3.6.0-SNAPSHOT</version>
+    <version>3.7.0-SNAPSHOT</version>
   </parent>
   <artifactId>incubator-site</artifactId>
-  <version>3.6.0-SNAPSHOT</version>
+  <version>3.7.0-SNAPSHOT</version>
   <packaging>eclipse-update-site</packaging>
   <name>Mylyn Incubator</name>
   <properties>
