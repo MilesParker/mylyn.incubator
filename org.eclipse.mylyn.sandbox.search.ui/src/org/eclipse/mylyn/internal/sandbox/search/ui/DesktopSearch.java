@@ -11,6 +11,7 @@
 package org.eclipse.mylyn.internal.sandbox.search.ui;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.mylyn.sandbox.search.ui.SearchCriteria;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.text.FileTextSearchScope;
 import org.eclipse.search.ui.text.TextSearchQueryProvider;

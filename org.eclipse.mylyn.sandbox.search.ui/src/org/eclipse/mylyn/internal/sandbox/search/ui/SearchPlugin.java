@@ -28,6 +28,8 @@ public class SearchPlugin extends AbstractUIPlugin {
 
 	public static final String IMAGE_SEARCH = ICONS_FULL + ENABLED_16 + "tsearch_obj.gif"; //$NON-NLS-1$
 
+	public static final String BUNDLE_ID = "org.eclipse.mylyn.sandbox.search.ui"; //$NON-NLS-1$
+
 	private static SearchPlugin instance;
 
 	public SearchPlugin() {

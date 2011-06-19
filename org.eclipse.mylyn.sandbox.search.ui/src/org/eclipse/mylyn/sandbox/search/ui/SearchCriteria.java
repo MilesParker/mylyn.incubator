@@ -8,24 +8,16 @@
  * Contributors:
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
-package org.eclipse.mylyn.internal.sandbox.search.ui;
+package org.eclipse.mylyn.sandbox.search.ui;
 
 import java.util.Arrays;
-
-import org.eclipse.jface.dialogs.IDialogSettings;
 
 /**
  * a search specification that defines criteria for a search
  * 
  * @author David Green
  */
-public class SearchCriteria {
-
-	private static final String KEY_FILE_NAME_PATTERNS = "filenamePatterns"; //$NON-NLS-1$
-
-	private static final String KEY_TEXT = "text"; //$NON-NLS-1$
-
-	private static final String KEY_CASE_SENSITIVE = "caseSensitive"; //$NON-NLS-1$
+public final class SearchCriteria {
 
 	private String text;
 
@@ -83,18 +75,6 @@ public class SearchCriteria {
 	public void setFilenamePatternsAsText(String text) {
 		filenamePatterns = text == null || text.trim().length() == 0 ? new String[0] : text.trim().split(
 				"(\\s*,\\s*)|(\\s+)"); //$NON-NLS-1$
-	}
-
-	public void load(IDialogSettings settings) {
-		text = settings.get(KEY_TEXT);
-		filenamePatterns = settings.getArray(KEY_FILE_NAME_PATTERNS);
-		caseSensitive = settings.getBoolean(KEY_CASE_SENSITIVE);
-	}
-
-	public void save(IDialogSettings settings) {
-		settings.put(KEY_TEXT, text);
-		settings.put(KEY_FILE_NAME_PATTERNS, filenamePatterns);
-		settings.put(KEY_CASE_SENSITIVE, caseSensitive);
 	}
 
 	@Override

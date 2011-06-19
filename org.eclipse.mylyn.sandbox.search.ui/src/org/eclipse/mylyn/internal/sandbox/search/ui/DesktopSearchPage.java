@@ -13,13 +13,17 @@ package org.eclipse.mylyn.internal.sandbox.search.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.mylyn.sandbox.search.ui.SearchCriteria;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchPage;
 import org.eclipse.search.ui.ISearchPageContainer;
 import org.eclipse.search.ui.NewSearchUI;
@@ -130,7 +134,14 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		getSearchHistory().remove(criteria);
 		getSearchHistory().add(0, criteria);
 		saveSearchHistory();
-		NewSearchUI.runQueryInBackground(new DesktopSearchQuery(SearchProvider.instance(), criteria));
+
+		try {
+			NewSearchUI.runQueryInBackground(new DesktopSearchQuery(SearchProviders.getSearchProvider(), criteria));
+		} catch (CoreException e) {
+			ErrorDialog.openError(getShell(), Messages.DesktopSearchPage_SearchFailedTitle,
+					NLS.bind(Messages.DesktopSearchPage_SearchFailedMessage, e.getStatus().getMessage()), e.getStatus());
+			return false;
+		}
 		return true;
 	}
 
@@ -192,6 +203,8 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 	private void loadSearchHistory() {
 		List<SearchCriteria> newSearchHistory = new ArrayList<SearchCriteria>();
 
+		SearchCriteriaPersistence persistence = new SearchCriteriaPersistence();
+
 		IDialogSettings settings = getDialogSettings();
 		final String historyPrefix = "history"; //$NON-NLS-1$
 		for (int x = 0; x < MAX_HISTORY; ++x) {
@@ -200,13 +213,15 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 				break;
 			}
 			SearchCriteria item = new SearchCriteria();
-			item.load(historySection);
+			persistence.load(item, historySection);
 			newSearchHistory.add(item);
 		}
 		this.searchHistory = newSearchHistory;
 	}
 
 	private void saveSearchHistory() {
+		SearchCriteriaPersistence persistence = new SearchCriteriaPersistence();
+
 		IDialogSettings settings = getDialogSettings();
 		final String historyPrefix = "history"; //$NON-NLS-1$
 		for (int x = 0; x < MAX_HISTORY; ++x) {
@@ -218,7 +233,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 				}
 				historySection = settings.addNewSection(itemName);
 			}
-			searchHistory.get(x).save(historySection);
+			persistence.save(searchHistory.get(x), historySection);
 		}
 	}
 

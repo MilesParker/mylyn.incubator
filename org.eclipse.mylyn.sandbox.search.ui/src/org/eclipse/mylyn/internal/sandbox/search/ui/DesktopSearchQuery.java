@@ -15,6 +15,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.mylyn.sandbox.search.ui.SearchCallback;
+import org.eclipse.mylyn.sandbox.search.ui.SearchCriteria;
+import org.eclipse.mylyn.sandbox.search.ui.SearchProvider;
+import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.ISearchResult;
@@ -28,7 +32,7 @@ public class DesktopSearchQuery implements ISearchQuery {
 
 	private final SearchCriteria criteria;
 
-	private DesktopSearchResult searchResult;
+	private final DesktopSearchResult searchResult;
 
 	public DesktopSearchQuery(SearchProvider provider, SearchCriteria criteria) {
 		this.provider = provider;
@@ -40,15 +44,11 @@ public class DesktopSearchQuery implements ISearchQuery {
 		searchResult.clear();
 
 		SearchCallback callback = new SearchCallback() {
-			public void searchResult(SearchResultItem item) {
+			@Override
+			public void searchResult(SearchResult item) {
 				searchResult.add(item);
 			}
 
-			public void searchInitiated() {
-			}
-
-			public void searchCompleted() {
-			}
 		};
 		try {
 			provider.performSearch(criteria, callback, monitor);

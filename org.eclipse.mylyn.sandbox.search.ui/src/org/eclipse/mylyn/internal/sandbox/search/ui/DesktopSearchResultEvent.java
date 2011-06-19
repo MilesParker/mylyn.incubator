@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.mylyn.internal.sandbox.search.ui;
 
+import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
 import org.eclipse.search.ui.ISearchResult;
 import org.eclipse.search.ui.SearchResultEvent;
 
@@ -21,13 +22,13 @@ public class DesktopSearchResultEvent extends SearchResultEvent {
 
 	private final Kind kind;
 
-	private final SearchResultItem[] items;
+	private final SearchResult[] items;
 
 	public enum Kind {
 		ADDED, CLEARED
 	}
 
-	public DesktopSearchResultEvent(ISearchResult searchResult, Kind kind, SearchResultItem... items) {
+	public DesktopSearchResultEvent(ISearchResult searchResult, Kind kind, SearchResult... items) {
 		super(searchResult);
 		this.kind = kind;
 		this.items = items;
@@ -37,7 +38,7 @@ public class DesktopSearchResultEvent extends SearchResultEvent {
 		return kind;
 	}
 
-	public SearchResultItem[] getItems() {
+	public SearchResult[] getItems() {
 		return items;
 	}
 }

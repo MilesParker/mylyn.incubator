@@ -11,6 +11,7 @@
 package org.eclipse.mylyn.internal.sandbox.search.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -23,8 +24,8 @@ public class DesktopSearchWorkbenchAdapter implements IWorkbenchAdapter {
 	private static DesktopSearchWorkbenchAdapter instance = new DesktopSearchWorkbenchAdapter();
 
 	public ImageDescriptor getImageDescriptor(Object o) {
-		if (o instanceof SearchResultItem) {
-			SearchResultItem item = (SearchResultItem) o;
+		if (o instanceof SearchResult) {
+			SearchResult item = (SearchResult) o;
 
 			ImageDescriptor image = PlatformUI.getWorkbench()
 					.getEditorRegistry()
@@ -38,8 +39,8 @@ public class DesktopSearchWorkbenchAdapter implements IWorkbenchAdapter {
 	}
 
 	public String getLabel(Object o) {
-		if (o instanceof SearchResultItem) {
-			SearchResultItem item = (SearchResultItem) o;
+		if (o instanceof SearchResult) {
+			SearchResult item = (SearchResult) o;
 			return item.getFile().getName();
 		}
 		return null;

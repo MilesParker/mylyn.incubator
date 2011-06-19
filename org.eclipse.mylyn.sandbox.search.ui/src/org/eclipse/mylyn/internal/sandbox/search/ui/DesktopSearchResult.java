@@ -16,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.internal.sandbox.search.ui.DesktopSearchResultEvent.Kind;
+import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.ISearchResult;
 import org.eclipse.search.ui.ISearchResultListener;
@@ -27,7 +28,7 @@ public class DesktopSearchResult implements ISearchResult {
 
 	private List<ISearchResultListener> listeners = new CopyOnWriteArrayList<ISearchResultListener>();
 
-	private List<SearchResultItem> items = new ArrayList<SearchResultItem>();
+	private List<SearchResult> items = new ArrayList<SearchResult>();
 
 	private final DesktopSearchQuery searchQuery;
 
@@ -48,20 +49,20 @@ public class DesktopSearchResult implements ISearchResult {
 		fire(Kind.CLEARED);
 	}
 
-	public List<SearchResultItem> getItems() {
+	public List<SearchResult> getItems() {
 		synchronized (items) {
-			return new ArrayList<SearchResultItem>(items);
+			return new ArrayList<SearchResult>(items);
 		}
 	}
 
-	private void fire(Kind eventKind, SearchResultItem... items) {
+	private void fire(Kind eventKind, SearchResult... items) {
 		DesktopSearchResultEvent event = new DesktopSearchResultEvent(this, eventKind, items);
 		for (ISearchResultListener listener : listeners) {
 			listener.searchResultChanged(event);
 		}
 	}
 
-	public void add(SearchResultItem item) {
+	public void add(SearchResult item) {
 		synchronized (items) {
 			items.add(item);
 		}

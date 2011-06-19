@@ -10,7 +10,7 @@
     <version>3.7.0-SNAPSHOT</version>
   </parent>
   <groupId>org.eclipse.mylyn.incubator</groupId>
-  <artifactId>org.eclipse.mylyn.sandbox.search.ui</artifactId>
+  <artifactId>org.eclipse.mylyn.sandbox.search.ui.ui</artifactId>
   <version>3.7.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   <build>

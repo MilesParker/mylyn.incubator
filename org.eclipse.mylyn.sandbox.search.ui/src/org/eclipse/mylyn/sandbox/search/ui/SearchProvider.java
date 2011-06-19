@@ -8,30 +8,27 @@
  * Contributors:
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
-package org.eclipse.mylyn.internal.sandbox.search.ui;
+package org.eclipse.mylyn.sandbox.search.ui;
 
-import java.io.File;
-
-import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
+ * An implementation of a search capability
+ * 
  * @author David Green
  */
-public class SearchResultItem extends PlatformObject {
+public abstract class SearchProvider {
 
-	private File file;
-
-	public SearchResultItem(File file) {
-		this.file = file;
-	}
-
-	public File getFile() {
-		return file;
-	}
-
-	@Override
-	public String toString() {
-		return file.toString();
-	}
-
+	/**
+	 * perform the search
+	 * 
+	 * @param searchSpecification
+	 * @param callback
+	 * @param monitor
+	 *            the progress monitor, can be null
+	 * @throws CoreException
+	 */
+	public abstract void performSearch(SearchCriteria searchSpecification, SearchCallback callback,
+			IProgressMonitor monitor) throws CoreException;
 }

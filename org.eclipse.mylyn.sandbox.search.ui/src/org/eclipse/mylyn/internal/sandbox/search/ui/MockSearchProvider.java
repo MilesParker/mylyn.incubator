@@ -14,6 +14,10 @@ import java.io.File;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.mylyn.sandbox.search.ui.SearchCallback;
+import org.eclipse.mylyn.sandbox.search.ui.SearchCriteria;
+import org.eclipse.mylyn.sandbox.search.ui.SearchProvider;
+import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
 
 /**
  * Temporary, for testing purposes a {@link SearchProvider} that provides some search results
@@ -25,25 +29,20 @@ public class MockSearchProvider extends SearchProvider {
 	@Override
 	public void performSearch(SearchCriteria searchSpecification, SearchCallback callback, IProgressMonitor monitor)
 			throws CoreException {
-		callback.searchInitiated();
-		try {
-			int count = 0;
-			File[] roots = File.listRoots();
-			for (File root : roots) {
-				File[] files = root.listFiles();
-				if (files != null) {
-					for (File file : files) {
-						if (file.isFile()) {
-							callback.searchResult(new SearchResultItem(file));
-							if (++count > 20) {
-								return;
-							}
+		int count = 0;
+		File[] roots = File.listRoots();
+		for (File root : roots) {
+			File[] files = root.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.isFile()) {
+						callback.searchResult(new SearchResult(file));
+						if (++count > 20) {
+							return;
 						}
 					}
 				}
 			}
-		} finally {
-			callback.searchCompleted();
 		}
 	}
 

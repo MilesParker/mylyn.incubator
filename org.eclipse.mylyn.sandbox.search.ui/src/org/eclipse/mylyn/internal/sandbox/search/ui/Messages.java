@@ -15,9 +15,15 @@ import org.eclipse.osgi.util.NLS;
 class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.mylyn.internal.sandbox.search.ui.messages"; //$NON-NLS-1$
 
+	public static String CompositeSearchProvider_SearchingTask;
+
 	public static String DesktopSearchPage_CaseSensitive;
 
 	public static String DesktopSearchPage_FilenamePatterns;
+
+	public static String DesktopSearchPage_SearchFailedMessage;
+
+	public static String DesktopSearchPage_SearchFailedTitle;
 
 	public static String DesktopSearchPage_SpecifyFilenamePatternsPrompt;
 
@@ -35,7 +41,8 @@ class Messages extends NLS {
 
 	public static String DesktopSearchResultPage_EmptyLabel;
 
-	public static String Windows7SearchProvider_SearchingTask;
+	public static String SearchProviders_NoSearchProvidersAvailable;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

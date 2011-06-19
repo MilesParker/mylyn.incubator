@@ -8,16 +8,16 @@
  * Contributors:
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
-package org.eclipse.mylyn.internal.sandbox.search.ui;
+package org.eclipse.mylyn.sandbox.search.ui;
+
 
 /**
+ * A callback for use with {@link SearchProvider}
+ * 
  * @author David Green
  */
-public interface SearchCallback {
+public abstract class SearchCallback {
 
-	public void searchInitiated();
+	public abstract void searchResult(SearchResult item);
 
-	public void searchResult(SearchResultItem item);
-
-	public void searchCompleted();
 }

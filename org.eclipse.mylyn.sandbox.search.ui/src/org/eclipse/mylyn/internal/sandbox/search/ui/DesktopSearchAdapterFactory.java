@@ -11,6 +11,7 @@
 package org.eclipse.mylyn.internal.sandbox.search.ui;
 
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
@@ -23,7 +24,7 @@ public class DesktopSearchAdapterFactory implements IAdapterFactory {
 
 	@SuppressWarnings("rawtypes")
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
-		if (adapterType == IWorkbenchAdapter.class && adaptableObject instanceof SearchResultItem) {
+		if (adapterType == IWorkbenchAdapter.class && adaptableObject instanceof SearchResult) {
 			return DesktopSearchWorkbenchAdapter.instance();
 		}
 		return null;

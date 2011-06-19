@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
 import org.eclipse.search.ui.ISearchResultListener;
 import org.eclipse.search.ui.SearchResultEvent;
 import org.eclipse.swt.widgets.Control;
@@ -47,7 +48,7 @@ class ContentProvider implements ITreeContentProvider, ISearchResultListener {
 
 	public Object[] getElements(Object inputElement) {
 		if (searchResult == inputElement) {
-			List<SearchResultItem> items = searchResult.getItems();
+			List<SearchResult> items = searchResult.getItems();
 			return items.toArray(new Object[items.size()]);
 		}
 		return new Object[0];
