@@ -11,14 +11,14 @@
 
 package org.eclipse.mylyn.internal.sandbox.ui.editors;
 
-import org.eclipse.mylyn.internal.tasks.ui.editors.TaskEditorNewCommentPart;
+import org.eclipse.mylyn.internal.bugzilla.ui.editor.BugzillaTaskEditorNewCommentPart;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
  * @author Jingwen Ou
  */
-public class ExtensibleTaskEditorNewCommentPart extends TaskEditorNewCommentPart {
+public class ExtensibleTaskEditorNewCommentPart extends BugzillaTaskEditorNewCommentPart {
 
 	@Override
 	public void createControl(Composite parent, FormToolkit toolkit) {
