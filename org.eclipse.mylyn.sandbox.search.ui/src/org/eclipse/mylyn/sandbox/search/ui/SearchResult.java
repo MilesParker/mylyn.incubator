@@ -43,9 +43,9 @@ public class SearchResult extends PlatformObject {
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		if (file.isFile()) {
-			resource = workspace.getRoot().getFileForLocation(new Path(file.getName()));
+			resource = workspace.getRoot().getFileForLocation(new Path(file.getAbsolutePath()));
 		} else if (file.isDirectory()) {
-			resource = workspace.getRoot().getContainerForLocation(new Path(file.getName()));
+			resource = workspace.getRoot().getContainerForLocation(new Path(file.getAbsolutePath()));
 		}
 
 		return resource;

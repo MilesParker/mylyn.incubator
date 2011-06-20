@@ -17,6 +17,8 @@ class Messages extends NLS {
 
 	public static String CompositeSearchProvider_SearchingTask;
 
+	public static String DesktopSearchActionGroup_MenuOpenWith;
+
 	public static String DesktopSearchPage_CaseSensitive;
 
 	public static String DesktopSearchPage_FilenamePatterns;
@@ -41,7 +43,15 @@ class Messages extends NLS {
 
 	public static String DesktopSearchResultPage_EmptyLabel;
 
+	public static String OpenFileAction_CannotOpenFile;
+
+	public static String OpenFileAction_OpenFileErrorMessage;
+
+	public static String OpenFileAction_OpenFileErrorTitle;
+
 	public static String SearchProviders_NoSearchProvidersAvailable;
+
+	public static String SearchResultLabelProvider_QualifierFormat;
 
 	static {
 		// initialize resource bundle

@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.mylyn.internal.sandbox.search.ui;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -49,7 +51,7 @@ class ContentProvider implements ITreeContentProvider, ISearchResultListener {
 	public Object[] getElements(Object inputElement) {
 		if (searchResult == inputElement) {
 			List<SearchResult> items = searchResult.getItems();
-			return items.toArray(new Object[items.size()]);
+			return convertToContent(items);
 		}
 		return new Object[0];
 	}
@@ -81,7 +83,7 @@ class ContentProvider implements ITreeContentProvider, ISearchResultListener {
 					if (!control.isDisposed() && viewer.getInput() == event.getSearchResult()) {
 						switch (event.getKind()) {
 						case ADDED:
-							viewer.add(searchResult, event.getItems());
+							viewer.add(searchResult, convertToContent(Arrays.asList(event.getItems())));
 							break;
 						case CLEARED:
 							viewer.refresh();
@@ -89,7 +91,21 @@ class ContentProvider implements ITreeContentProvider, ISearchResultListener {
 						}
 					}
 				}
+
 			});
 		}
+	}
+
+	private Object[] convertToContent(List<SearchResult> searchResults) {
+		Object[] converted = new Object[searchResults.size()];
+		for (int x = 0; x < searchResults.size(); ++x) {
+			converted[x] = convertToContent(searchResults.get(x));
+		}
+		return converted;
+	}
+
+	private Object convertToContent(SearchResult result) {
+		IResource resource = result.getResource();
+		return resource == null ? result : resource;
 	}
 }

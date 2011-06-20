@@ -10,8 +10,17 @@
  *******************************************************************************/
 package org.eclipse.mylyn.internal.sandbox.search.ui;
 
+import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.search.ui.IContextMenuConstants;
 import org.eclipse.search.ui.ISearchResult;
 import org.eclipse.search.ui.ISearchResultListener;
 import org.eclipse.search.ui.ISearchResultPage;
@@ -22,7 +31,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.actions.ActionContext;
 import org.eclipse.ui.part.Page;
 
 /**
@@ -41,6 +51,10 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 	private Control control;
 
 	private ISearchResultListener listener;
+
+	private MenuManager menu;
+
+	private DesktopSearchActionGroup actionGroup;
 
 	public Object getUIState() {
 		return viewer == null ? null : viewer.getSelection();
@@ -85,6 +99,7 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 
 	public void setViewPart(ISearchResultViewPart part) {
 		this.viewPart = part;
+		actionGroup = new DesktopSearchActionGroup(part);
 	}
 
 	public ISearchResultViewPart getViewPart() {
@@ -105,9 +120,10 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 		container.setLayout(new FillLayout());
 
 		viewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer.setUseHashlookup(true);
 
 		viewer.setContentProvider(new ContentProvider());
-		viewer.setLabelProvider(WorkbenchLabelProvider.getDecoratingWorkbenchLabelProvider());
+		viewer.setLabelProvider(new DesktopSearchLabelProvider(new SearchResultLabelProvider()));
 
 		getSite().setSelectionProvider(viewer);
 
@@ -115,12 +131,77 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 
 		control = container;
 
+		createMenu();
+
+		viewer.getControl().setMenu(menu.createContextMenu(viewer.getControl()));
+		getSite().registerContextMenu(getViewPart().getViewSite().getId(), menu, viewer);
+
+		viewer.addOpenListener(new IOpenListener() {
+
+			public void open(OpenEvent event) {
+				ISelection selection = event.getSelection();
+				if (selection instanceof IStructuredSelection) {
+					IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+					OpenFileAction openFileAction = new OpenFileAction(getSite().getPage());
+					openFileAction.selectionChanged(structuredSelection);
+					if (openFileAction.isEnabled()) {
+						openFileAction.run();
+					}
+				}
+			}
+		});
+
 		getViewPart().updateLabel();
+	}
+
+	private void createMenu() {
+		menu = new MenuManager("#PopUp"); //$NON-NLS-1$
+		menu.setRemoveAllWhenShown(true);
+		menu.setParent(getSite().getActionBars().getMenuManager());
+		menu.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager manager) {
+				fillContextMenu(manager);
+			}
+		});
+	}
+
+	protected void fillContextMenu(IMenuManager menu) {
+		createContextMenuGroups(menu);
+
+		actionGroup.setContext(new ActionContext(getSite().getSelectionProvider().getSelection()));
+		actionGroup.fillContextMenu(menu);
+
+		getViewPart().fillContextMenu(menu);
+	}
+
+	private void createContextMenuGroups(IMenuManager menu) {
+		menu.add(new Separator(IContextMenuConstants.GROUP_NEW));
+		menu.add(new GroupMarker(IContextMenuConstants.GROUP_GOTO));
+		menu.add(new GroupMarker(IContextMenuConstants.GROUP_OPEN));
+		menu.add(new Separator(IContextMenuConstants.GROUP_SHOW));
+		menu.add(new Separator(IContextMenuConstants.GROUP_EDIT));
+		menu.add(new GroupMarker(IContextMenuConstants.GROUP_REMOVE_MATCHES));
+		menu.add(new Separator(IContextMenuConstants.GROUP_REORGANIZE));
+		menu.add(new GroupMarker(IContextMenuConstants.GROUP_GENERATE));
+		menu.add(new Separator(IContextMenuConstants.GROUP_SEARCH));
+		menu.add(new Separator(IContextMenuConstants.GROUP_BUILD));
+		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		menu.add(new Separator(IContextMenuConstants.GROUP_VIEWER_SETUP));
+		menu.add(new Separator(IContextMenuConstants.GROUP_PROPERTIES));
 	}
 
 	@Override
 	public Control getControl() {
 		return control;
+	}
+
+	@Override
+	public void dispose() {
+		if (actionGroup != null) {
+			actionGroup.dispose();
+			actionGroup = null;
+		}
+		super.dispose();
 	}
 
 	@Override

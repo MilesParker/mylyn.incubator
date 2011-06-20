@@ -10,8 +10,14 @@
  *******************************************************************************/
 package org.eclipse.mylyn.internal.sandbox.search.ui;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.sandbox.search.ui.SearchResult;
+import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -27,9 +33,24 @@ public class DesktopSearchWorkbenchAdapter implements IWorkbenchAdapter {
 		if (o instanceof SearchResult) {
 			SearchResult item = (SearchResult) o;
 
-			ImageDescriptor image = PlatformUI.getWorkbench()
-					.getEditorRegistry()
-					.getImageDescriptor(item.getFile().getName(), null);
+			IResource resource = item.getResource();
+
+			final IEditorRegistry editorRegistry = PlatformUI.getWorkbench().getEditorRegistry();
+
+			IContentType contentType = null;
+			if (resource instanceof IFile) {
+				IFile file = (IFile) resource;
+				try {
+					final IContentDescription contentDescription = file.getContentDescription();
+					if (contentDescription != null) {
+						contentType = contentDescription.getContentType();
+					}
+				} catch (CoreException e) {
+					// ignore
+				}
+			}
+
+			ImageDescriptor image = editorRegistry.getImageDescriptor(item.getFile().getName(), contentType);
 			if (image == null) {
 				image = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FILE);
 			}
