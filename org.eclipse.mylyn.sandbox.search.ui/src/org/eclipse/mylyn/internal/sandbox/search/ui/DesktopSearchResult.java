@@ -26,9 +26,9 @@ import org.eclipse.search.ui.ISearchResultListener;
  */
 public class DesktopSearchResult implements ISearchResult {
 
-	private List<ISearchResultListener> listeners = new CopyOnWriteArrayList<ISearchResultListener>();
+	private final List<ISearchResultListener> listeners = new CopyOnWriteArrayList<ISearchResultListener>();
 
-	private List<SearchResult> items = new ArrayList<SearchResult>();
+	private final List<SearchResult> items = new ArrayList<SearchResult>();
 
 	private final DesktopSearchQuery searchQuery;
 
@@ -63,10 +63,19 @@ public class DesktopSearchResult implements ISearchResult {
 	}
 
 	public void add(SearchResult item) {
+		if (filtered(item)) {
+			return;
+		}
 		synchronized (items) {
 			items.add(item);
 		}
 		fire(Kind.ADDED, item);
+	}
+
+	private boolean filtered(SearchResult item) {
+		// filter everything that's not a file
+		// TODO: do we want to include things such as folders?
+		return !item.getFile().isFile();
 	}
 
 	public void addListener(ISearchResultListener listener) {
