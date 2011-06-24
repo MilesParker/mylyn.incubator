@@ -19,8 +19,6 @@ class Messages extends NLS {
 
 	public static String DesktopSearchActionGroup_MenuOpenWith;
 
-	public static String DesktopSearchPage_CaseSensitive;
-
 	public static String DesktopSearchPage_FilenamePatterns;
 
 	public static String DesktopSearchPage_SearchFailedMessage;
@@ -37,9 +35,17 @@ class Messages extends NLS {
 
 	public static String DesktopSearchQuery_NFilesMatching;
 
+	public static String DesktopSearchQuery_NFilesMatching_MaxReached;
+
 	public static String DesktopSearchQuery_NoFilesMatching;
 
 	public static String DesktopSearchQuery_OneFileMatches;
+
+	public static String DesktopSearchQuery_Searching;
+
+	public static String DesktopSearchQuery_Searching_NFilesMatching;
+
+	public static String DesktopSearchQuery_Searching_OneFileMatch;
 
 	public static String DesktopSearchResultPage_EmptyLabel;
 

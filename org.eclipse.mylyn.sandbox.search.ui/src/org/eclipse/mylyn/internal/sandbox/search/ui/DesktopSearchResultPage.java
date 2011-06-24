@@ -127,8 +127,6 @@ public class DesktopSearchResultPage extends Page implements ISearchResultPage {
 
 		getSite().setSelectionProvider(viewer);
 
-		// FIXME: actions, context menu
-
 		control = container;
 
 		createMenu();

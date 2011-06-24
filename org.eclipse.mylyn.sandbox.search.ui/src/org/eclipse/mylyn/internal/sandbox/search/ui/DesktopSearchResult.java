@@ -32,6 +32,8 @@ public class DesktopSearchResult implements ISearchResult {
 
 	private final DesktopSearchQuery searchQuery;
 
+	private boolean searchInProgres;
+
 	public DesktopSearchResult(DesktopSearchQuery searchQuery) {
 		this.searchQuery = searchQuery;
 	}
@@ -87,7 +89,7 @@ public class DesktopSearchResult implements ISearchResult {
 	}
 
 	public String getLabel() {
-		return searchQuery.getResultLabel(getSize());
+		return searchQuery.getResultLabel(isSearchInProgres(), getSize());
 	}
 
 	public String getTooltip() {
@@ -102,4 +104,15 @@ public class DesktopSearchResult implements ISearchResult {
 		return searchQuery;
 	}
 
+	public void setSearchInProgres(boolean searchInProgres) {
+		boolean previous = this.searchInProgres;
+		if (previous != searchInProgres) {
+			this.searchInProgres = searchInProgres;
+			fire(Kind.SEARCH_STATUS);
+		}
+	}
+
+	public boolean isSearchInProgres() {
+		return searchInProgres;
+	}
 }

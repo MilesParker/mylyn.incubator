@@ -19,9 +19,9 @@ import java.util.Arrays;
  */
 public final class SearchCriteria {
 
-	private String text;
+	private int maximumResults = 500;
 
-	private boolean caseSensitive;
+	private String text;
 
 	private String[] filenamePatterns;
 
@@ -39,14 +39,6 @@ public final class SearchCriteria {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public boolean isCaseSensitive() {
-		return caseSensitive;
-	}
-
-	public void setCaseSensitive(boolean caseSensitive) {
-		this.caseSensitive = caseSensitive;
 	}
 
 	public String[] getFilenamePatterns() {
@@ -75,6 +67,28 @@ public final class SearchCriteria {
 	public void setFilenamePatternsAsText(String text) {
 		filenamePatterns = text == null || text.trim().length() == 0 ? new String[0] : text.trim().split(
 				"(\\s*,\\s*)|(\\s+)"); //$NON-NLS-1$
+	}
+
+	/**
+	 * the maximum number of results to find.
+	 */
+	public int getMaximumResults() {
+		return maximumResults;
+	}
+
+	/**
+	 * the maximum number of results to find.
+	 * 
+	 * @param maximumResults
+	 *            the maximum number of results to find, must be greater than 0
+	 * @throws IllegalArgumentException
+	 *             if maximumResults is < 1
+	 */
+	public void setMaximumResults(int maximumResults) {
+		if (maximumResults < 1) {
+			throw new IllegalArgumentException();
+		}
+		this.maximumResults = maximumResults;
 	}
 
 	@Override

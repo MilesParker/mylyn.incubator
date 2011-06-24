@@ -32,7 +32,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -60,8 +59,6 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 
 	private Combo filenamePatternText;
 
-	private Button caseSensitive;
-
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.swtDefaults().numColumns(2).equalWidth(false).applyTo(container);
@@ -79,7 +76,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		GridDataFactory.swtDefaults().span(2, 1).applyTo(searchLabel);
 
 		searchText = new Combo(container, SWT.SINGLE | SWT.BORDER);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(searchText);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(searchText);
 		searchText.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -93,9 +90,6 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 			}
 		});
 
-		caseSensitive = new Button(container, SWT.CHECK);
-		caseSensitive.setText(Messages.DesktopSearchPage_CaseSensitive);
-		GridDataFactory.swtDefaults().applyTo(caseSensitive);
 	}
 
 	private void addFileNamePatternControls(Composite container) {
@@ -104,7 +98,7 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		GridDataFactory.swtDefaults().span(2, 1).applyTo(searchLabel);
 
 		filenamePatternText = new Combo(container, SWT.SINGLE | SWT.BORDER);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(filenamePatternText);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(filenamePatternText);
 		filenamePatternText.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -185,7 +179,6 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		SearchCriteria item = new SearchCriteria();
 		item.setText(searchText.getText());
 		item.setFilenamePatternsAsText(filenamePatternText.getText());
-		item.setCaseSensitive(caseSensitive.getSelection());
 		return item;
 	}
 
@@ -270,7 +263,6 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 	private void initializeSearchSettings(SearchCriteria item) {
 		searchText.setText(item.getText());
 		filenamePatternText.setText(item.getFilenamePatternsAsText());
-		caseSensitive.setSelection(item.isCaseSensitive());
 	}
 
 	private SearchCriteria computeSearchHistoryItem(String text) {
@@ -283,7 +275,6 @@ public class DesktopSearchPage extends DialogPage implements ISearchPage {
 		SearchCriteria historyItem = new SearchCriteria();
 		historyItem.setText(text);
 		historyItem.setFilenamePatternsAsText("*"); //$NON-NLS-1$
-		historyItem.setCaseSensitive(false);
 		return historyItem;
 	}
 }

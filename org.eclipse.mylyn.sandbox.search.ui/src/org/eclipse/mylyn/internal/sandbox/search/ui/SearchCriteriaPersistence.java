@@ -25,18 +25,14 @@ public class SearchCriteriaPersistence {
 
 	private static final String KEY_TEXT = "text"; //$NON-NLS-1$
 
-	private static final String KEY_CASE_SENSITIVE = "caseSensitive"; //$NON-NLS-1$
-
 	public void load(SearchCriteria criteria, IDialogSettings settings) {
 		criteria.setText(settings.get(KEY_TEXT));
 		criteria.setFilenamePatterns(settings.getArray(KEY_FILE_NAME_PATTERNS));
-		criteria.setCaseSensitive(settings.getBoolean(KEY_CASE_SENSITIVE));
 	}
 
 	public void save(SearchCriteria criteria, IDialogSettings settings) {
 		settings.put(KEY_TEXT, criteria.getText());
 		settings.put(KEY_FILE_NAME_PATTERNS, criteria.getFilenamePatterns());
-		settings.put(KEY_CASE_SENSITIVE, criteria.isCaseSensitive());
 	}
 
 }

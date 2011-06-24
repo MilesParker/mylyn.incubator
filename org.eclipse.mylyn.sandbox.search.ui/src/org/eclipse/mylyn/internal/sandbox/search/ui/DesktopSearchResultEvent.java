@@ -25,7 +25,11 @@ public class DesktopSearchResultEvent extends SearchResultEvent {
 	private final SearchResult[] items;
 
 	public enum Kind {
-		ADDED, CLEARED
+		ADDED, CLEARED,
+		/**
+		 * @see DesktopSearchResult#isSearchInProgres()
+		 */
+		SEARCH_STATUS
 	}
 
 	public DesktopSearchResultEvent(ISearchResult searchResult, Kind kind, SearchResult... items) {

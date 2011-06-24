@@ -50,10 +50,13 @@ public class DesktopSearchQuery implements ISearchQuery {
 			}
 
 		};
+		searchResult.setSearchInProgres(true);
 		try {
 			provider.performSearch(criteria, callback, monitor);
 		} catch (CoreException e) {
 			return e.getStatus();
+		} finally {
+			searchResult.setSearchInProgres(false);
 		}
 
 		return Status.OK_STATUS;
@@ -75,13 +78,30 @@ public class DesktopSearchQuery implements ISearchQuery {
 		return searchResult;
 	}
 
-	public String getResultLabel(int size) {
-		if (size == 0) {
-			return NLS.bind(Messages.DesktopSearchQuery_NoFilesMatching, criteria.getText());
-		} else if (size == 1) {
-			return NLS.bind(Messages.DesktopSearchQuery_OneFileMatches, criteria.getText());
+	public String getResultLabel(boolean inProgress, int size) {
+		if (inProgress) {
+			if (size == 0) {
+				return NLS.bind(Messages.DesktopSearchQuery_Searching, criteria.getText());
+			} else if (size == 1) {
+				return NLS.bind(Messages.DesktopSearchQuery_Searching_OneFileMatch, criteria.getText());
+			} else {
+				return NLS.bind(Messages.DesktopSearchQuery_Searching_NFilesMatching, criteria.getText(),
+						Integer.valueOf(size));
+			}
 		} else {
-			return NLS.bind(Messages.DesktopSearchQuery_NFilesMatching, criteria.getText(), Integer.valueOf(size));
+			if (size == 0) {
+				return NLS.bind(Messages.DesktopSearchQuery_NoFilesMatching, criteria.getText());
+			} else if (size == 1) {
+				return NLS.bind(Messages.DesktopSearchQuery_OneFileMatches, criteria.getText());
+			} else {
+				if (size >= criteria.getMaximumResults()) {
+					NLS.bind(
+							Messages.DesktopSearchQuery_NFilesMatching_MaxReached,
+							new Object[] { criteria.getText(), Integer.valueOf(size),
+									Integer.valueOf(criteria.getMaximumResults()) });
+				}
+				return NLS.bind(Messages.DesktopSearchQuery_NFilesMatching, criteria.getText(), Integer.valueOf(size));
+			}
 		}
 	}
 
