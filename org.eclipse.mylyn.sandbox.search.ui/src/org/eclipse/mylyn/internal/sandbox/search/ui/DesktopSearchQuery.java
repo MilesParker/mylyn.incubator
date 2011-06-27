@@ -95,7 +95,7 @@ public class DesktopSearchQuery implements ISearchQuery {
 				return NLS.bind(Messages.DesktopSearchQuery_OneFileMatches, criteria.getText());
 			} else {
 				if (size >= criteria.getMaximumResults()) {
-					NLS.bind(
+					return NLS.bind(
 							Messages.DesktopSearchQuery_NFilesMatching_MaxReached,
 							new Object[] { criteria.getText(), Integer.valueOf(size),
 									Integer.valueOf(criteria.getMaximumResults()) });
