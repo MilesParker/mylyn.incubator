@@ -132,18 +132,22 @@ public class ExtensibleBugzillaTaskEditorPage extends BugzillaTaskEditorPage {
 	@Override
 	protected Set<TaskEditorPartDescriptor> createPartDescriptors() {
 		Set<TaskEditorPartDescriptor> descriptors = super.createPartDescriptors();
+		boolean hasPartNewComment = false;
 		for (TaskEditorPartDescriptor taskEditorPartDescriptor : descriptors) {
 			if (taskEditorPartDescriptor.getId().equals(ID_PART_NEW_COMMENT)) {
 				descriptors.remove(taskEditorPartDescriptor);
+				hasPartNewComment = true;
 				break;
 			}
 		}
-		descriptors.add(new TaskEditorPartDescriptor(ID_PART_NEW_COMMENT) {
-			@Override
-			public AbstractTaskEditorPart createPart() {
-				return new ExtensibleTaskEditorNewCommentPart();
-			}
-		}.setPath(PATH_COMMENTS));
+		if (hasPartNewComment) {
+			descriptors.add(new TaskEditorPartDescriptor(ID_PART_NEW_COMMENT) {
+				@Override
+				public AbstractTaskEditorPart createPart() {
+					return new ExtensibleTaskEditorNewCommentPart();
+				}
+			}.setPath(PATH_COMMENTS));
+		}
 		return descriptors;
 	}
 
