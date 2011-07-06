@@ -78,6 +78,9 @@
     <module>org.eclipse.mylyn.sandbox.search-feature</module>
     <module>org.eclipse.mylyn.sandbox.ui</module>
     <module>org.eclipse.mylyn.sandbox.ui-feature</module>
+<!--
+    <module>org.eclipse.mylyn.tests.ui</module>
+-->
     <module>org.eclipse.mylyn.trac.wiki</module>
     <module>org.eclipse.mylyn.trac.wiki-feature</module>
     <module>org.eclipse.mylyn.web.tasks</module>
@@ -113,6 +116,11 @@
 		  <layout>p2</layout>
 		  <url>http://download.eclipse.org/releases/galileo/</url>
 		</repository>
+		<repository>
+		  <id>swtbot</id>
+		  <layout>p2</layout>
+		  <url>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site/</url>
+		</repository>
 	  </repositories>
     </profile>
     <profile>
@@ -125,6 +133,11 @@
 		  <id>helios</id>
 		  <layout>p2</layout>
 		  <url>http://download.eclipse.org/releases/helios/</url>
+		</repository>
+		<repository>
+		  <id>swtbot</id>
+		  <layout>p2</layout>
+		  <url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/</url>
 		</repository>
 	  </repositories>
     </profile>
@@ -141,6 +154,11 @@
 		  <id>indigo</id>
 		  <layout>p2</layout>
 		  <url>http://download.eclipse.org/releases/indigo/</url>
+		</repository>
+		<repository>
+		  <id>swtbot</id>
+		  <layout>p2</layout>
+		  <url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/</url>
 		</repository>
 	  </repositories>
     </profile>
