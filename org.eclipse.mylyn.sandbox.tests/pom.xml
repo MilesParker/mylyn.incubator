@@ -11,23 +11,17 @@
   <version>3.7.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <properties>
-    <mylyn-incubator-test-suite>org.eclipse.mylyn.sandbox.tests.AllSandboxTests</mylyn-incubator-test-suite>
+	<test.suite>${project.artifactId}.AllSandboxTests</test.suite>
   </properties>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-surefire-plugin</artifactId>
-        <version>${tycho-version}</version>
-        <configuration>
-          <useUIHarness>true</useUIHarness>
-          <forkedProcessTimeoutInSeconds>7200</forkedProcessTimeoutInSeconds>
-          <product>org.eclipse.sdk.ide</product>
-          <application>org.eclipse.ui.ide.workbench</application>
-          <testSuite>org.eclipse.mylyn.sandbox.tests</testSuite>
-          <testClass>${mylyn-incubator-test-suite}</testClass>
-          <argLine>-Xmx1024m -XX:MaxPermSize=256m -Djava.io.tmpdir=${project.build.directory} ${test.vmargs}</argLine>
-          <appArgLine>${test.args}</appArgLine> 
+	  <plugin>
+		<groupId>org.eclipse.tycho</groupId>
+		<artifactId>tycho-surefire-plugin</artifactId>
+		<version>${tycho-version}</version>
+		<configuration>
+		  <testSuite>${project.artifactId}</testSuite>
+		  <testClass>${test.suite}</testClass>
           <dependencies>
             <dependency>
               <type>p2-installable-unit</type>
@@ -40,8 +34,8 @@
               <version>0.0.0</version>
             </dependency>
           </dependencies>		  
-        </configuration>
-      </plugin>
+		</configuration>
+	  </plugin>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-source-plugin</artifactId>
