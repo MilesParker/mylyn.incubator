@@ -3,11 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>mylyn-incubator-parent</artifactId>
+    <artifactId>org.eclipse.mylyn.incubator-parent</artifactId>
     <groupId>org.eclipse.mylyn.incubator</groupId>
     <version>3.7.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.eclipse.mylyn.incubator</groupId>
   <artifactId>org.eclipse.mylyn.sandbox.tests</artifactId>
   <version>3.7.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
@@ -27,8 +26,8 @@
           <application>org.eclipse.ui.ide.workbench</application>
           <testSuite>org.eclipse.mylyn.sandbox.tests</testSuite>
           <testClass>${mylyn-incubator-test-suite}</testClass>
-          <argLine>-Xmx1024m -XX:MaxPermSize=256m -Djava.io.tmpdir=${project.build.directory} ${mylyn-test-args}</argLine>
-          <appArgLine>${mylyn-test-app-args}</appArgLine> 
+          <argLine>-Xmx1024m -XX:MaxPermSize=256m -Djava.io.tmpdir=${project.build.directory} ${test.vmargs}</argLine>
+          <appArgLine>${test.args}</appArgLine> 
           <dependencies>
             <dependency>
               <type>p2-installable-unit</type>
