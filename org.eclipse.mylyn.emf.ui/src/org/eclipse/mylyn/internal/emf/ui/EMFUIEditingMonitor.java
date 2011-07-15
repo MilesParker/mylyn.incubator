@@ -11,6 +11,8 @@
 
 package org.eclipse.mylyn.internal.emf.ui;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -18,19 +20,28 @@ import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
- * @author Benjamin Muskalla
+ * @author Benjamin Muskalla * @
+ * @author milesparker
  */
-public class EmfEditingMonitor extends AbstractUserInteractionMonitor {
+public class EMFUIEditingMonitor extends AbstractUserInteractionMonitor {
 
 	@Override
 	protected void handleWorkbenchPartSelection(IWorkbenchPart part, ISelection selection, boolean contributeToContext) {
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-			if (structuredSelection.getFirstElement() instanceof EObject) {
-				handleElementSelection(part, structuredSelection.getFirstElement(), contributeToContext);
+			for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {
+				Object selectedObject = iterator.next();
+				if (selectedObject instanceof EObject) {
+					handleElementSelection(part, selectedObject, contributeToContext);
+				}
+//				if (selectedObject instanceof IFile) {
+//					IFile file = (IFile) selectedObject;
+//					if (file.getFileExtension().equals("ecore")) {
+//						handleElementSelection(part, selectedObject, contributeToContext);
+//					}
+//				}
 			}
 
 		}
 	}
-
 }

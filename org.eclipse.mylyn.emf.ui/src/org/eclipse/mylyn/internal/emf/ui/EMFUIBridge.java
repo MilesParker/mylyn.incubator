@@ -11,50 +11,77 @@
 
 package org.eclipse.mylyn.internal.emf.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.context.ui.AbstractContextUiBridge;
+import org.eclipse.mylyn.emf.context.EMFStructureBridge;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchSite;
+import org.eclipse.ui.part.Page;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
  * @author Benjamin Muskalla
+ * @author milesparker
  */
-public class EmfUiBridge extends AbstractContextUiBridge {
+public class EMFUIBridge extends AbstractContextUiBridge {
 
 	@Override
 	public void open(IInteractionElement element) {
 		// ignore
-
+		System.err.println("o" + element);
 	}
 
 	@Override
 	public void close(IInteractionElement element) {
 		// ignore
+		System.err.println("close" + element);
 
 	}
 
 	@Override
 	public boolean acceptsEditor(IEditorPart editorPart) {
-		// ignore
-		return false;
+		return (editorPart instanceof IEditingDomainProvider);
 	}
 
 	@Override
 	public IInteractionElement getElement(IEditorInput input) {
-		// ignore
 		return null;
 	}
 
 	@Override
 	public List<TreeViewer> getContentOutlineViewers(IEditorPart editorPart) {
-		// ignore
-		return null;
+		if (editorPart == null) {
+			return null;
+		}
+		List<TreeViewer> viewers = new ArrayList<TreeViewer>();
+		Object out = editorPart.getAdapter(IContentOutlinePage.class);
+		if (out instanceof Page) {
+			Page page = (Page) out;
+			if (page.getControl() != null) {
+				IWorkbenchSite site = page.getSite();
+				if (site != null) {
+					ISelectionProvider provider = site.getSelectionProvider();
+					if (provider instanceof TreeViewer) {
+						viewers.add((TreeViewer) provider);
+					}
+				}
+			}
+		}
+		return viewers;
 	}
 
+	/**
+	 * NB: Text is probably not appropriate for EMF models until we look at supporting DSLs. See:
+	 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=343195
+	 */
 	@Override
 	public Object getObjectForTextSelection(TextSelection selection, IEditorPart editor) {
 		// ignore
@@ -63,7 +90,6 @@ public class EmfUiBridge extends AbstractContextUiBridge {
 
 	@Override
 	public String getContentType() {
-		// ignore
-		return null;
+		return EMFStructureBridge.EMF_CONTENT_TYPE;
 	}
 }

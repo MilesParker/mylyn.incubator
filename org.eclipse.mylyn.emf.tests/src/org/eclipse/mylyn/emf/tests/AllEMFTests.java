@@ -19,13 +19,12 @@ import org.eclipse.mylyn.context.tests.support.ContextTestUtil;
 /**
  * @author Benjamin Muskalla
  */
-public class AllEmfTests {
+public class AllEMFTests {
 
 	public static Test suite() {
 		ContextTestUtil.triggerContextUiLazyStart();
 
-		TestSuite suite = new TestSuite(AllEmfTests.class.getName());
-		suite.addTestSuite(EmfHandleIdentifierTest.class);
+		TestSuite suite = new TestSuite(AllEMFTests.class.getName());
 		return suite;
 	}
 

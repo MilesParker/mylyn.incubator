@@ -19,31 +19,31 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Benjamin Muskalla
  */
-public class EmfUiBridgePlugin extends Plugin {
+public class EMFUIBridgePlugin extends Plugin {
 
-	public static class EmfUiBrideStartup implements IContextUiStartup {
+	public static class EmfUiBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
-			EmfUiBridgePlugin.getDefault().lazyStart();
+			EMFUIBridgePlugin.getDefault().lazyStart();
 		}
 
 	}
 
 	public static final String ID_PLUGIN = "org.eclipse.mylyn.emf.ui"; //$NON-NLS-1$
 
-	private static EmfUiBridgePlugin INSTANCE;
+	private static EMFUIBridgePlugin INSTANCE;
 
-	public static EmfUiBridgePlugin getDefault() {
+	public static EMFUIBridgePlugin getDefault() {
 		return INSTANCE;
 	}
 
-	private EmfEditingMonitor emfEditingMonitor;
+	private EMFUIEditingMonitor emfEditingMonitor;
 
-	public EmfUiBridgePlugin() {
+	public EMFUIBridgePlugin() {
 	}
 
 	private void lazyStart() {
-		emfEditingMonitor = new EmfEditingMonitor();
+		emfEditingMonitor = new EMFUIEditingMonitor();
 		MonitorUi.getSelectionMonitors().add(emfEditingMonitor);
 	}
 

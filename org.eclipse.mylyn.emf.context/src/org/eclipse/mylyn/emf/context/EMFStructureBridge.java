@@ -9,58 +9,66 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.internal.emf.ui;
+package org.eclipse.mylyn.emf.context;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecoretools.diagram.navigator.EcoreDomainNavigatorItem;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 
 /**
  * @author Benjamin Muskalla
+ * @author milesparker
  */
-public class EmfStructureBridge extends AbstractContextStructureBridge {
+public class EMFStructureBridge extends AbstractContextStructureBridge {
 
-	private static final String ECORE_CONTENT_TYPE = "emf"; //$NON-NLS-1$
+	public static final String EMF_CONTENT_TYPE = "emfModel"; //$NON-NLS-1$
 
 	@Override
 	public String getContentType() {
-		return ECORE_CONTENT_TYPE;
+		return EMF_CONTENT_TYPE;
 	}
 
 	@Override
+	/**
+	 * See https://bugs.eclipse.org/bugs/show_bug.cgi?id=343194
+	 */
 	public String getHandleIdentifier(Object object) {
+		// if (object instanceof IResource) {
+		// return ((IResource) object).getFullPath().toPortableString();
+		// }
 		if (object instanceof EObject) {
 			EObject eobject = ((EObject) object);
-			IFile file = ResourcesPlugin.getWorkspace()
-					.getRoot()
-					.getFile(new Path(eobject.eResource().getURI().toString()));
-			return file.getFullPath().toString() + ";" + eobject.eResource().getURIFragment(eobject);
+			URI uri = EcoreUtil.getURI(eobject);
+			return uri.toString();
+		} else if (object instanceof EcoreDomainNavigatorItem) {
+			return getHandleIdentifier(((EcoreDomainNavigatorItem) object)
+					.getEObject());
 		}
 		return null;
 	}
 
 	@Override
 	public String getParentHandle(String handle) {
-		return getHandleIdentifier(((EObject) getObjectForHandle(handle)).eContainer());
+		EObject eObject = (EObject) getObjectForHandle(handle);
+		return getHandleIdentifier(eObject.eContainer());
 	}
 
 	@Override
 	public Object getObjectForHandle(String handle) {
-		String[] fileName = handle.split(";"); //$NON-NLS-1$
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName[0]));
-
+		URI uri = URI.createURI(handle);
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
-		URI uri = URI.createURI(file.getFullPath().toString());
-		Resource resource = resourceSetImpl.getResource(uri, true);
-		EObject eObject = resource.getEObject(fileName[1]);
-		return eObject;
+		EObject eObject = resourceSetImpl.getEObject(uri, true);
+		if (eObject != null) {
+			return eObject;
+		}
+		return resourceSetImpl.getResource(uri, true);
 	}
 
 	@Override
@@ -71,30 +79,40 @@ public class EmfStructureBridge extends AbstractContextStructureBridge {
 
 	@Override
 	public String getLabel(Object object) {
+		/**
+		 * if (object instanceof IResource) { return ((IResource)
+		 * object).getName(); } else
+		 **/
+		if (object instanceof ENamedElement) {
+			return ((ENamedElement) object).getName();
+		} else if (object instanceof EObject) {
+			return ((EObject) object).toString();
+		}
 		return ((EObject) object).toString();
 	}
 
 	@Override
 	public boolean canBeLandmark(String handle) {
-		// ignore
-		return false;
+		Object object = getObjectForHandle(handle);
+		return object instanceof EClassifier;
 	}
 
 	@Override
 	public boolean acceptsObject(Object object) {
-		return object instanceof EObject;
+		return object instanceof EObject
+				|| object instanceof EcoreDomainNavigatorItem;
 	}
 
 	@Override
 	public boolean canFilter(Object element) {
 		// ignore
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isDocument(String handle) {
-		// ignore
-		return false;
+		URI uri = URI.createURI(handle);
+		return uri.isFile();
 	}
 
 	@Override
