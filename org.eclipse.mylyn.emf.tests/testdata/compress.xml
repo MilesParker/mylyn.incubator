@@ -1,6 +1,6 @@
 <project name="Compress Target Project" default="compress" basedir=".">
 
   <target name="compress">
-  <zip destFile="org.eclipse.mylyn.emf.tests.library.zip" basedir="org.eclipse.mylyn.emf.tests.library"/>
+  <zip destFile="projects/library.zip" basedir="org.eclipse.mylyn.emf.tests.library"/>
   </target>
 </project>

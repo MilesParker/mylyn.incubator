@@ -22,6 +22,15 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class EMFStructureBridgeTest extends AbstractEMFContextTest {
 
+	public void testSimpleHandle() {
+		String elementHandle = "platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecore#//Book";
+		Object objectForHandle = structureBridge.getObjectForHandle(elementHandle);
+		assertTrue(objectForHandle instanceof EClass);
+		assertEquals(((EClass) objectForHandle).getName(), "Book");
+		Resource res = structureBridge.getUniqueResourceForHandle(elementHandle);
+		assertNotNull(res);
+	}
+
 	public void testHandles() throws Exception {
 		ResourceSet rs = new ResourceSetImpl();
 		Resource resource = rs.getResource(

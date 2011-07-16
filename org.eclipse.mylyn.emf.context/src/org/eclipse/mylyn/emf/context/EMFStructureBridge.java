@@ -11,15 +11,20 @@
 
 package org.eclipse.mylyn.emf.context;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecoretools.diagram.navigator.EcoreDomainNavigatorItem;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 
 /**
@@ -29,6 +34,8 @@ import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 public class EMFStructureBridge extends AbstractContextStructureBridge {
 
 	public static final String EMF_CONTENT_TYPE = "emfModel"; //$NON-NLS-1$
+
+	Map<URI, Resource> resourceCache = new HashMap<URI, Resource>();
 
 	@Override
 	public String getContentType() {
@@ -47,11 +54,21 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 			EObject eobject = ((EObject) object);
 			URI uri = EcoreUtil.getURI(eobject);
 			return uri.toString();
-		} else if (object instanceof EcoreDomainNavigatorItem) {
-			return getHandleIdentifier(((EcoreDomainNavigatorItem) object)
-					.getEObject());
+		} else if (object instanceof IAdaptable) {
+			Object diagramObject = ((IAdaptable) object)
+					.getAdapter(EObject.class);
+			if (diagramObject instanceof EObject) {
+				return getHandleIdentifier(diagramObject);
+			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean acceptsObject(Object object) {
+		return object instanceof EObject
+				|| (object instanceof IAdaptable && ((IAdaptable) object)
+						.getAdapter(EClass.class) instanceof EObject);
 	}
 
 	@Override
@@ -69,6 +86,35 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 			return eObject;
 		}
 		return resourceSetImpl.getResource(uri, true);
+	}
+
+	/**
+	 * These are only for determining unique resources..do not use the resources
+	 * themselves!
+	 * 
+	 * @param handle
+	 * @return
+	 */
+	public Resource getUniqueResourceForHandle(String handle) {
+		URI uri = URI.createURI(handle);
+		uri = uri.trimFragment();
+		Resource resource = resourceCache.get(uri);
+		if (resource == null) {
+			ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
+			resource = resourceSetImpl.getResource(uri, true);
+			resourceCache.put(uri, resource);
+		}
+		return resource;
+	}
+
+	public void flushResourceCache() {
+		if (resourceCache != null) {
+			for (Entry<URI, Resource> res : resourceCache.entrySet()) {
+				Resource value = res.getValue();
+				value.unload();
+			}
+		}
+		resourceCache = new HashMap<URI, Resource>();
 	}
 
 	@Override
@@ -95,12 +141,6 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 	public boolean canBeLandmark(String handle) {
 		Object object = getObjectForHandle(handle);
 		return object instanceof EClassifier;
-	}
-
-	@Override
-	public boolean acceptsObject(Object object) {
-		return object instanceof EObject
-				|| object instanceof EcoreDomainNavigatorItem;
 	}
 
 	@Override

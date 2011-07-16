@@ -21,7 +21,6 @@ import org.eclipse.mylyn.internal.context.core.InteractionContextScaling;
 import org.eclipse.mylyn.internal.context.ui.ContextUiPlugin;
 import org.eclipse.mylyn.internal.emf.ui.EMFUIEditingMonitor;
 import org.eclipse.mylyn.internal.ide.ui.IdeUiBridgePlugin;
-import org.eclipse.mylyn.resources.tests.ResourceTestUtil;
 
 public class AbstractEMFContextTest extends AbstractContextTest {
 
@@ -41,6 +40,7 @@ public class AbstractEMFContextTest extends AbstractContextTest {
 
 	@Override
 	protected void setUp() throws Exception {
+
 		emfProject = WorkspaceSetupHelper.getEMFLibraryProject();
 		assertNotNull(IdeUiBridgePlugin.getDefault());
 		context = new InteractionContext(taskId, scaling);
@@ -56,7 +56,7 @@ public class AbstractEMFContextTest extends AbstractContextTest {
 		manager.deactivateContext(taskId);
 		manager.deleteContext(taskId);
 		ContextCorePlugin.getContextStore().getFileForContext(taskId).delete();
-		ResourceTestUtil.deleteProject(emfProject.getProject());
+//		ResourceTestUtil.deleteProject(emfProject.getProject());
 		super.tearDown();
 	}
 
