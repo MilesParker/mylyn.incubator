@@ -3,6 +3,7 @@
   <dirname property="scriptdir" file="${ant.file.pack-and-sign}"/>
   <property name="pack200" value="${java.home}/bin"/>
   <property name="filter" value=""/>
+  <property name="mirrorsUrl" value=""/>
 
   <target name="pack-and-sign">
 	<fail unless="localRepository">Required property localRepository not set</fail>
@@ -13,9 +14,9 @@
 
 	<echo>Running on ${os.name} ${os.version} (${os.arch}) / ${ant.version} / ${java.vendor} ${java.vm.name} ${java.version}</echo>
 
-	<condition property="sign.skip" value="true"><equals arg1="${skipSign}" arg2="true"/></condition>
-	<condition property="pack.skip" value="true"><equals arg1="${skipPack}" arg2="true"/></condition>
-  	<condition property="promote.skip" value="true"><equals arg1="${skipPromote}" arg2="true"/></condition>
+	<condition property="_sign.skip" value="true"><equals arg1="${skipSign}" arg2="true"/></condition>
+	<condition property="_pack.skip" value="true"><equals arg1="${skipPack}" arg2="true"/></condition>
+  	<condition property="_promote.skip" value="true"><equals arg1="${skipPromote}" arg2="true"/></condition>
 
   	<!-- sign -->
 
@@ -58,6 +59,10 @@
 	  <param name="site" value="${projectDir}/site"/>
 	</antcall>
 
+	<!-- does not work
+	<antcall target="add-mirrors-url"/>
+	-->
+
 	<antcall target="publish"/>
 
 	<!-- create packed site archive  -->
@@ -74,7 +79,7 @@
 
   </target>
 
-  <target name="sign" unless="sign.skip">	
+  <target name="sign" unless="_sign.skip">	
 	<chmod perm="755" file="${scriptdir}/sign-and-wait.sh"/>
 	<exec executable="${scriptdir}/sign-and-wait.sh" failonerror="true">
 	  <arg value="${projectDir}/site"/>
@@ -83,7 +88,7 @@
 	</exec>
   </target>
 
-  <target name="promote" unless="promote.skip">	
+  <target name="promote" unless="_promote.skip">	
 	<chmod perm="755" file="${scriptdir}/promote.sh"/>
   	<chmod perm="755" file="${scriptdir}/update-composite.sh"/>
 	<exec executable="${scriptdir}/promote.sh" dir="${scriptdir}" failonerror="true">
@@ -96,7 +101,7 @@
 	</exec>
   </target>
 
-  <target name="pack" unless="pack.skip">	
+  <target name="pack" unless="_pack.skip">	
 	<delete file="${site}/content.jar" />
 	<delete file="${site}/artifacts.jar" />
 	
@@ -125,6 +130,13 @@
 	  </fileset>
 	</delete>
 	-->
+  </target>
+
+  <target name="add-mirrors-url" unless="_promote.skip">	
+	<replace file="${projectDir}/../site.xml">
+	  <replacetoken><![CDATA[<site pack200="true">]]></replacetoken>
+	  <replacevalue><![CDATA[<site pack200="true" mirrorsURL="${mirrorsUrl}">]]></replacevalue>
+	</replace>	
   </target>
 
   <target name="publish">	
@@ -162,4 +174,3 @@
   </target>
 
 </project>
-
