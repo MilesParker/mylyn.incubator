@@ -12,7 +12,6 @@
 package org.eclipse.mylyn.internal.emf.ui;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.osgi.framework.BundleContext;
@@ -22,7 +21,7 @@ import org.osgi.framework.BundleContext;
  */
 public class EMFUIBridgePlugin extends Plugin {
 
-	public static class EmfUiBridgeStartup implements IContextUiStartup {
+	public static class EMFUIBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
 			EMFUIBridgePlugin.getDefault().lazyStart();
@@ -40,23 +39,17 @@ public class EMFUIBridgePlugin extends Plugin {
 
 	private EMFUIEditingMonitor emfEditingMonitor;
 
-	private EMFEditorContextListener editorListener;
-
 	public EMFUIBridgePlugin() {
 	}
 
 	private void lazyStart() {
 		emfEditingMonitor = new EMFUIEditingMonitor();
 		MonitorUi.getSelectionMonitors().add(emfEditingMonitor);
-		editorListener = new EMFEditorContextListener();
-		ContextCore.getContextManager().addListener(editorListener);
-
 	}
 
 	private void lazyStop() {
 		if (emfEditingMonitor != null) {
 			MonitorUi.getSelectionMonitors().remove(emfEditingMonitor);
-			ContextCore.getContextManager().removeListener(editorListener);
 		}
 	}
 

@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.internal.emf.ui;
+package org.eclipse.mylyn.gmf.ui;
 
 import java.util.ArrayList;
 import java.util.List;

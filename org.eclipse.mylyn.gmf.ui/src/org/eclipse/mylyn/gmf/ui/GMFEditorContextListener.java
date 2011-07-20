@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.internal.emf.ui;
+package org.eclipse.mylyn.gmf.ui;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,22 +22,23 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
-import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.INodeEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.ShapeStyle;
 import org.eclipse.mylyn.context.core.AbstractContextListener;
 import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.EMFStructureBridge;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 
-public class EMFEditorContextListener extends AbstractContextListener {
+public class GMFEditorContextListener extends AbstractContextListener {
 	@Override
 	public void contextChanged(ContextChangeEvent event) {
 		if (event.getEventKind() != ContextChangeKind.DEACTIVATED) {
@@ -66,21 +67,15 @@ public class EMFEditorContextListener extends AbstractContextListener {
 					.getActivePage()
 					.getEditorReferences();
 			for (IEditorReference reference : editorReferences) {
-				if (reference.getId().equals(EcoreDiagramEditor.ID)) {
-					EcoreDiagramEditor editor = (EcoreDiagramEditor) reference.getEditor(true);
-					Diagram diagram = editor.getDiagram();
-//					for (Resource res : editor.getEditingDomain().getResourceSet().getResources()) {
-//						List<IInteractionElement> interests = resourceInterests.get(res);
-//						if (interests != null) {
-					updateDiagram(editor, interestingElems);
-//						}
-//					}
+				IEditorPart editor = reference.getEditor(false);
+				if (editor instanceof DiagramDocumentEditor) {
+					updateDiagram((DiagramDocumentEditor) editor, interestingElems);
 				}
 			}
 		}
 	}
 
-	private void updateDiagram(EcoreDiagramEditor editor, Collection<IInteractionElement> interestingElems) {
+	private void updateDiagram(DiagramDocumentEditor editor, Collection<IInteractionElement> interestingElems) {
 		EMFStructureBridge structure = (EMFStructureBridge) ContextCore.getStructureBridge(EMFStructureBridge.EMF_CONTENT_TYPE);
 		Collection<Node> interestingParts = new HashSet<Node>();
 //		for (IInteractionElement interaction : interestingElems) {
@@ -98,43 +93,63 @@ public class EMFEditorContextListener extends AbstractContextListener {
 		Collection registry = editor.getDiagramGraphicalViewer().getEditPartRegistry().entrySet();
 		for (Object object : registry) {
 			Object value = ((Entry) object).getValue();
-			if (value instanceof EClassEditPart) {
-				EClassEditPart editPart = (EClassEditPart) value;
-				Node node = (Node) editPart.getModel();
-				EClass editClass = (EClass) node.getElement();
-				boolean interesting = false;
-				for (IInteractionElement interaction : interestingElems) {
-					Object objectForHandle = structure.getObjectForHandle(interaction.getHandleIdentifier());
-					if (objectForHandle instanceof EClassifier) {
-						EClassifier eObject = (EClassifier) objectForHandle;
-						if (editClass.getClassifierID() == eObject.getClassifierID()) {
-							interesting = true;
-							break;
-						}
-						//TODO do we ever have more than one?
+			if (value instanceof INodeEditPart) {
+				INodeEditPart editPart = (INodeEditPart) value;
+				if (editPart.getModel() instanceof Node) {
+					Node node = (Node) editPart.getModel();
+					EClass editClass = (EClass) node.getElement();
+					boolean interesting = false;
+					for (IInteractionElement interaction : interestingElems) {
+						Object objectForHandle = structure.getObjectForHandle(interaction.getHandleIdentifier());
+						if (objectForHandle instanceof EClassifier) {
+							EClassifier eObject = (EClassifier) objectForHandle;
+							if (editClass.getClassifierID() == eObject.getClassifierID()) {
+								interesting = true;
+								break;
+							}
+							//TODO do we ever have more than one?
 //						List elements = editor.getDiagramGraphicalViewer().findEditPartsForElement(
 //								EMFCoreUtil.getProxyID((EObject) objectForHandle), EClassEditPart.class);
 //						interestingParts.addAll(elements);
+						}
 					}
-				}
-				if (interesting) {
-					interestingParts.add(node);
-				} else {
-					boringParts.add(node);
+					if (interesting) {
+						interestingParts.add(node);
+					} else {
+						boringParts.add(node);
+					}
 				}
 			}
 		}
 //		boringParts.removeAll(interestingParts);
 		for (Node boringPart : boringParts) {
-			Command setVisible = SetCommand.create(editor.getEditingDomain(), boringPart,
-					NotationPackage.Literals.VIEW__VISIBLE, false);
-			editor.getEditingDomain().getCommandStack().execute(setVisible);
+			markBoring(editor, boringPart);
 		}
 		for (Node interestingPart : interestingParts) {
-			Command setVisible = SetCommand.create(editor.getEditingDomain(), interestingPart,
-					NotationPackage.Literals.VIEW__VISIBLE, true);
-			editor.getEditingDomain().getCommandStack().execute(setVisible);
+			markInteresting(editor, interestingPart);
 		}
 		editor.getDiagramGraphicalViewer().getRootEditPart().refresh();
+	}
+
+	private void markInteresting(DiagramDocumentEditor editor, Node interestingPart) {
+		for (Object object : interestingPart.getStyles()) {
+			if (object instanceof ShapeStyle) {
+				ShapeStyle s = (ShapeStyle) object;
+				Command setVisible = SetCommand.create(editor.getEditingDomain(), s,
+						NotationPackage.Literals.FILL_STYLE__FILL_COLOR, 100);
+				editor.getEditingDomain().getCommandStack().execute(setVisible);
+			}
+		}
+	}
+
+	private void markBoring(DiagramDocumentEditor editor, Node boringPart) {
+		for (Object object : boringPart.getStyles()) {
+			if (object instanceof ShapeStyle) {
+				ShapeStyle s = (ShapeStyle) object;
+				Command setVisible = SetCommand.create(editor.getEditingDomain(), s,
+						NotationPackage.Literals.FILL_STYLE__FILL_COLOR, 100000);
+				editor.getEditingDomain().getCommandStack().execute(setVisible);
+			}
+		}
 	}
 }

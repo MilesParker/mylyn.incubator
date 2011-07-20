@@ -25,6 +25,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.notation.Node;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 
 /**
@@ -50,16 +53,19 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 		// if (object instanceof IResource) {
 		// return ((IResource) object).getFullPath().toPortableString();
 		// }
-		if (object instanceof EObject) {
-			EObject eobject = ((EObject) object);
-			URI uri = EcoreUtil.getURI(eobject);
-			return uri.toString();
-		} else if (object instanceof IAdaptable) {
+		// TODO rather not have graphcs dependency but papyrus doesn't seem to
+		// adapt to EObject
+		if (object instanceof IAdaptable) {
 			Object diagramObject = ((IAdaptable) object)
 					.getAdapter(EObject.class);
 			if (diagramObject instanceof EObject) {
 				return getHandleIdentifier(diagramObject);
 			}
+		} 
+		if (object instanceof EObject) {
+			EObject eobject = ((EObject) object);
+			URI uri = EcoreUtil.getURI(eobject);
+			return uri.toString();
 		}
 		return null;
 	}
@@ -68,7 +74,7 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 	public boolean acceptsObject(Object object) {
 		return object instanceof EObject
 				|| (object instanceof IAdaptable && ((IAdaptable) object)
-						.getAdapter(EClass.class) instanceof EObject);
+						.getAdapter(EObject.class) instanceof EObject);
 	}
 
 	@Override

@@ -46,8 +46,6 @@ public class WorkspaceSetupHelper {
 
 	private static InteractionContext taskscape;
 
-	private static IJavaProject emfLibProject;
-
 	private static IWorkspaceRoot workspaceRoot;
 
 	public static void clearWorkspace() throws CoreException, IOException {
@@ -67,10 +65,7 @@ public class WorkspaceSetupHelper {
 		workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
 		IJavaProject project1 = ContextTestUtil.createJavaPluginProjectFromZip("project1", "project1.zip");
-		emfLibProject = createJavaPluginProjectFromZip("org.eclipse.mylyn.emf.tests.library", "library.zip");
 		isSetup = true;
-
-		emfLibProject.open(new NullProgressMonitor());
 
 		return workspaceRoot;
 	}
@@ -86,14 +81,6 @@ public class WorkspaceSetupHelper {
 			setupWorkspace();
 		}
 		return taskscape;
-	}
-
-	public static IJavaProject getEMFLibraryProject() throws CoreException, IOException, InvocationTargetException,
-			InterruptedException {
-		if (!isSetup) {
-			setupWorkspace();
-		}
-		return emfLibProject;
 	}
 
 	public static IWorkspaceRoot getWorkspaceRoot() throws CoreException, IOException, InvocationTargetException,

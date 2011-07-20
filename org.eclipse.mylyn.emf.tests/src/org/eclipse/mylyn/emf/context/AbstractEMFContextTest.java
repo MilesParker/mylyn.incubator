@@ -11,6 +11,7 @@
 
 package org.eclipse.mylyn.emf.context;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.mylyn.context.tests.AbstractContextTest;
 import org.eclipse.mylyn.emf.tests.WorkspaceSetupHelper;
@@ -21,6 +22,7 @@ import org.eclipse.mylyn.internal.context.core.InteractionContextScaling;
 import org.eclipse.mylyn.internal.context.ui.ContextUiPlugin;
 import org.eclipse.mylyn.internal.emf.ui.EMFUIEditingMonitor;
 import org.eclipse.mylyn.internal.ide.ui.IdeUiBridgePlugin;
+import org.eclipse.mylyn.resources.tests.ResourceTestUtil;
 
 public class AbstractEMFContextTest extends AbstractContextTest {
 
@@ -38,13 +40,22 @@ public class AbstractEMFContextTest extends AbstractContextTest {
 
 	IJavaProject emfProject;
 
+	private IJavaProject papyrusProject;
+
 	@Override
 	protected void setUp() throws Exception {
 
-		emfProject = WorkspaceSetupHelper.getEMFLibraryProject();
+		WorkspaceSetupHelper.setupWorkspace();
+
 		assertNotNull(IdeUiBridgePlugin.getDefault());
 		context = new InteractionContext(taskId, scaling);
 		context.reset();
+		emfProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip("org.eclipse.mylyn.emf.tests.library",
+				"library.zip");
+		emfProject.open(new NullProgressMonitor());
+		papyrusProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip("org.eclipse.mylyn.emf.tests.papyrus",
+				"papyrus.zip");
+		papyrusProject.open(new NullProgressMonitor());
 		manager.internalActivateContext(context);
 		ContextUiPlugin.getViewerManager().setSyncRefreshMode(true);
 	}
@@ -56,11 +67,16 @@ public class AbstractEMFContextTest extends AbstractContextTest {
 		manager.deactivateContext(taskId);
 		manager.deleteContext(taskId);
 		ContextCorePlugin.getContextStore().getFileForContext(taskId).delete();
-//		ResourceTestUtil.deleteProject(emfProject.getProject());
+		ResourceTestUtil.deleteProject(emfProject.getProject());
+		ResourceTestUtil.deleteProject(papyrusProject.getProject());
 		super.tearDown();
 	}
 
 	public IJavaProject getEmfProject() {
 		return emfProject;
+	}
+
+	public IJavaProject getPapyrusProject() {
+		return papyrusProject;
 	}
 }

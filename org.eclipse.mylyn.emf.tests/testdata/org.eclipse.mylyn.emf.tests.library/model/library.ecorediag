@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_Lkgqga8vEeCsebYZkZnMNg" type="EcoreTools" name="library.ecorediag" measurementUnit="Pixel">
-  <children xmi:type="notation:Node" xmi:id="_LkxwQK8vEeCsebYZkZnMNg" visible="false" type="1001">
+  <children xmi:type="notation:Node" xmi:id="_LkxwQK8vEeCsebYZkZnMNg" type="1001">
     <children xmi:type="notation:Node" xmi:id="_LkzlcK8vEeCsebYZkZnMNg" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_Lk0MgK8vEeCsebYZkZnMNg" type="5001">
       <children xmi:type="notation:Node" xmi:id="_LlHugK8vEeCsebYZkZnMNg" type="2001">

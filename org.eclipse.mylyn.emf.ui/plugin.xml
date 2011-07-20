@@ -12,15 +12,10 @@
 
 <plugin> 
 
-   <extension point="org.eclipse.mylyn.context.ui.bridges">
-    <uiBridge
-          class="org.eclipse.mylyn.internal.emf.ui.EMFUIBridge"
-          contentType="emf"/>
-  </extension>
    <extension
          point="org.eclipse.mylyn.context.ui.startup">
       <startup
-            class="org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin$EmfUiBridgeStartup">
+            class="org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin$EMFUIBridgeStartup">
       </startup>
    </extension>
 
