@@ -36,6 +36,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.context.core.AbstractContextListener;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
+import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionElement;
@@ -617,7 +618,7 @@ public class RelatedElementsPopupDialog extends PopupDialog implements IInformat
 		provider.setDegreeOfSeparation(degreeOfSeparation);
 		for (IInteractionElement element : ContextCore.getContextManager().getActiveContext().getInteresting()) {
 			if (element.getInterest().isLandmark()) {
-				provider.landmarkAdded(element);
+				provider.contextChanged(ContextChangeEvent.createLandmarksAddedEvent(element, false));
 			}
 		}
 	}

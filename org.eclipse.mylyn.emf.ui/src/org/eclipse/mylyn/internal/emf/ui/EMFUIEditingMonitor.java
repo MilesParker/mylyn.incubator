@@ -36,7 +36,7 @@ public class EMFUIEditingMonitor extends AbstractUserInteractionMonitor {
 				if (object instanceof EObject
 						|| (object instanceof IAdaptable && ((IAdaptable) object).getAdapter(EClass.class) instanceof EObject)) {
 					handleElementSelection(part, object, contributeToContext);
-				}
+				}//test 2
 //				if (selectedObject instanceof IFile) {
 //					IFile file = (IFile) selectedObject;
 //					if (file.getFileExtension().equals("ecore")) {
