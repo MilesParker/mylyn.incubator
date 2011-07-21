@@ -1,14 +1,11 @@
 package org.eclipse.mylyn.gmf.ui;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoration;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
-import org.eclipse.swt.graphics.Color;
 
 public class MylynDecorator implements IDecorator {
 
@@ -55,7 +52,7 @@ public class MylynDecorator implements IDecorator {
 				target.removeDecoration(lastDecoration);
 			}
 			lastDecoration = target.addDecoration(decoration,
-					new LabelLocator(decorated), false);
+					new NodeLocator(decorated), false);
 			dirty = false;
 		}
 	}

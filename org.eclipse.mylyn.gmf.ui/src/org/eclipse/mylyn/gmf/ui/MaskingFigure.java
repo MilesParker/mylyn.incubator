@@ -2,6 +2,7 @@ package org.eclipse.mylyn.gmf.ui;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
@@ -23,7 +24,8 @@ public class MaskingFigure extends RectangleFigure {
 	public MaskingFigure(IGraphicalEditPart part) {
 		setLayoutManager(new XYLayout());
 		setOpaque(true);
-		Color backgroundColor = part.getFigure().getBackgroundColor();
+		IFigure figure = part.getFigure();
+		Color backgroundColor = figure.getBackgroundColor();
 		setBackgroundColor(backgroundColor);
 		setAlpha(200);
 	}

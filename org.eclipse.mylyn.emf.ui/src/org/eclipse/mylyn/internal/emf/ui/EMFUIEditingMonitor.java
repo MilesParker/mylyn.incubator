@@ -13,11 +13,10 @@ package org.eclipse.mylyn.internal.emf.ui;
 
 import java.util.Iterator;
 
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.context.core.ContextCore;
+import org.eclipse.mylyn.emf.context.EMFStructureBridge;
 import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -27,24 +26,18 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class EMFUIEditingMonitor extends AbstractUserInteractionMonitor {
 
+	private final EMFStructureBridge structure = (EMFStructureBridge) ContextCore.getStructureBridge(EMFStructureBridge.EMF_CONTENT_TYPE);
+
 	@Override
 	public void handleWorkbenchPartSelection(IWorkbenchPart part, ISelection selection, boolean contributeToContext) {
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 			for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {
 				Object object = iterator.next();
-				if (object instanceof EObject
-						|| (object instanceof IAdaptable && ((IAdaptable) object).getAdapter(EClass.class) instanceof EObject)) {
+				if (structure.acceptsObject(object)) {
 					handleElementSelection(part, object, contributeToContext);
-				}//test 3
-//				if (selectedObject instanceof IFile) {
-//					IFile file = (IFile) selectedObject;
-//					if (file.getFileExtension().equals("ecore")) {
-//						handleElementSelection(part, selectedObject, contributeToContext);
-//					}
-//				}
+				}
 			}
-
 		}
 	}
 }

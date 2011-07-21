@@ -20,6 +20,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -37,6 +38,7 @@ import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.EMFStructureBridge;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 public class MylynDecoratorProvider extends AbstractProvider implements
@@ -52,12 +54,10 @@ public class MylynDecoratorProvider extends AbstractProvider implements
 
 	private Collection<EObject> interestingParts;
 
-	private Collection<EObject> boringParts;
-
 	private Collection<MylynDecorator> decorators;
 
 	private EMFStructureBridge structure = (EMFStructureBridge) ContextCore
-			.getStructureBridge(EMFStructureBridge.EMF_CONTENT_TYPE);;
+			.getStructureBridge(EMFStructureBridge.EMF_CONTENT_TYPE);
 
 	public MylynDecoratorProvider() {
 		ContextCore.getContextManager().addListener(this);
@@ -91,19 +91,22 @@ public class MylynDecoratorProvider extends AbstractProvider implements
 
 	@Override
 	public void contextChanged(ContextChangeEvent event) {
-		if (event.getEventKind() != ContextChangeKind.DEACTIVATED) {
+		if (event.getEventKind() != ContextChangeKind.DEACTIVATED
+				&& event.getContext() != null) {
+			IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow();
 			updateInterestDecorators(event.getContext());
-			IEditorReference[] editorReferences = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage()
-					.getEditorReferences();
-			for (IEditorReference reference : editorReferences) {
-				IEditorPart editor = reference.getEditor(false);
-				if (editor instanceof DiagramDocumentEditor) {
-					DiagramDocumentEditor de = (DiagramDocumentEditor) editor;
-					de.getDiagramEditPart().getRoot().refresh();
+			if (activeWorkbenchWindow != null) {
+				IEditorReference[] editorReferences = activeWorkbenchWindow
+						.getActivePage().getEditorReferences();
+				for (IEditorReference reference : editorReferences) {
+					IEditorPart editor = reference.getEditor(false);
+					if (editor instanceof DiagramDocumentEditor) {
+						DiagramDocumentEditor de = (DiagramDocumentEditor) editor;
+						de.getDiagramEditPart().getRoot().refresh();
+					}
 				}
 			}
-
 		}
 	}
 
@@ -125,21 +128,17 @@ public class MylynDecoratorProvider extends AbstractProvider implements
 		for (IInteractionElement interaction : interestingElems) {
 			Object objectForHandle = structure.getObjectForHandle(interaction
 					.getHandleIdentifier());
-			if (objectForHandle instanceof EClassifier) {
-				EClassifier eObject = (EClassifier) objectForHandle;
-				interestingParts.add(eObject);
+			if (objectForHandle instanceof EObject) {
+				interestingParts.add((EObject) objectForHandle);
 			}
 		}
 		for (MylynDecorator decorator : decorators) {
 			boolean interesting = false;
-			for (EObject object : interestingParts) {
-				if (object instanceof EClassifier
-						&& decorator.getModel() instanceof EClassifier) {
-					if (((EClassifier) object).getClassifierID() == ((EClassifier) decorator
-							.getModel()).getClassifierID()) {
-						interesting = true;
-						break;
-					}
+			for (EObject interestingObject : interestingParts) {
+				EObject decoratedModel = decorator.getModel();
+				if (EcoreUtil.equals(decoratedModel, interestingObject)) {
+					interesting = true;
+					break;
 				}
 			}
 			if (interesting) {

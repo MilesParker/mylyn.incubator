@@ -69,6 +69,11 @@ public class AbstractEMFContextTest extends AbstractContextTest {
 		ContextCorePlugin.getContextStore().getFileForContext(taskId).delete();
 		ResourceTestUtil.deleteProject(emfProject.getProject());
 		ResourceTestUtil.deleteProject(papyrusProject.getProject());
+
+		for (InteractionContext context : manager.getActiveContexts()) {
+			manager.deactivateContext(context.getHandleIdentifier());
+		}
+		assertFalse(manager.isContextActive());
 		super.tearDown();
 	}
 

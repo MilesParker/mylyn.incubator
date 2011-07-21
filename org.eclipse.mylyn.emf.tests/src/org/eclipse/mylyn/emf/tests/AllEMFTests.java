@@ -15,6 +15,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.mylyn.context.tests.support.ContextTestUtil;
+import org.eclipse.mylyn.emf.context.BasicEMFResourceTest;
+import org.eclipse.mylyn.emf.context.EMFStructureBridgeTest;
+import org.eclipse.mylyn.emf.ui.EMFUIBridgeTest;
+import org.eclipse.mylyn.emf.ui.PapyrusDiagramEditorUIBridgeTest;
 
 /**
  * @author Benjamin Muskalla
@@ -25,6 +29,11 @@ public class AllEMFTests {
 		ContextTestUtil.triggerContextUiLazyStart();
 
 		TestSuite suite = new TestSuite(AllEMFTests.class.getName());
+		suite.addTestSuite(BasicEMFResourceTest.class);
+		suite.addTestSuite(EMFStructureBridgeTest.class);
+		suite.addTestSuite(EMFUIBridgeTest.class);
+		suite.addTestSuite(PapyrusDiagramEditorUIBridgeTest.class);
+
 		return suite;
 	}
 

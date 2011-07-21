@@ -18,16 +18,13 @@ import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.notation.Node;
-import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 
 /**
@@ -68,7 +65,7 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 				return getDomainObject(diagramObject);
 			}
 		} 
-		if (object instanceof EObject) {
+		if (object instanceof EModelElement) {
 			return (EObject) object;
 		}
 		return null;
@@ -76,9 +73,9 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 
 	@Override
 	public boolean acceptsObject(Object object) {
-		return object instanceof EObject
+		return object instanceof EModelElement
 				|| (object instanceof IAdaptable && ((IAdaptable) object)
-						.getAdapter(EObject.class) instanceof EClassifier);
+						.getAdapter(EObject.class) instanceof EModelElement);
 	}
 
 	@Override

@@ -16,19 +16,18 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
-import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.AbstractEMFContextTest;
 import org.eclipse.mylyn.emf.context.EMFStructureBridge;
-import org.eclipse.papyrus.diagram.common.part.UmlGmfDiagramEditor;
+import org.eclipse.papyrus.diagram.common.editparts.IPapyrusEditPart;
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.uml2.uml.internal.impl.ClassImpl;
 
 public class PapyrusDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 
@@ -46,7 +45,8 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 
 		Thread.sleep(2000);
 
-		UmlGmfDiagramEditor ed = (UmlGmfDiagramEditor) page.openEditor(input, "org.eclipse.papyrus.core.papyrusEditor");
+		PapyrusMultiDiagramEditor ed = (PapyrusMultiDiagramEditor) page.openEditor(input,
+				"org.eclipse.papyrus.core.papyrusEditor");
 
 		System.out.println(ContextCore.getContextManager().getActiveContext().getAllElements());
 
@@ -55,7 +55,7 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 		assertNotNull(element);
 		assertFalse(element.getInterest().isInteresting());
 
-		Node p = (Node) ed.getEditingDomain()
+		ClassImpl book = (ClassImpl) ed.getEditingDomain()
 				.getResourceSet()
 				.getResources()
 				.get(0)
@@ -64,12 +64,10 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 				.eContents()
 				.get(0);
 
-		EClass firstElement = (EClass) p.getElement();
-
-		assertEquals(firstElement.getName(), "Book");
+		assertEquals(book.getName(), "Book");
 
 		List findEditPartsForElement = ed.getDiagramGraphicalViewer().findEditPartsForElement(
-				EMFCoreUtil.getProxyID(firstElement), EClassEditPart.class);
+				EMFCoreUtil.getProxyID(book), IPapyrusEditPart.class);
 
 		assertEquals(findEditPartsForElement.size(), 1);
 		StructuredSelection selection = new StructuredSelection(findEditPartsForElement);
@@ -83,8 +81,10 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 		assertNotNull(element);
 		assertNotNull(element.getInterest());
 
+		System.err.println(ContextCore.getContextManager().getActiveContext().getAllElements());
+
 		IInteractionElement element2 = ContextCore.getContextManager().getElement(
-				"platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecore#//Book");
+				"platform:/resource/org.eclipse.mylyn.emf.tests.papyrus/model/model.uml#_xkh2ALJFEeCYupgj-BJj-Q");
 
 		assertTrue(element2.getInterest().isInteresting());
 

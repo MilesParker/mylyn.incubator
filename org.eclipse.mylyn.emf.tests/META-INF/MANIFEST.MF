@@ -66,7 +66,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.papyrus.diagram.profile;bundle-version="0.8.0",
  org.eclipse.papyrus.diagram.sequence;bundle-version="0.8.0",
  org.eclipse.papyrus.diagram.statemachine;bundle-version="0.8.0",
- org.eclipse.papyrus.diagram.usecase;bundle-version="0.8.0"
+ org.eclipse.papyrus.diagram.usecase;bundle-version="0.8.0",
+ org.eclipse.papyrus.editor;bundle-version="0.8.0"
 Export-Package: org.eclipse.mylyn.emf.context,
  org.eclipse.mylyn.emf.tests;x-internal:=true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
