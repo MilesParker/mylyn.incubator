@@ -24,9 +24,6 @@ public class GMFUIBridgePlugin extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "org.eclipse.mylyn.gmf.ui"; //$NON-NLS-1$
 
 	private static GMFUIBridgePlugin INSTANCE;
-
-	private GMFEditorContextListener editorListener;
-
 	
 	/**
 	 * The constructor
@@ -35,13 +32,9 @@ public class GMFUIBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStart() {
-		editorListener = new GMFEditorContextListener();
-		ContextCore.getContextManager().addListener(editorListener);
-
 	}
 
 	private void lazyStop() {
-			ContextCore.getContextManager().removeListener(editorListener);
 	}
 	
 	@Override

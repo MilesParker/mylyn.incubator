@@ -31,7 +31,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
  * @author Benjamin Muskalla
  * @author milesparker
  */
-public class EMFUIBridge extends AbstractContextUiBridge {
+public class GMFUIBridge extends AbstractContextUiBridge {
 
 	@Override
 	public void open(IInteractionElement element) {

@@ -50,22 +50,26 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 	 * See https://bugs.eclipse.org/bugs/show_bug.cgi?id=343194
 	 */
 	public String getHandleIdentifier(Object object) {
-		// if (object instanceof IResource) {
-		// return ((IResource) object).getFullPath().toPortableString();
-		// }
-		// TODO rather not have graphcs dependency but papyrus doesn't seem to
-		// adapt to EObject
+		Object domainObject = getDomainObject(object);
+		if (domainObject instanceof EObject) {
+			EObject eobject = ((EObject) domainObject);
+			URI uri = EcoreUtil.getURI(eobject);
+			return uri.toString();
+		}
+		return null;
+	}
+	
+	public EObject getDomainObject(Object object) {
+		//We follow the chain down until the object isn't adaptable to EObject anymore in order to get the actual domain object
 		if (object instanceof IAdaptable) {
 			Object diagramObject = ((IAdaptable) object)
 					.getAdapter(EObject.class);
 			if (diagramObject instanceof EObject) {
-				return getHandleIdentifier(diagramObject);
+				return getDomainObject(diagramObject);
 			}
 		} 
 		if (object instanceof EObject) {
-			EObject eobject = ((EObject) object);
-			URI uri = EcoreUtil.getURI(eobject);
-			return uri.toString();
+			return (EObject) object;
 		}
 		return null;
 	}
@@ -74,7 +78,7 @@ public class EMFStructureBridge extends AbstractContextStructureBridge {
 	public boolean acceptsObject(Object object) {
 		return object instanceof EObject
 				|| (object instanceof IAdaptable && ((IAdaptable) object)
-						.getAdapter(EObject.class) instanceof EObject);
+						.getAdapter(EObject.class) instanceof EClassifier);
 	}
 
 	@Override
