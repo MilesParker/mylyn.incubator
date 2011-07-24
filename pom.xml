@@ -40,13 +40,30 @@
       <layout>default</layout>
     </repository>
   </repositories>
+  <profiles>
+	<profile>
+	  <id>implicit-target</id>
+      <activation>
+		<property>
+		  <name>!explicit-target</name>
+		</property>
+      </activation>
+	  <repositories>
+		<repository>
+		  <id>eclipse-mylyn</id>
+		  <layout>p2</layout>
+		  <url>${mylyn-repository-url}</url>
+		</repository>
+	  </repositories>
+	</profile>
+  </profiles>
   <modules>
     <module>org.eclipse.mylyn.examples.monitor.study</module>
     <module>org.eclipse.mylyn.ide.capabilities</module>
     <module>org.eclipse.mylyn.ide.dev</module>
-    <module>org.eclipse.mylyn.monitor-feature</module>
     <module>org.eclipse.mylyn.monitor.reports</module>
     <module>org.eclipse.mylyn.monitor.usage</module>
+    <module>org.eclipse.mylyn.monitor.usage-feature</module>
     <module>org.eclipse.mylyn.sandbox.dev</module>
     <module>org.eclipse.mylyn.sandbox.dev-feature</module>
     <module>org.eclipse.mylyn.sandbox.tests</module>
