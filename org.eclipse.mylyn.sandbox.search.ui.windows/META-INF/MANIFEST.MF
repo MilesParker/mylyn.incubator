@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.eclipse.mylyn.sandbox.search.ui.windows;singleton:=true
+Bundle-Version: 3.7.0.qualifier
+Bundle-Vendor: %Bundle-Vendor
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.5.0",
+ org.eclipse.mylyn.sandbox.search.ui;bundle-version="3.7.0"
+Eclipse-PlatformFilter: (& (osgi.os=win32))
+Export-Package: org.eclipse.mylyn.internal.sandbox.search.ui.windows;x-internal:=true

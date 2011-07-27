@@ -68,6 +68,7 @@
     <module>org.eclipse.mylyn.sandbox.dev-feature</module>
     <module>org.eclipse.mylyn.sandbox.tests</module>
     <module>org.eclipse.mylyn.sandbox.search.ui</module>
+    <module>org.eclipse.mylyn.sandbox.search.ui.windows</module>
     <module>org.eclipse.mylyn.sandbox.search-feature</module>
     <module>org.eclipse.mylyn.sandbox.ui</module>
     <module>org.eclipse.mylyn.sandbox.ui-feature</module>
