@@ -102,7 +102,7 @@
 				  
 				  <property name="dist" value="mylyn"/>
 				  <property name="filter" value="mylyn"/>
-				  <property name="repositoryName" value="${mylyn-incubator-repository}"/>
+				  <property name="repositoryName" value="${dist.repository}"/>
 				  <property name="pack200" value="${dist.pack200}"/>
 				  
 				  <property name="skipSign" value="${sign.skip}"/>
