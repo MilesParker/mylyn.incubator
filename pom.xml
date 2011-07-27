@@ -14,7 +14,7 @@
   <packaging>pom</packaging>
   <properties>
 	<dist.repository>Mylyn Incubator for Mylyn 3.7</dist.repository>
-  <properties>
+  </properties>
   <mailingLists>
     <mailingList>
       <name>Mylyn Incubator Mailing List</name>
