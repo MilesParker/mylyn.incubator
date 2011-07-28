@@ -10,11 +10,7 @@
          Tasktop Technologies - initial API and implementation
  -->
 
-<plugin> 
-   	<extension point="org.eclipse.mylyn.context.core.bridges">
-		<structureBridge
-	        class="org.eclipse.mylyn.emf.context.EMFStructureBridge"
-	        name="%EmfStructureBridge.name"/>
-	</extension>
+<plugin>
+   <extension-point id="diagram" name="Mylyn Diagram" schema="schema/diagram.exsd"/> 
 	
 </plugin>

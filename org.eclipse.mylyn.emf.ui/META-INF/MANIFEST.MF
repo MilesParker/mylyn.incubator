@@ -30,6 +30,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-Activator: org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.eclipse.mylyn.internal.emf.ui;x-internal:=true
+Export-Package: org.eclipse.mylyn.emf.ui,
+ org.eclipse.mylyn.internal.emf.ui;x-internal:=true
 Bundle-Localization: plugin
 

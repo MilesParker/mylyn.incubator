@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.mylyn.emf.context.diagram">
+      <diagramBridge
+            class="org.eclipse.mylyn.diagram.papyrus.UML2DiagramBridge">
+      </diagramBridge>
+   </extension>
+
+   <extension point="org.eclipse.mylyn.context.ui.bridges">
+    <uiBridge
+          class="org.eclipse.mylyn.diagram.papyrus.UML2UIBridge"
+          contentType="ecore"/>
+  </extension>
+	
+	     <extension
+           point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
+        <decoratorProvider
+              class="org.eclipse.mylyn.diagram.papyrus.UML2DiagramDecoratorProvider">
+           <Priority
+                 name="Highest">
+           </Priority>
+           <object
+                 class="org.eclipse.gmf.runtime.notation.Node(org.eclipse.gmf.runtime.notation)"
+                 id="NODE">
+           </object>
+           <context
+                 decoratorTargets="NODE">
+           </context>
+        </decoratorProvider>
+     </extension>
+
+</plugin>

@@ -12,22 +12,30 @@
 
 <plugin> 
 
-   <extension point="org.eclipse.mylyn.context.ui.bridges">
-    <uiBridge
-          class="org.eclipse.mylyn.gmf.ui.GMFUIBridge"
-          contentType="emf"/>
-  </extension>
    <extension
          point="org.eclipse.mylyn.context.ui.startup">
       <startup
             class="org.eclipse.mylyn.gmf.ui.GMFUIBridgePlugin$GMFUiBridgeStartup">
       </startup>
    </extension>
+   <extension
+         point="org.eclipse.mylyn.emf.context.diagram">
+      <diagramBridge
+            class="org.eclipse.mylyn.emf.context.EcoreDiagramBridge">
+      </diagramBridge>
+   </extension>
 
+
+   <extension point="org.eclipse.mylyn.context.ui.bridges">
+    <uiBridge
+          class="org.eclipse.mylyn.gmf.ui.EcoreUIBridge"
+          contentType="ecore"/>
+  </extension>
+	
 	     <extension
            point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
         <decoratorProvider
-              class="org.eclipse.mylyn.gmf.ui.MylynDecoratorProvider">
+              class="org.eclipse.mylyn.gmf.ui.EcoreDiagramDecoratorProvider">
            <Priority
                  name="Highest">
            </Priority>

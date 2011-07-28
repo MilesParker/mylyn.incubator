@@ -1,7 +1,6 @@
 package org.eclipse.mylyn.gmf.ui;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoration;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
@@ -13,13 +12,14 @@ public class MylynDecorator implements IDecorator {
 	private final MylynDecoratorProvider provider;
 
 	boolean interesting;
-	private final EObject model;
+	private final Object model;
 	private IDecoration lastDecoration;
 
 	boolean dirty;
+	private IFigure decorationFigure;
 
 	public MylynDecorator(MylynDecoratorProvider provider,
-			IDecoratorTarget target, EObject model) {
+			IDecoratorTarget target, Object model) {
 		this.provider = provider;
 		this.target = target;
 		this.model = model;
@@ -32,8 +32,9 @@ public class MylynDecorator implements IDecorator {
 
 	@Override
 	public void deactivate() {
-		// TODO Auto-generated method stub
-
+//		if (decorationFigure != null) {
+//			decorationFigure.erase();
+//		}
 	}
 
 	@Override
@@ -41,17 +42,17 @@ public class MylynDecorator implements IDecorator {
 		if (dirty) {
 			IGraphicalEditPart part = (IGraphicalEditPart) target
 					.getAdapter(IGraphicalEditPart.class);
-			IFigure decoration = null;
+			decorationFigure = null;
 			final IFigure decorated = part.getFigure();
 			if (!interesting) {
-				decoration = new MaskingFigure(part);
+				decorationFigure = new MaskingFigure(part);
 			} else {
-				decoration = new InterestingFigure(part);
+				decorationFigure = new InterestingFigure(part);
 			}
 			if (lastDecoration != null) {
 				target.removeDecoration(lastDecoration);
 			}
-			lastDecoration = target.addDecoration(decoration,
+			lastDecoration = target.addDecoration(decorationFigure,
 					new NodeLocator(decorated), false);
 			dirty = false;
 		}
@@ -68,7 +69,7 @@ public class MylynDecorator implements IDecorator {
 		return target;
 	}
 
-	public EObject getModel() {
+	public Object getModel() {
 		return model;
 	}
 }

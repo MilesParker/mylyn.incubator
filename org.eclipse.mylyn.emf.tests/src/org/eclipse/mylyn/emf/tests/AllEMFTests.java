@@ -18,6 +18,7 @@ import org.eclipse.mylyn.context.tests.support.ContextTestUtil;
 import org.eclipse.mylyn.emf.context.BasicEMFResourceTest;
 import org.eclipse.mylyn.emf.context.EMFStructureBridgeTest;
 import org.eclipse.mylyn.emf.ui.EMFUIBridgeTest;
+import org.eclipse.mylyn.emf.ui.EcoreDiagramEditorUIBridgeTest;
 import org.eclipse.mylyn.emf.ui.PapyrusDiagramEditorUIBridgeTest;
 
 /**
@@ -32,6 +33,7 @@ public class AllEMFTests {
 		suite.addTestSuite(BasicEMFResourceTest.class);
 		suite.addTestSuite(EMFStructureBridgeTest.class);
 		suite.addTestSuite(EMFUIBridgeTest.class);
+		suite.addTestSuite(EcoreDiagramEditorUIBridgeTest.class);
 		suite.addTestSuite(PapyrusDiagramEditorUIBridgeTest.class);
 
 		return suite;

@@ -25,12 +25,22 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.AbstractEMFContextTest;
-import org.eclipse.mylyn.emf.context.EMFStructureBridge;
+import org.eclipse.mylyn.emf.context.EcoreDiagramBridge;
+import org.eclipse.mylyn.gmf.ui.EcoreUIBridge;
+import org.eclipse.mylyn.internal.emf.ui.DiagramUIEditingMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
+
+	protected DiagramUIEditingMonitor monitor;
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		monitor = new DiagramUIEditingMonitor(structureBridge, new EcoreUIBridge());
+	}
 
 	public void test() throws Exception {
 
@@ -88,10 +98,7 @@ public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), EMFStructureBridge.EMF_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), EcoreDiagramBridge.ECORE_CONTENT_TYPE);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-	}
 }

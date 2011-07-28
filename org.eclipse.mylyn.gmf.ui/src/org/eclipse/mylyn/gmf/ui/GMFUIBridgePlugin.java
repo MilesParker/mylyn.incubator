@@ -1,8 +1,6 @@
 package org.eclipse.mylyn.gmf.ui;
 
-import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
-import org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 

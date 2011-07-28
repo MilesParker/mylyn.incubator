@@ -1,20 +1,16 @@
 package org.eclipse.mylyn.gmf.ui;
 
-import org.eclipse.draw2d.Figure;
-import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.RectangleFigure;
-import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.XYLayout;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
 
 public class MaskingFigure extends RectangleFigure {
 	/**
 	 * Constructor.
-	 * @param part 
+	 * 
+	 * @param part
 	 * 
 	 * @param color
 	 *            the highlight color
@@ -27,6 +23,6 @@ public class MaskingFigure extends RectangleFigure {
 		IFigure figure = part.getFigure();
 		Color backgroundColor = figure.getBackgroundColor();
 		setBackgroundColor(backgroundColor);
-		setAlpha(200);
+		setAlpha(255);
 	}
 }

@@ -17,11 +17,18 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
-import org.eclipse.mylyn.emf.context.AbstractEMFContextTest;
+import org.eclipse.mylyn.diagram.papyrus.UML2DiagramBridge;
+import org.eclipse.mylyn.diagram.papyrus.UML2UIBridge;
+import org.eclipse.mylyn.emf.context.AbstractDiagramContextTest;
+import org.eclipse.mylyn.emf.context.DomainAdaptedStructureBridge;
 import org.eclipse.mylyn.emf.context.EMFStructureBridge;
+import org.eclipse.mylyn.emf.tests.WorkspaceSetupHelper;
+import org.eclipse.mylyn.internal.emf.ui.DiagramUIEditingMonitor;
+import org.eclipse.mylyn.resources.tests.ResourceTestUtil;
 import org.eclipse.papyrus.diagram.common.editparts.IPapyrusEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -29,12 +36,29 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.uml2.uml.internal.impl.ClassImpl;
 
-public class PapyrusDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
+public class PapyrusDiagramEditorUIBridgeTest extends AbstractDiagramContextTest {
+
+	protected DomainAdaptedStructureBridge structureBridge;
+
+	private IJavaProject papyrusProject;
+
+	private DiagramUIEditingMonitor monitor;
+
+	@Override
+	protected void setUp() throws Exception {
+		// ignore
+		super.setUp();
+		structureBridge = new EMFStructureBridge(new UML2DiagramBridge());
+		monitor = new DiagramUIEditingMonitor(structureBridge, new UML2UIBridge());
+		papyrusProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip("org.eclipse.mylyn.emf.tests.papyrus",
+				"papyrus.zip");
+		papyrusProject.open(new NullProgressMonitor());
+	}
 
 	public void test() throws Exception {
 
-		getPapyrusProject().open(new NullProgressMonitor());
-		IProject project = getPapyrusProject().getProject();
+		papyrusProject.open(new NullProgressMonitor());
+		IProject project = papyrusProject.getProject();
 		IFile file = project.getFile("model/model.di");
 		assertNotNull(file);
 
@@ -88,6 +112,13 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), EMFStructureBridge.EMF_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), UML2DiagramBridge.UML2_CONTENT_TYPE);
 	}
+
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		ResourceTestUtil.deleteProject(papyrusProject.getProject());
+	}
+
 }

@@ -9,26 +9,26 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.gmf.ui;
+package org.eclipse.mylyn.diagram.papyrus;
 
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Locator;
-import org.eclipse.gmf.runtime.diagram.ui.services.decorator.Decoration;
+import org.eclipse.mylyn.emf.context.EcoreDiagramBridge;
+import org.eclipse.mylyn.emf.ui.GenericUIBridge;
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
+import org.eclipse.ui.IEditorPart;
 
-public class NodeLocator implements Locator {
+/**
+ * @author milesparker
+ */
+public class UML2UIBridge extends GenericUIBridge {
 
-	private final IFigure decorated;
-
-	public NodeLocator(IFigure decorated) {
-		this.decorated = decorated;
+	@Override
+	public String getContentType() {
+		return UML2DiagramBridge.UML2_CONTENT_TYPE;
 	}
 
 	@Override
-	public void relocate(IFigure target) {
-		if (target instanceof Decoration) {
-			target.setBounds(decorated.getBounds().getCopy());
-			((IFigure) target.getChildren().get(0)).setBounds(decorated.getBounds().getCopy());
-		}
+	public boolean acceptsEditor(IEditorPart editorPart) {
+		return editorPart instanceof PapyrusMultiDiagramEditor;
 	}
 
 }

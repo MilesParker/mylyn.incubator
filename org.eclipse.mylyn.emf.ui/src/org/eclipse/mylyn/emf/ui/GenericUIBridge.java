@@ -9,29 +9,23 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.gmf.ui;
+package org.eclipse.mylyn.emf.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.context.ui.AbstractContextUiBridge;
-import org.eclipse.mylyn.emf.context.EMFStructureBridge;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-/**
- * @author Benjamin Muskalla
- * @author milesparker
- */
-public class GMFUIBridge extends AbstractContextUiBridge {
+public abstract class GenericUIBridge extends AbstractContextUiBridge {
 
 	@Override
 	public void open(IInteractionElement element) {
@@ -44,11 +38,6 @@ public class GMFUIBridge extends AbstractContextUiBridge {
 		// ignore
 		System.err.println("close" + element);
 
-	}
-
-	@Override
-	public boolean acceptsEditor(IEditorPart editorPart) {
-		return (editorPart instanceof IEditingDomainProvider);
 	}
 
 	@Override
@@ -86,10 +75,5 @@ public class GMFUIBridge extends AbstractContextUiBridge {
 	public Object getObjectForTextSelection(TextSelection selection, IEditorPart editor) {
 		// ignore
 		return null;
-	}
-
-	@Override
-	public String getContentType() {
-		return EMFStructureBridge.EMF_CONTENT_TYPE;
 	}
 }

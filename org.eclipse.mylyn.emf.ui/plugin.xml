@@ -18,6 +18,4 @@
             class="org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin$EMFUIBridgeStartup">
       </startup>
    </extension>
-
-	
 </plugin>
