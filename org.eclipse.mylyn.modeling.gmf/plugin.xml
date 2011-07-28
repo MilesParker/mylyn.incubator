@@ -19,7 +19,7 @@
       </startup>
    </extension>
    <extension
-         point="org.eclipse.mylyn.emf.context.diagram">
+         point="org.eclipse.mylyn.modeling.core.diagram">
       <diagramBridge
             class="org.eclipse.mylyn.emf.context.EcoreDiagramBridge">
       </diagramBridge>

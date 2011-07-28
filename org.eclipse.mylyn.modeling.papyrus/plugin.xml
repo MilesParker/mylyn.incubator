@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.mylyn.emf.context.diagram">
+         point="org.eclipse.mylyn.modeling.core.diagram">
       <diagramBridge
             class="org.eclipse.mylyn.diagram.papyrus.UML2DiagramBridge">
       </diagramBridge>

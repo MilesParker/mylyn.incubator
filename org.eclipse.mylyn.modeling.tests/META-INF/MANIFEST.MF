@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mylyn EMF Tests
-Bundle-SymbolicName: org.eclipse.mylyn.emf.tests;singleton:=true
+Bundle-SymbolicName: org.eclipse.mylyn.modeling.tests;singleton:=true
 Bundle-Version: 3.7.0.qualifier
 Bundle-Vendor: Eclipse Mylyn
 Require-Bundle: org.eclipse.core.runtime,
@@ -27,8 +27,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.context.core;bundle-version="3.6.0",
  org.eclipse.mylyn.context.ui;bundle-version="3.6.0",
  org.eclipse.mylyn.context.tests;bundle-version="3.6.0",
- org.eclipse.mylyn.emf.ui;bundle-version="3.6.0",
- org.eclipse.mylyn.emf.context;bundle-version="1.0.0",
+ org.eclipse.mylyn.modeling.ui;bundle-version="3.6.0",
+ org.eclipse.mylyn.modeling.core;bundle-version="1.0.0",
  org.eclipse.jdt.core;bundle-version="3.7.0",
  org.eclipse.mylyn.commons.tests;bundle-version="3.7.0",
  org.eclipse.ui;bundle-version="3.7.0",
@@ -68,8 +68,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.papyrus.diagram.statemachine;bundle-version="0.8.0",
  org.eclipse.papyrus.diagram.usecase;bundle-version="0.8.0",
  org.eclipse.papyrus.editor;bundle-version="0.8.0",
- org.eclipse.mylyn.diagram.papyrus;bundle-version="1.0.0",
- org.eclipse.mylyn.gmf.ui;bundle-version="1.0.0"
+ org.eclipse.mylyn.modeling.papyrus;bundle-version="1.0.0",
+ org.eclipse.mylyn.modeling.gmf;bundle-version="1.0.0"
 Export-Package: org.eclipse.mylyn.emf.context,
  org.eclipse.mylyn.emf.tests;x-internal:=true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
