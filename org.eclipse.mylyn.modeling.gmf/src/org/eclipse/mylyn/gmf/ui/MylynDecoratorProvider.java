@@ -29,14 +29,13 @@ import org.eclipse.gmf.runtime.diagram.ui.services.decorator.CreateDecoratorsOpe
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorProvider;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.mylyn.context.core.AbstractContextListener;
 import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
-import org.eclipse.mylyn.context.core.IContextListener;
 import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.DomainAdaptedStructureBridge;
-import org.eclipse.mylyn.emf.context.EcoreDiagramBridge;
 import org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -44,7 +43,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 public abstract class MylynDecoratorProvider extends AbstractProvider implements
-		IDecoratorProvider, IContextListener {
+		IDecoratorProvider {
 
 	public static final String MYLYN_MARKER = "mylyn-marker";
 
@@ -60,8 +59,14 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 
 	private DomainAdaptedStructureBridge structure;
 
+	AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
+		public void contextChanged(ContextChangeEvent event) {
+			MylynDecoratorProvider.this.contextChanged(event);
+		}
+	};
+	
 	public MylynDecoratorProvider() {
-		ContextCore.getContextManager().addListener(this);
+		ContextCore.getContextManager().addListener(contextListenerAdapter);
 		decorators = new HashSet<MylynDecorator>();
 	}
 
@@ -90,7 +95,6 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 				.getActiveContext());
 	}
 
-	@Override
 	public void contextChanged(ContextChangeEvent event) {
 
 		if (event.getEventKind() != ContextChangeKind.DEACTIVATED
