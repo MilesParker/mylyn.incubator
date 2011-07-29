@@ -32,9 +32,7 @@ public class MylynDecorator implements IDecorator {
 
 	@Override
 	public void deactivate() {
-//		if (decorationFigure != null) {
-//			decorationFigure.erase();
-//		}
+		provider.removeDecorator(this);
 	}
 
 	@Override

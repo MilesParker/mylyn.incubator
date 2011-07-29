@@ -21,11 +21,14 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPartListener;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.CreateDecoratorsOperation;
+import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorProvider;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
 import org.eclipse.gmf.runtime.notation.View;
@@ -36,7 +39,6 @@ import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.DomainAdaptedStructureBridge;
-import org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -83,6 +85,14 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	public void createDecorators(IDecoratorTarget target) {
 		IGraphicalEditPart targetPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
+		targetPart.addEditPartListener(new EditPartListener.Stub() {
+			@Override
+			public void partDeactivated(EditPart editpart) {
+			}
+			@Override
+			public void removingChild(EditPart child, int index) {
+			}
+		});
 		Object model = targetPart.getModel();
 		if (model instanceof View) {
 			model = ((View) model).getElement();
@@ -96,7 +106,6 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	}
 
 	public void contextChanged(ContextChangeEvent event) {
-
 		if (event.getEventKind() != ContextChangeKind.DEACTIVATED
 				&& event.getContext() != null) {
 			IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
@@ -114,12 +123,17 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 				}
 			}
 		} else {
-			for (MylynDecorator decorator : decorators) {
-				decorator.deactivate();
-			}
-			decorators = new ArrayList<MylynDecorator>();
+			clearDecorators();
 		}
 
+	}
+
+	public void removeDecorator(IDecorator decorator) {
+		decorators.remove(decorator);
+	}
+	
+	private void clearDecorators() {
+		decorators = new ArrayList<MylynDecorator>();
 	}
 
 	private void updateInterestDecorators(IInteractionContext context) {
@@ -165,7 +179,6 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 
 	public DomainAdaptedStructureBridge getStructure() {
 		if (structure == null) {
-			EMFUIBridgePlugin.getDefault().initExtensions();
 			structure = (DomainAdaptedStructureBridge) ContextCore
 					.getStructureBridge(getContentType());
 		}

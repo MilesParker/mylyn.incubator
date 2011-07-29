@@ -11,6 +11,5 @@
  -->
 
 <plugin>
-   <extension-point id="diagram" name="Mylyn Diagram" schema="schema/diagram.exsd"/> 
 	
 </plugin>

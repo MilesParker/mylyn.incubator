@@ -32,7 +32,6 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.mylyn.context.core.ContextCore;
-import org.eclipse.mylyn.context.tests.support.ContextTestUtil;
 import org.eclipse.mylyn.internal.context.core.InteractionContext;
 import org.eclipse.mylyn.internal.context.core.InteractionContextScaling;
 import org.eclipse.pde.internal.core.natures.PDE;
@@ -63,8 +62,6 @@ public class WorkspaceSetupHelper {
 		taskscape = new InteractionContext(HELPER_CONTEXT_ID, new InteractionContextScaling());
 
 		workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-
-		IJavaProject project1 = ContextTestUtil.createJavaPluginProjectFromZip("project1", "project1.zip");
 		isSetup = true;
 
 		return workspaceRoot;

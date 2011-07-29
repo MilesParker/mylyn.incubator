@@ -16,17 +16,28 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.presentation.EcoreEditor;
+import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.AbstractEMFContextTest;
-import org.eclipse.mylyn.emf.context.EcoreDiagramBridge;
+import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
+import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 public class EMFUIBridgeTest extends AbstractEMFContextTest {
+
+	private DiagramUIEditingMonitor monitor;
+
+	@Override
+	protected void setUp() throws Exception {
+		// ignore
+		super.setUp();
+		monitor = new DiagramUIEditingMonitor(structureBridge, new EcoreDiagramDomainBridge());
+		MonitorUi.getSelectionMonitors().add(monitor);
+	}
 
 	public void testModification() throws Exception {
 		getEmfProject().open(new NullProgressMonitor());
@@ -38,7 +49,8 @@ public class EMFUIBridgeTest extends AbstractEMFContextTest {
 		FileEditorInput input = new FileEditorInput(file);
 
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		EcoreEditor ed = (EcoreEditor) page.openEditor(input, "org.eclipse.emf.ecore.presentation.EcoreEditorID");
+		EcoreDiagramEditor ed = (EcoreDiagramEditor) page.openEditor(input,
+				"org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID");
 
 		System.out.println(ContextCore.getContextManager().getActiveContext().getAllElements());
 
@@ -51,7 +63,7 @@ public class EMFUIBridgeTest extends AbstractEMFContextTest {
 
 		EClassifier book = p.getEClassifier("Book");
 
-		ed.setSelection(new StructuredSelection(book));
+		monitor.handleWorkbenchPartSelection(ed, new StructuredSelection(book), true);
 
 		assertNotNull(element);
 		assertNotNull(element.getInterest());
@@ -60,6 +72,6 @@ public class EMFUIBridgeTest extends AbstractEMFContextTest {
 				"platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecore#//Book");
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), EcoreDiagramBridge.ECORE_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE);
 	}
 }

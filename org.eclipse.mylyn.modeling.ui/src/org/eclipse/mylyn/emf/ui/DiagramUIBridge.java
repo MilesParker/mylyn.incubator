@@ -25,12 +25,12 @@ import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-public abstract class GenericUIBridge extends AbstractContextUiBridge {
+public abstract class DiagramUIBridge extends AbstractContextUiBridge {
+
+	boolean initialized;
 
 	@Override
 	public void open(IInteractionElement element) {
-		// ignore
-		System.err.println("o" + element);
 	}
 
 	@Override
@@ -73,7 +73,18 @@ public abstract class GenericUIBridge extends AbstractContextUiBridge {
 	 */
 	@Override
 	public Object getObjectForTextSelection(TextSelection selection, IEditorPart editor) {
-		// ignore
 		return null;
 	}
+
+	@Override
+	public boolean acceptsEditor(IEditorPart editorPart) {
+		return getDomainUIBridge().acceptsEditor(editorPart);
+	}
+
+	@Override
+	public String getContentType() {
+		return getDomainUIBridge().getContentType();
+	}
+
+	public abstract IDomainUIBridge getDomainUIBridge();
 }

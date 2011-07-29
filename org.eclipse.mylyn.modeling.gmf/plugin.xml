@@ -18,35 +18,8 @@
             class="org.eclipse.mylyn.gmf.ui.GMFUIBridgePlugin$GMFUiBridgeStartup">
       </startup>
    </extension>
-   <extension
-         point="org.eclipse.mylyn.modeling.core.diagram">
-      <diagramBridge
-            class="org.eclipse.mylyn.emf.context.EcoreDiagramBridge">
-      </diagramBridge>
-   </extension>
 
 
-   <extension point="org.eclipse.mylyn.context.ui.bridges">
-    <uiBridge
-          class="org.eclipse.mylyn.gmf.ui.EcoreUIBridge"
-          contentType="ecore"/>
-  </extension>
 	
-	     <extension
-           point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
-        <decoratorProvider
-              class="org.eclipse.mylyn.gmf.ui.EcoreDiagramDecoratorProvider">
-           <Priority
-                 name="Highest">
-           </Priority>
-           <object
-                 class="org.eclipse.gmf.runtime.notation.Node(org.eclipse.gmf.runtime.notation)"
-                 id="NODE">
-           </object>
-           <context
-                 decoratorTargets="NODE">
-           </context>
-        </decoratorProvider>
-     </extension>
 	
 </plugin>

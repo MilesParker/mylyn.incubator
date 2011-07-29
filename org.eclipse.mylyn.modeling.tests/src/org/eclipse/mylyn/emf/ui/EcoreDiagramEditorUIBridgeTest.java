@@ -25,9 +25,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.emf.context.AbstractEMFContextTest;
-import org.eclipse.mylyn.emf.context.EcoreDiagramBridge;
-import org.eclipse.mylyn.gmf.ui.EcoreUIBridge;
-import org.eclipse.mylyn.internal.emf.ui.DiagramUIEditingMonitor;
+import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
+import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
@@ -39,7 +38,8 @@ public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		monitor = new DiagramUIEditingMonitor(structureBridge, new EcoreUIBridge());
+		monitor = new DiagramUIEditingMonitor(structureBridge, new EcoreDiagramDomainBridge());
+		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 
 	public void test() throws Exception {
@@ -58,8 +58,6 @@ public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 
 		EcoreDiagramEditor ed = (EcoreDiagramEditor) page.openEditor(input,
 				"org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID");
-
-		System.out.println(ContextCore.getContextManager().getActiveContext().getAllElements());
 
 		IInteractionElement element = ContextCore.getContextManager().getElement(
 				"platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecorediag#//Diagram");
@@ -98,7 +96,7 @@ public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), EcoreDiagramBridge.ECORE_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE);
 	}
 
 }

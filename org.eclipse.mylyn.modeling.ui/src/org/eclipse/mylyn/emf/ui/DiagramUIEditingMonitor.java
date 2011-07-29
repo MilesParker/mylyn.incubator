@@ -9,15 +9,13 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.internal.emf.ui;
+package org.eclipse.mylyn.emf.ui;
 
 import java.util.Iterator;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
-import org.eclipse.mylyn.context.ui.AbstractContextUiBridge;
-import org.eclipse.mylyn.internal.context.ui.ContextUiPlugin;
 import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
@@ -29,9 +27,9 @@ public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
 
 	private final AbstractContextStructureBridge structure;
 
-	private AbstractContextUiBridge ui;
+	private final IDomainUIBridge ui;
 
-	public DiagramUIEditingMonitor(AbstractContextStructureBridge structure, AbstractContextUiBridge ui) {
+	public DiagramUIEditingMonitor(AbstractContextStructureBridge structure, IDomainUIBridge ui) {
 		super();
 		this.structure = structure;
 		this.ui = ui;
@@ -39,8 +37,6 @@ public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
 
 	@Override
 	public void handleWorkbenchPartSelection(IWorkbenchPart part, ISelection selection, boolean contributeToContext) {
-		ui = ContextUiPlugin.getDefault().getUiBridge(structure.getContentType());
-
 		if (part instanceof IEditorPart && ui.acceptsEditor((IEditorPart) part)
 				&& selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;

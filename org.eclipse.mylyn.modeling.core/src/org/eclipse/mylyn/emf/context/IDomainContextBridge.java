@@ -1,7 +1,7 @@
 package org.eclipse.mylyn.emf.context;
 
 
-public interface IDiagramContextBridge {
+public interface IDomainContextBridge {
 	
 	String getContentType();
 

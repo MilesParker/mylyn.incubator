@@ -11,24 +11,16 @@
 
 package org.eclipse.mylyn.diagram.papyrus;
 
-import org.eclipse.mylyn.emf.context.EcoreDiagramBridge;
-import org.eclipse.mylyn.emf.ui.GenericUIBridge;
-import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.mylyn.emf.ui.DiagramUIBridge;
+import org.eclipse.mylyn.emf.ui.IDomainUIBridge;
 
 /**
  * @author milesparker
  */
-public class UML2UIBridge extends GenericUIBridge {
+public class UML2UIBridge extends DiagramUIBridge {
 
 	@Override
-	public String getContentType() {
-		return UML2DiagramBridge.UML2_CONTENT_TYPE;
+	public IDomainUIBridge getDomainUIBridge() {
+		return UML2DomainBridge.getInstance();
 	}
-
-	@Override
-	public boolean acceptsEditor(IEditorPart editorPart) {
-		return editorPart instanceof PapyrusMultiDiagramEditor;
-	}
-
 }

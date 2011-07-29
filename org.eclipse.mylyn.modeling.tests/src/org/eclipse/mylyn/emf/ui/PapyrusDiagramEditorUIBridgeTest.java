@@ -21,13 +21,11 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
-import org.eclipse.mylyn.diagram.papyrus.UML2DiagramBridge;
-import org.eclipse.mylyn.diagram.papyrus.UML2UIBridge;
+import org.eclipse.mylyn.diagram.papyrus.UML2DomainBridge;
+import org.eclipse.mylyn.diagram.papyrus.UML2StructureBridge;
 import org.eclipse.mylyn.emf.context.AbstractDiagramContextTest;
 import org.eclipse.mylyn.emf.context.DomainAdaptedStructureBridge;
-import org.eclipse.mylyn.emf.context.EMFStructureBridge;
 import org.eclipse.mylyn.emf.tests.WorkspaceSetupHelper;
-import org.eclipse.mylyn.internal.emf.ui.DiagramUIEditingMonitor;
 import org.eclipse.mylyn.resources.tests.ResourceTestUtil;
 import org.eclipse.papyrus.diagram.common.editparts.IPapyrusEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
@@ -48,8 +46,8 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractDiagramContextTest
 	protected void setUp() throws Exception {
 		// ignore
 		super.setUp();
-		structureBridge = new EMFStructureBridge(new UML2DiagramBridge());
-		monitor = new DiagramUIEditingMonitor(structureBridge, new UML2UIBridge());
+		structureBridge = new UML2StructureBridge();
+		monitor = new DiagramUIEditingMonitor(structureBridge, UML2DomainBridge.getInstance());
 		papyrusProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip("org.eclipse.mylyn.emf.tests.papyrus",
 				"papyrus.zip");
 		papyrusProject.open(new NullProgressMonitor());
@@ -112,7 +110,7 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractDiagramContextTest
 
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), UML2DiagramBridge.UML2_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), UML2DomainBridge.UML2_CONTENT_TYPE);
 	}
 
 	@Override

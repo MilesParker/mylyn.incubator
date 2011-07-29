@@ -13,9 +13,9 @@ package org.eclipse.mylyn.emf.context;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.mylyn.commons.sdk.util.ResourceTestUtil;
 import org.eclipse.mylyn.emf.tests.WorkspaceSetupHelper;
-import org.eclipse.mylyn.internal.emf.ui.EMFUIBridgePlugin;
-import org.eclipse.mylyn.resources.tests.ResourceTestUtil;
+import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramStructureBridge;
 
 public class AbstractEMFContextTest extends AbstractDiagramContextTest {
 
@@ -26,8 +26,7 @@ public class AbstractEMFContextTest extends AbstractDiagramContextTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		EMFUIBridgePlugin.getDefault().initExtensions();
-		structureBridge = new EMFStructureBridge(new EcoreDiagramBridge());
+		structureBridge = new EcoreDiagramStructureBridge();
 		emfProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip("org.eclipse.mylyn.emf.tests.library",
 				"library.zip");
 		emfProject.open(new NullProgressMonitor());

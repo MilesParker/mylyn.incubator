@@ -22,11 +22,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @author Benjamin Muskalla
  * @author milesparker
  */
-public class EMFStructureBridge extends DomainAdaptedStructureBridge {
-
-	public EMFStructureBridge(IDiagramContextBridge delegatedBridge) {
-		super(delegatedBridge);
-	}
+public abstract class EMFStructureBridge extends DomainAdaptedStructureBridge {
 
 	public String getDomainHandleIdentifier(Object object) {
 			EObject eobject = ((EObject) object);
@@ -59,7 +55,7 @@ public class EMFStructureBridge extends DomainAdaptedStructureBridge {
 	
 	@Override
 	public String getLabel(Object object) {
-		String label = delegatedBridge.getLabel(object);
+		String label = getDomainContextBridge().getLabel(object);
 		if (label != null) {
 			return label;
 		}

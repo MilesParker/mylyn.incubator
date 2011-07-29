@@ -8,13 +8,6 @@ import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 public abstract class DomainAdaptedStructureBridge extends
 		AbstractContextStructureBridge {
 
-	IDiagramContextBridge delegatedBridge;
-
-	public DomainAdaptedStructureBridge(IDiagramContextBridge delegatedBridge) {
-		super();
-		this.delegatedBridge = delegatedBridge;
-	}
-
 	public abstract String getDomainHandleIdentifier(Object object);
 	
 	public Object getDomainObject(Object object) {
@@ -25,14 +18,14 @@ public abstract class DomainAdaptedStructureBridge extends
 		}
 		if (object instanceof IAdaptable) {
 			Object diagramObject = ((IAdaptable) object)
-					.getAdapter(delegatedBridge.getDomainBaseClass());
+					.getAdapter(getDomainContextBridge().getDomainBaseClass());
 			if (diagramObject != null
-					&& delegatedBridge.getDomainBaseClass().isAssignableFrom(
+					&& getDomainContextBridge().getDomainBaseClass().isAssignableFrom(
 							diagramObject.getClass())) {
 				return getDomainObject(diagramObject);
 			}
 		}
-		for (Class<?> domainClass : delegatedBridge.getDomainNodeClasses()) {
+		for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
 			if (domainClass.isAssignableFrom(object.getClass())) {
 				return object;
 			}
@@ -48,7 +41,7 @@ public abstract class DomainAdaptedStructureBridge extends
 	@Override
 	public String getHandleIdentifier(Object object) {
 		Object domainObject = getDomainObject(object);
-		if (domainObject != null && delegatedBridge.getDomainBaseClass().isAssignableFrom(domainObject.getClass())) {
+		if (domainObject != null && getDomainContextBridge().getDomainBaseClass().isAssignableFrom(domainObject.getClass())) {
 			return getDomainHandleIdentifier(domainObject);
 		}
 		return null;
@@ -76,7 +69,7 @@ public abstract class DomainAdaptedStructureBridge extends
 	@Override
 	public boolean canBeLandmark(String handle) {
 		Object object = getObjectForHandle(handle);
-		for (Class<?> domainClass : delegatedBridge.getDomainNodeClasses()) {
+		for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
 			if (domainClass.isAssignableFrom(object.getClass())) {
 				return true;
 			}
@@ -99,7 +92,7 @@ public abstract class DomainAdaptedStructureBridge extends
 	@Override
 	public String getContentType() {
 		// TODO Auto-generated method stub
-		return delegatedBridge.getContentType();
+		return getDomainContextBridge().getContentType();
 	}
 	
 	@Override
@@ -107,4 +100,5 @@ public abstract class DomainAdaptedStructureBridge extends
 		return getContentType();
 	}
 
+	public abstract IDomainContextBridge getDomainContextBridge();
 }

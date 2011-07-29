@@ -7,7 +7,7 @@ public class UML2DiagramDecoratorProvider extends MylynDecoratorProvider {
 
 	@Override
 	public String getContentType() {
-		return UML2DiagramBridge.UML2_CONTENT_TYPE;
+		return UML2DomainBridge.UML2_CONTENT_TYPE;
 	}
 
 }
