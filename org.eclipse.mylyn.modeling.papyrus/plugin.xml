@@ -3,14 +3,14 @@
 <plugin>
    <extension point="org.eclipse.mylyn.context.ui.bridges">
     <uiBridge
-          class="org.eclipse.mylyn.diagram.papyrus.UML2UIBridge"
+          class="org.eclipse.mylyn.modeling.papyrus.UML2UIBridge"
           contentType="uml2"/>
   </extension>
 	
 	     <extension
            point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
         <decoratorProvider
-              class="org.eclipse.mylyn.diagram.papyrus.UML2DiagramDecoratorProvider">
+              class="org.eclipse.mylyn.modeling.papyrus.UML2DiagramDecoratorProvider">
            <Priority
                  name="Highest">
            </Priority>
@@ -26,13 +26,13 @@
       <extension
             point="org.eclipse.mylyn.context.core.bridges">
          <structureBridge
-               class="org.eclipse.mylyn.diagram.papyrus.UML2StructureBridge">
+               class="org.eclipse.mylyn.modeling.papyrus.UML2StructureBridge">
          </structureBridge>
       </extension>
       <extension
             point="org.eclipse.mylyn.context.ui.startup">
          <startup
-               class="org.eclipse.mylyn.diagram.papyrus.UML2DiagramUIBridgePlugin$UML2DiagramBridgeStartup">
+               class="org.eclipse.mylyn.modeling.papyrus.UML2DiagramUIBridgePlugin$UML2DiagramBridgeStartup">
          </startup>
       </extension>
 

@@ -1,10 +1,10 @@
 package org.eclipse.mylyn.modeling.ecoretools;
 
-import org.eclipse.mylyn.emf.ui.DiagramUIBridge;
-import org.eclipse.mylyn.emf.ui.IDomainUIBridge;
+import org.eclipse.mylyn.modeling.ui.DiagramUIBridge;
+import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 
 public class EcoreDiagramUIBridge extends DiagramUIBridge {
-	public IDomainUIBridge getDomainUIBridge() {
+	public IModelUIProvider getDomainUIBridge() {
 		return EcoreDiagramDomainBridge.getInstance();
 	};
 }

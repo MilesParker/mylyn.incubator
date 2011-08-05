@@ -1,12 +1,10 @@
-package org.eclipse.mylyn.modeling.ecoretools;
+package org.eclipse.mylyn.modeling.papyrus;
 
 import org.eclipse.mylyn.modeling.context.EMFStructureBridge;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 
-public class EcoreDiagramStructureBridge extends EMFStructureBridge {
-
-	@Override
+public class UML2StructureBridge extends EMFStructureBridge {
 	public IModelStructureProvider getDomainContextBridge() {
-		return EcoreDiagramDomainBridge.getInstance();
-	}
+		return UML2DomainBridge.getInstance();
+	};
 }

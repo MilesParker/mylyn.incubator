@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Context
 Bundle-SymbolicName: org.eclipse.mylyn.modeling.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.mylyn.emf.context.Activator
+Bundle-Activator: org.eclipse.mylyn.modeling.context.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.context.core,
  org.eclipse.core.resources;bundle-version="3.7.0",
@@ -14,4 +14,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.uml2.uml;bundle-version="3.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.mylyn.emf.context
+Export-Package: org.eclipse.mylyn.modeling.context

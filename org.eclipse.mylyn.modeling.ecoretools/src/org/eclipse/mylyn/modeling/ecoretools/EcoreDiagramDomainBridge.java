@@ -15,10 +15,10 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
-import org.eclipse.mylyn.emf.ui.IDomainUIBridge;
+import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IEditorPart;
 
-public class EcoreDiagramDomainBridge implements IDomainUIBridge {
+public class EcoreDiagramDomainBridge implements IModelUIProvider {
 
 	private static EcoreDiagramDomainBridge INSTANCE;
 

@@ -26,9 +26,13 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore;bundle-version="2.5.0",
  org.eclipse.emf.edit;bundle-version="2.7.0",
  org.eclipse.emf.edit.ui;bundle-version="2.7.0",
- org.eclipse.mylyn.modeling.core;bundle-version="1.0.0"
+ org.eclipse.mylyn.modeling.core;bundle-version="1.0.0",
+ org.eclipse.gef;bundle-version="3.7.0",
+ org.eclipse.gmf.runtime.diagram.core;bundle-version="1.4.1",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.5.0",
+ org.eclipse.emf.ecoretools.diagram;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.eclipse.mylyn.emf.ui
+Export-Package: org.eclipse.mylyn.modeling.ui
 Bundle-Localization: plugin
 

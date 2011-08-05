@@ -9,12 +9,9 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.ecoretools;
+package org.eclipse.mylyn.modeling.papyrus;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
@@ -27,15 +24,16 @@ import org.osgi.framework.BundleContext;
 /**
  * @author mparker
  */
-public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
+public class UML2DiagramUIBridgePlugin extends AbstractUIPlugin {
 
 	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.ecoretools"; //$NON-NLS-1$
 
-	private static EcoreDiagramUIBridgePlugin INSTANCE;
+	private static UML2DiagramUIBridgePlugin INSTANCE;
 
 	private DiagramUIEditingMonitor monitor;
 
-	public EcoreDiagramUIBridgePlugin() {
+
+	public UML2DiagramUIBridgePlugin() {
 	}
 
 	/**
@@ -48,28 +46,17 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStart() {
-		AbstractContextStructureBridge structureBridge = ContextCore
-				.getStructureBridge(EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE);
-		// we'll get resource by default -- shouldn't we get null as failure
-		// case? https://bugs.eclipse.org/bugs/show_bug.cgi?id=353439
+		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(UML2DomainBridge.UML2_CONTENT_TYPE);
 		if (structureBridge instanceof EMFStructureBridge) {
-			EMFStructureBridge bridge = (EMFStructureBridge) structureBridge;
-			monitor = new DiagramUIEditingMonitor(bridge,
-					EcoreDiagramDomainBridge.getInstance());
-			MonitorUi.getSelectionMonitors().add(monitor);
-		} else {
-			StatusHandler
-					.log(new Status(
-							IStatus.WARNING,
-							ID_PLUGIN,
-							"Couldn't load EMFStructure Bridge for " + EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
+			structureBridge = new UML2StructureBridge();
 		}
+		EMFStructureBridge bridge = (EMFStructureBridge) structureBridge;
+		monitor = new DiagramUIEditingMonitor(bridge, UML2DomainBridge.getInstance());
+		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 
 	private void lazyStop() {
-		if (monitor != null) {
-			MonitorUi.getSelectionMonitors().remove(monitor);
-		}
+		MonitorUi.getSelectionMonitors().remove(monitor);
 	}
 
 	@Override
@@ -83,13 +70,12 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the shared instance.
 	 */
-	public static EcoreDiagramUIBridgePlugin getDefault() {
+	public static UML2DiagramUIBridgePlugin getDefault() {
 		return INSTANCE;
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given plug-in
-	 * relative path.
+	 * Returns an image descriptor for the image file at the given plug-in relative path.
 	 * 
 	 * @param path
 	 *            the path
@@ -99,10 +85,10 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 		return AbstractUIPlugin.imageDescriptorFromPlugin(ID_PLUGIN, path);
 	}
 
-	public static class EcoreDiagramBridgeStartup implements IContextUiStartup {
+	public static class UML2DiagramBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
-			EcoreDiagramUIBridgePlugin.getDefault().lazyStart();
+			UML2DiagramUIBridgePlugin.getDefault().lazyStart();
 		}
 
 	}

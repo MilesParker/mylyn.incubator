@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Ui
 Bundle-SymbolicName: org.eclipse.mylyn.modeling.gmf;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.mylyn.gmf.ui.GMFUIBridgePlugin
+Bundle-Activator: org.eclipse.mylyn.modeling.gmf.GMFUIBridgePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.mylyn.modeling.ui;bundle-version="3.7.0",
@@ -17,4 +17,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.mylyn.gmf.ui
+Export-Package: org.eclipse.mylyn.modeling.gmf

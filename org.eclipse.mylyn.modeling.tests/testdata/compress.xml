@@ -1,7 +1,7 @@
 <project name="Compress Target Project" default="compress" basedir=".">
 
 	<target name="compress">
-		<zip destFile="projects/library.zip" basedir="org.eclipse.mylyn.emf.tests.library" />
-		<zip destFile="projects/papyrus.zip" basedir="org.eclipse.mylyn.emf.tests.papyrus" />
+		<zip destFile="projects/ecorediagram.zip" basedir="org.eclipse.mylyn.modeling.tests.ecorediagram" />
+		<zip destFile="projects/papyrus.zip" basedir="org.eclipse.mylyn.modeling.tests.papyrus" />
 	</target>
 </project>
