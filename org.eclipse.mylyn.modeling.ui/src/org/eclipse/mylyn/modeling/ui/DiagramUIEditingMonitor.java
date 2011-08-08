@@ -17,7 +17,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
@@ -37,8 +36,7 @@ public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
 
 	@Override
 	public void handleWorkbenchPartSelection(IWorkbenchPart part, ISelection selection, boolean contributeToContext) {
-		if (part instanceof IEditorPart && ui.acceptsPart((IEditorPart) part)
-				&& selection instanceof IStructuredSelection) {
+		if (ui.acceptsPart(part) && selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 			for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {
 				Object object = iterator.next();

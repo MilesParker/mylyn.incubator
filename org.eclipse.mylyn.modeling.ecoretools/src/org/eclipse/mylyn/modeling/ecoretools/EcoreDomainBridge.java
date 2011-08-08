@@ -19,9 +19,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 
 /**
- * 
  * @author milesparker
- *
  */
 public abstract class EcoreDomainBridge implements IModelUIProvider {
 
