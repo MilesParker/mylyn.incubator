@@ -1,6 +1,7 @@
 package org.eclipse.mylyn.modeling.gmf;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoration;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
@@ -10,72 +11,72 @@ public class MylynDecorator implements IDecorator {
 
 	private final MylynDecoratorProvider provider;
 
-	boolean interesting;
-	private final Object model;
+	boolean wasInteresting;
+	boolean wasFocussed;
+	private final EObject model;
 	private IDecoration lastDecoration;
 
-	boolean dirty;
-	boolean active;
+	boolean initialized;
 	private IFigure decorationFigure;
 
 	private final IDecoratorTarget target;
 
 	public MylynDecorator(MylynDecoratorProvider provider,
-			IDecoratorTarget target, Object model) {
+			IDecoratorTarget target, EObject model) {
 		this.provider = provider;
 		this.target = target;
 		this.model = model;
-		dirty = true;
+		getDecoratorTarget().installDecorator(
+				MylynDecoratorProvider.MYLYN_DETAIL, this);
 	}
 
 	@Override
 	public void activate() {
-		active = true;
 		refresh();
 	}
 
 	@Override
 	public void deactivate() {
-		active = false;
-		getDecoratorTarget().removeDecoration(lastDecoration);
+		initialized = false;
+		removeDecoration();
 	}
 
 	@Override
 	public void refresh() {
-		if (active && dirty) {
-			if (lastDecoration != null) {
-				getDecoratorTarget().removeDecoration(lastDecoration);
+		boolean interesting = provider.isInteresting(model);
+		boolean focussed = provider.isFocussed();
+		if (focussed != wasFocussed || interesting != wasInteresting || !initialized) {
+			removeDecoration();
+			if (focussed) {
+				IGraphicalEditPart part = (IGraphicalEditPart) getDecoratorTarget()
+						.getAdapter(IGraphicalEditPart.class);
+				decorationFigure = null;
+				final IFigure decorated = part.getFigure();
+				if (!interesting) {
+					decorationFigure = new MaskingFigure(part);
+				} else {
+					decorationFigure = new InterestingFigure(part);
+				}
+				lastDecoration = getDecoratorTarget().addDecoration(
+						decorationFigure, new NodeLocator(decorated), false);
 			}
-			IGraphicalEditPart part = (IGraphicalEditPart) getDecoratorTarget()
-					.getAdapter(IGraphicalEditPart.class);
-			decorationFigure = null;
-			final IFigure decorated = part.getFigure();
-			if (!interesting) {
-				decorationFigure = new MaskingFigure(part);
-			} else {
-				decorationFigure = new InterestingFigure(part);
-			}
-			lastDecoration = getDecoratorTarget().addDecoration(decorationFigure,
-					new NodeLocator(decorated), false);
-			dirty = false;
 		}
+		wasInteresting = interesting;
+		wasFocussed = focussed;
+		initialized = true;
 	}
 
-	public void setInteresting(boolean interesting) {
-		if (this.interesting != interesting) {
-			dirty = true;
+	private void removeDecoration() {
+		if (lastDecoration != null
+				&& ((IFigure) lastDecoration).getParent() != null) {
+			getDecoratorTarget().removeDecoration(lastDecoration);
+			lastDecoration = null;
 		}
-		this.interesting = interesting;
 	}
 
 	IDecoratorTarget getDecoratorTarget() {
 		return target;
 	}
-	
-//	IGraphicalEditPart getEditPart() {
-//		return (IGraphicalEditPart) getDecoratorTarget()
-//				.getAdapter(IGraphicalEditPart.class);
-//	}
 
 	public Object getModel() {
 		return model;

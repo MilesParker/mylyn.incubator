@@ -20,6 +20,7 @@ import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.modeling.context.EMFStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUIEditingMonitor;
+import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -33,7 +34,9 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 
 	private static EcoreDiagramUIBridgePlugin INSTANCE;
 
-	private DiagramUIEditingMonitor monitor;
+	private DiagramUIEditingMonitor diagramMonitor;
+
+	private AbstractUserInteractionMonitor navigatorMonitor;
 
 	public EcoreDiagramUIBridgePlugin() {
 	}
@@ -54,9 +57,11 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 		// case? https://bugs.eclipse.org/bugs/show_bug.cgi?id=353439
 		if (structureBridge instanceof EMFStructureBridge) {
 			EMFStructureBridge bridge = (EMFStructureBridge) structureBridge;
-			monitor = new DiagramUIEditingMonitor(bridge,
+			diagramMonitor = new DiagramUIEditingMonitor(bridge,
 					EcoreDiagramDomainBridge.getInstance());
-			MonitorUi.getSelectionMonitors().add(monitor);
+			MonitorUi.getSelectionMonitors().add(diagramMonitor);
+			navigatorMonitor = new EcoreToolsUIInteractionMonitor(bridge);
+			MonitorUi.getSelectionMonitors().add(navigatorMonitor);
 		} else {
 			StatusHandler
 					.log(new Status(
@@ -67,8 +72,8 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStop() {
-		if (monitor != null) {
-			MonitorUi.getSelectionMonitors().remove(monitor);
+		if (diagramMonitor != null) {
+			MonitorUi.getSelectionMonitors().remove(diagramMonitor);
 		}
 	}
 

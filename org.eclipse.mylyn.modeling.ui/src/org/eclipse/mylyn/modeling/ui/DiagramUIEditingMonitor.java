@@ -13,7 +13,6 @@ package org.eclipse.mylyn.modeling.ui;
 
 import java.util.Iterator;
 
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
@@ -40,13 +39,11 @@ public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
 	public void handleWorkbenchPartSelection(IWorkbenchPart part, ISelection selection, boolean contributeToContext) {
 		if (part instanceof IEditorPart && ui.acceptsEditor((IEditorPart) part)
 				&& selection instanceof IStructuredSelection) {
-			if (part instanceof DiagramEditor) {
-				IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-				for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {
-					Object object = iterator.next();
-					if (structure.acceptsObject(object)) {
-						handleElementSelection(part, object, contributeToContext);
-					}
+			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+			for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {
+				Object object = iterator.next();
+				if (structure.acceptsObject(object)) {
+					handleElementSelection(part, object, contributeToContext);
 				}
 			}
 		}

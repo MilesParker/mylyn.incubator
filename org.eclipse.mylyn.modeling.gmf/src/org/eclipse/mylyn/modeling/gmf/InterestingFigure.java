@@ -29,9 +29,9 @@ public class InterestingFigure extends Figure {
 	 *            the size of the border
 	 */
 	public InterestingFigure(IGraphicalEditPart part) {
-		Color color = ColorConstants.blue;
+		Color color = ColorConstants.black;
 		setLayoutManager(new XYLayout());
 		setBorder(new LineBorder(color, 4));
-		setOpaque(true);
+		setOpaque(false);
 	}
 }

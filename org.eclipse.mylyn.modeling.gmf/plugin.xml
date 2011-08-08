@@ -17,9 +17,6 @@
       <startup
             class="org.eclipse.mylyn.modeling.gmf.GMFUIBridgePlugin$GMFUiBridgeStartup">
       </startup>
-   </extension>
-
-
-	
+      </extension>
 	
 </plugin>

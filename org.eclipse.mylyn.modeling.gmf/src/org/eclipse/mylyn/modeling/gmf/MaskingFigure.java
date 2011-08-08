@@ -21,9 +21,14 @@ public class MaskingFigure extends RectangleFigure {
 	public MaskingFigure(IGraphicalEditPart part) {
 		setLayoutManager(new XYLayout());
 		setOpaque(true);
-		IFigure figure = part.getFigure();
-		Color backgroundColor = figure.getBackgroundColor();
-		setBackgroundColor(ColorConstants.red);
-		setAlpha(150);
+		setFill(true);
+		setOutline(false);
+		IFigure partFigure = part.getFigure();
+		if (partFigure.getParent() != null) {
+			partFigure =partFigure.getParent();
+		}
+		Color backgroundColor = partFigure.getBackgroundColor();
+		setBackgroundColor(backgroundColor);
+		setAlpha(255);
 	}
 }

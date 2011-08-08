@@ -38,8 +38,8 @@ public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-//		monitor = new DiagramUIEditingMonitor(structureBridge, EcoreDiagramDomainBridge.getInstance());
-//		MonitorUi.getSelectionMonitors().add(monitor);
+		monitor = new DiagramUIEditingMonitor(structureBridge, EcoreDiagramDomainBridge.getInstance());
+		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 
 	public void test() throws Exception {
@@ -96,6 +96,7 @@ public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 		IInteractionElement element2 = ContextCore.getContextManager().getElement(
 				"platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecore#//Book");
 
+		//TODO this test doesn't work, not clear why -- the functionality is fine at runtime
 		assertTrue(element2.getInterest().isInteresting());
 
 		assertEquals(element2.getContentType(), EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE);

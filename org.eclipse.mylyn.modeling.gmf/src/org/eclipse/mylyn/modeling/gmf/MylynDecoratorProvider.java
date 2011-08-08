@@ -17,10 +17,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.RootEditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.CreateDecoratorsOperation;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorProvider;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
@@ -30,6 +32,7 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
+import org.eclipse.mylyn.internal.context.core.CompositeInteractionContext;
 import org.eclipse.mylyn.modeling.context.DomainAdaptedStructureBridge;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IEditorPart;
@@ -68,7 +71,12 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 			CreateDecoratorsOperation cdo = (CreateDecoratorsOperation) operation;
 			IDecoratorTarget target = cdo.getDecoratorTarget();
 			View view = (View) target.getAdapter(View.class);
-			return getStructure().acceptsObject(view.getElement());
+			EObject domainObject = view.getElement();
+			IGraphicalEditPart targetPart = (IGraphicalEditPart) target
+					.getAdapter(IGraphicalEditPart.class);
+			return getStructure().acceptsObject(domainObject)
+					&& getDomainUIBridge().acceptsEditPart(domainObject,
+							targetPart);
 		}
 		return false;
 	}
@@ -76,29 +84,16 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	public void createDecorators(IDecoratorTarget target) {
 		IGraphicalEditPart targetPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
-		// targetPart.addEditPartListener(new EditPartListener.Stub() {
-		// @Override
-		// public void partDeactivated(EditPart editpart) {
-		// }
-		//
-		// @Override
-		// public void removingChild(EditPart child, int index) {
-		// }
-		// });
 		Object model = targetPart.getModel();
 		if (model instanceof View) {
 			model = ((View) model).getElement();
 		}
-		if (getStructure().acceptsObject(model)) {
-			EObject domainObject = (EObject) getStructure().getDomainObject(
-					model);
-			MylynDecorator mylynDecorator = new MylynDecorator(this, target,
-					domainObject);
-//			target.installDecorator(MYLYN_DETAIL, mylynDecorator);
-			decoratorForModel.put(structure.getHandleIdentifier(domainObject),
-					mylynDecorator);
-			mylynDecorator.setInteresting(false);
-		}
+		EObject domainObject = (EObject) getStructure().getDomainObject(model);
+		MylynDecorator mylynDecorator = new MylynDecorator(this, target,
+				domainObject);
+		target.installDecorator(MYLYN_DETAIL, mylynDecorator);
+		decoratorForModel.put(structure.getHandleIdentifier(domainObject),
+				mylynDecorator);
 	}
 
 	private void refreshEditors() {
@@ -110,65 +105,77 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 			for (IEditorReference reference : editorReferences) {
 				IEditorPart editor = reference.getEditor(false);
 				if (getDomainUIBridge().acceptsEditor(editor)) {
-					//TODO we can't really assume that this is a diagram editor
-					DiagramEditor de = (DiagramEditor) editor;
-					de.getDiagramEditPart().getRoot().refresh();
-				}
-			}
-		}
-	}
-
-	private void clearDecorators() {
-		for (Entry<String, MylynDecorator> entry : decoratorForModel.entrySet()) {
-			entry.getValue().deactivate();
-		}
-//		decoratorForModel.clear();
-	}
-
-	private void activateDecorators() {
-		for (Entry<String, MylynDecorator> entry : decoratorForModel.entrySet()) {
-			entry.getValue().activate();
-		}
-//		decoratorForModel.clear();
-	}
-	
-	public void contextChanged(ContextChangeEvent event) {
-		if (event.getEventKind() == ContextChangeKind.ACTIVATED) {
-			for (IInteractionElement element : event.getContext().getAllElements()) {
-				if (element.getContentType().equals(
-						getDomainUIBridge().getContentType())) {
-					MylynDecorator mylynDecorator = decoratorForModel
-							.get(element.getHandleIdentifier());
-					if (mylynDecorator != null) {
-						mylynDecorator.setInteresting(element.getInterest()
-								.isInteresting());
-//						mylynDecorator.activate();
-//						mylynDecorator.getEditPart().refresh();
+					RootEditPart root = null;
+					if (editor instanceof DiagramEditor) {
+						DiagramEditor de = (DiagramEditor) editor;
+						root = de.getDiagramEditPart().getRoot();
+					} else {
+						// Seems to be the only way to get Papyrus root edit
+						// part w/o explicit dependencies..
+						IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) editor
+								.getAdapter(IDiagramGraphicalViewer.class);
+						root = viewer.getRootEditPart();
+					}
+					if (root != null) {
+						root.refresh();
+					} else {
+						// TODO for developemnt only
+						System.err.println("Couldn't locate edit part for  "
+								+ editor);
 					}
 				}
 			}
-			activateDecorators();
-//			for (Entry<String, MylynDecorator> entry : decoratorForModel
-//					.entrySet()) {
-//				entry.getValue();
-//			}
-		} else if (event.getEventKind() == ContextChangeKind.DEACTIVATED){
-			clearDecorators();
+		}
+	}
+
+	public boolean isInteresting(EObject object) {
+		IInteractionElement interation = ContextCore.getContextManager()
+				.getActiveContext()
+				.get(getStructure().getHandleIdentifier(object));
+		return interation != null && interation.getInterest().isInteresting();
+	}
+
+	/**
+	 * Should Mylyn manage this object?
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public boolean isFocussed() {
+		return ((CompositeInteractionContext) ContextCore.getContextManager()
+				.getActiveContext()).getContextMap().values().size() > 0;
+	}
+
+	public void contextChanged(ContextChangeEvent event) {
+		if (event.getEventKind() == ContextChangeKind.ACTIVATED) {
+			for (IInteractionElement element : event.getContext()
+					.getAllElements()) {
+				refreshElement(element);
+			}
+		} else if (event.getEventKind() == ContextChangeKind.DEACTIVATED) {
+			for (Entry<String, MylynDecorator> entry : decoratorForModel
+					.entrySet()) {
+				entry.getValue().deactivate();
+			}
+			decoratorForModel.clear();
 		} else {
 			List<IInteractionElement> elements = event.getElements();
 			for (IInteractionElement element : elements) {
-				if (element.getContentType().equals(
-						getDomainUIBridge().getContentType())) {
-					MylynDecorator mylynDecorator = decoratorForModel
-							.get(element.getHandleIdentifier());
-					mylynDecorator.setInteresting(element.getInterest()
-							.isInteresting());
-//					mylynDecorator.getEditPart().refresh();
-					mylynDecorator.refresh();
-				}
+				refreshElement(element);
 			}
 		}
-//		refreshEditors();
+		refreshEditors();
+	}
+
+	private void refreshElement(IInteractionElement element) {
+		if (element.getContentType().equals(
+				getDomainUIBridge().getContentType())) {
+			MylynDecorator mylynDecorator = decoratorForModel.get(element
+					.getHandleIdentifier());
+			if (mylynDecorator != null) {
+				mylynDecorator.refresh();
+			}
+		}
 	}
 
 	public abstract IModelUIProvider getDomainUIBridge();

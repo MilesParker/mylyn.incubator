@@ -42,7 +42,7 @@ public class EMFUIBridgeTest extends AbstractEMFContextTest {
 	public void testModification() throws Exception {
 		getEmfProject().open(new NullProgressMonitor());
 		IProject project = getEmfProject().getProject();
-		IFile file = project.getFile("model/library.ecore");
+		IFile file = project.getFile("model/library.ecorediag");
 		assertNotNull(file);
 
 		assertTrue(file.exists());

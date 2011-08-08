@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.gmf.runtime.notation.View;
 
 /**
  * @author Benjamin Muskalla
@@ -63,6 +64,14 @@ public abstract class EMFStructureBridge extends DomainAdaptedStructureBridge {
 			return ((ENamedElement) object).getName();
 		}
 		return super.getLabel(object.toString());
+	}
+	
+	@Override
+	public Object getDomainObject(Object object) {
+		if (object instanceof View) {
+			return ((View) object).getElement();
+		}
+		return super.getDomainObject(object);
 	}
 
 	@Override

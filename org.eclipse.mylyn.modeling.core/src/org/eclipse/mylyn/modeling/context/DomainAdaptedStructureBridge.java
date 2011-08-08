@@ -9,7 +9,7 @@ public abstract class DomainAdaptedStructureBridge extends
 		AbstractContextStructureBridge {
 
 	public abstract String getDomainHandleIdentifier(Object object);
-	
+
 	public Object getDomainObject(Object object) {
 		// We follow the chain down until the object isn't adaptable to EObject
 		// anymore in order to get the actual domain object
@@ -20,14 +20,19 @@ public abstract class DomainAdaptedStructureBridge extends
 			Object diagramObject = ((IAdaptable) object)
 					.getAdapter(getDomainContextBridge().getDomainBaseClass());
 			if (diagramObject != null
-					&& getDomainContextBridge().getDomainBaseClass().isAssignableFrom(
-							diagramObject.getClass())) {
+					&& getDomainContextBridge().getDomainBaseClass()
+							.isAssignableFrom(diagramObject.getClass())) {
 				return getDomainObject(diagramObject);
 			}
 		}
-		for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
-			if (domainClass.isAssignableFrom(object.getClass())) {
-				return object;
+		//don't want to look at all classes unless it's relevant
+		if (getDomainContextBridge().getDomainBaseClass().isAssignableFrom(
+				object.getClass())) {
+			for (Class<?> domainClass : getDomainContextBridge()
+					.getDomainNodeClasses()) {
+				if (domainClass.isAssignableFrom(object.getClass())) {
+					return object;
+				}
 			}
 		}
 		return null;
@@ -41,7 +46,9 @@ public abstract class DomainAdaptedStructureBridge extends
 	@Override
 	public String getHandleIdentifier(Object object) {
 		Object domainObject = getDomainObject(object);
-		if (domainObject != null && getDomainContextBridge().getDomainBaseClass().isAssignableFrom(domainObject.getClass())) {
+		if (domainObject != null
+				&& getDomainContextBridge().getDomainBaseClass()
+						.isAssignableFrom(domainObject.getClass())) {
 			return getDomainHandleIdentifier(domainObject);
 		}
 		return null;
@@ -49,10 +56,11 @@ public abstract class DomainAdaptedStructureBridge extends
 
 	@Override
 	public final Object getObjectForHandle(String handle) {
-		//We're simply calling this delegated method but renaming to clarify relationship with similar methods.
+		// We're simply calling this delegated method but renaming to clarify
+		// relationship with similar methods.
 		return getDomainObjectForHandle(handle);
 	}
-	
+
 	public abstract Object getDomainObjectForHandle(String handle);
 
 	@Override
@@ -69,7 +77,8 @@ public abstract class DomainAdaptedStructureBridge extends
 	@Override
 	public boolean canBeLandmark(String handle) {
 		Object object = getObjectForHandle(handle);
-		for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
+		for (Class<?> domainClass : getDomainContextBridge()
+				.getDomainNodeClasses()) {
 			if (domainClass.isAssignableFrom(object.getClass())) {
 				return true;
 			}
@@ -94,7 +103,7 @@ public abstract class DomainAdaptedStructureBridge extends
 		// TODO Auto-generated method stub
 		return getDomainContextBridge().getContentType();
 	}
-	
+
 	@Override
 	public String getContentType(String elementHandle) {
 		return getContentType();
