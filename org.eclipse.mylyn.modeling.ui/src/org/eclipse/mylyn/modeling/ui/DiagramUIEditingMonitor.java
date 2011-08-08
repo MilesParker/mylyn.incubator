@@ -37,7 +37,7 @@ public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
 
 	@Override
 	public void handleWorkbenchPartSelection(IWorkbenchPart part, ISelection selection, boolean contributeToContext) {
-		if (part instanceof IEditorPart && ui.acceptsEditor((IEditorPart) part)
+		if (part instanceof IEditorPart && ui.acceptsPart((IEditorPart) part)
 				&& selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 			for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {

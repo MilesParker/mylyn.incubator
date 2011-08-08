@@ -1,13 +1,13 @@
 package org.eclipse.mylyn.modeling.ui;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
+import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 
 public interface IModelUIProvider extends IModelStructureProvider {
 
-	boolean acceptsEditor(IEditorPart editorPart);
+	boolean acceptsPart(IWorkbenchPart part);
 
-	boolean acceptsEditPart(EObject object, IGraphicalEditPart part);
+	boolean acceptsEditPart(EObject object, EditPart part);
 }

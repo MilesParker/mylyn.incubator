@@ -104,7 +104,7 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 					.getActivePage().getEditorReferences();
 			for (IEditorReference reference : editorReferences) {
 				IEditorPart editor = reference.getEditor(false);
-				if (getDomainUIBridge().acceptsEditor(editor)) {
+				if (getDomainUIBridge().acceptsPart(editor)) {
 					RootEditPart root = null;
 					if (editor instanceof DiagramEditor) {
 						DiagramEditor de = (DiagramEditor) editor;

@@ -60,7 +60,7 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 			diagramMonitor = new DiagramUIEditingMonitor(bridge,
 					EcoreDiagramDomainBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(diagramMonitor);
-			navigatorMonitor = new EcoreToolsUIInteractionMonitor(bridge);
+			navigatorMonitor = new DiagramUIEditingMonitor(bridge, EcoreToolsNavigatorDomainBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(navigatorMonitor);
 		} else {
 			StatusHandler

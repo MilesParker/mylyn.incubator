@@ -1,12 +1,12 @@
 package org.eclipse.mylyn.modeling.papyrus;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
+import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.NamedElement;
@@ -18,8 +18,8 @@ public class UML2DomainBridge implements IModelStructureProvider, IModelUIProvid
 	public static final String UML2_CONTENT_TYPE = "uml2"; //$NON-NLS-1$
 
 	@Override
-	public boolean acceptsEditor(IEditorPart editorPart) {
-		return editorPart instanceof PapyrusMultiDiagramEditor;
+	public boolean acceptsPart(IWorkbenchPart part) {
+		return part instanceof PapyrusMultiDiagramEditor;
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class UML2DomainBridge implements IModelStructureProvider, IModelUIProvid
 	}
 
 	@Override
-	public boolean acceptsEditPart(EObject domainObject, IGraphicalEditPart part) {
+	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
 		if (domainObject instanceof Classifier) {
 			return part instanceof ClassEditPart;
 		}

@@ -78,7 +78,7 @@ public abstract class DiagramUIBridge extends AbstractContextUiBridge {
 
 	@Override
 	public boolean acceptsEditor(IEditorPart editorPart) {
-		return getDomainUIBridge().acceptsEditor(editorPart);
+		return getDomainUIBridge().acceptsPart(editorPart);
 	}
 
 	@Override
