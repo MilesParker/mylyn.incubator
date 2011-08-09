@@ -11,11 +11,13 @@
 
 package org.eclipse.mylyn.modeling.gmf;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
@@ -32,11 +34,13 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
-import org.eclipse.mylyn.internal.context.core.CompositeInteractionContext;
 import org.eclipse.mylyn.modeling.context.DomainAdaptedStructureBridge;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
@@ -55,6 +59,8 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 
 	private DomainAdaptedStructureBridge structure;
 
+	private boolean anyContextActive;
+
 	AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
 		public void contextChanged(ContextChangeEvent event) {
 			MylynDecoratorProvider.this.contextChanged(event);
@@ -64,6 +70,8 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	public MylynDecoratorProvider() {
 		ContextCore.getContextManager().addListener(contextListenerAdapter);
 		decoratorForModel = new HashMap<String, MylynDecorator>();
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
 	}
 
 	public boolean provides(IOperation operation) {
@@ -79,6 +87,40 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 							targetPart);
 		}
 		return false;
+	}
+
+	public void hookEditor() {
+		// decorationFigure.addMouseMotionListener(new
+		// MouseMotionListener.Stub() {
+		// public void mouseEntered(MouseEvent me) {
+		// Animation.markBegin();
+		// // decorationFigure.setAlpha(150);
+		// // part.getFigure().getLayoutManager().layout(part.getFigure());
+		// getDecoratorTarget().removeDecoration(lastDecoration);
+		// Animation.run(2000);
+		// }
+		//
+		// // public void mouseExited(MouseEvent me) {
+		// // Animation.markBegin();
+		// // decorationFigure.setAlpha(255);
+		// // decorationFigure.validate();
+		// // // part.getFigure().revalidate();
+		// // // getDecoratorTarget().removeDecoration(lastDecoration);
+		// // Animation.run(2000);
+		// // }
+		// });
+		// part.getFigure().addMouseMotionListener(new
+		// MouseMotionListener.Stub() {
+		// @Override
+		// public void mouseExited(MouseEvent me) {
+		// Animation.markBegin();
+		// // decorationFigure.setAlpha(0);
+		// // decorationFigure.validate();
+		// lastDecoration = getDecoratorTarget().addDecoration(
+		// decorationFigure, new NodeLocator(decorated), false);
+		// Animation.run(2000);
+		// }
+		// });
 	}
 
 	public void createDecorators(IDecoratorTarget target) {
@@ -104,28 +146,28 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 					.getActivePage().getEditorReferences();
 			for (IEditorReference reference : editorReferences) {
 				IEditorPart editor = reference.getEditor(false);
-				if (getDomainUIBridge().acceptsPart(editor)) {
-					RootEditPart root = null;
-					if (editor instanceof DiagramEditor) {
-						DiagramEditor de = (DiagramEditor) editor;
-						root = de.getDiagramEditPart().getRoot();
-					} else {
-						// Seems to be the only way to get Papyrus root edit
-						// part w/o explicit dependencies..
-						IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) editor
-								.getAdapter(IDiagramGraphicalViewer.class);
-						root = viewer.getRootEditPart();
-					}
-					if (root != null) {
-						root.refresh();
-					} else {
-						// TODO for developemnt only
-						System.err.println("Couldn't locate edit part for  "
-								+ editor);
-					}
+				RootEditPart root = getRootEditPart(editor);
+				if (root != null) {
+					root.refresh();
 				}
 			}
 		}
+	}
+
+	private RootEditPart getRootEditPart(IEditorPart editor) {
+		if (getDomainUIBridge().acceptsPart(editor)) {
+			if (editor instanceof DiagramEditor) {
+				DiagramEditor de = (DiagramEditor) editor;
+				return de.getDiagramEditPart().getRoot();
+			} else {
+				// Seems to be the only way to get Papyrus root edit
+				// part w/o explicit dependencies..
+				IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) editor
+						.getAdapter(IDiagramGraphicalViewer.class);
+				return viewer.getRootEditPart();
+			}
+		}
+		return null;
 	}
 
 	public boolean isInteresting(EObject object) {
@@ -142,17 +184,22 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	 * @return
 	 */
 	public boolean isFocussed() {
-		return ((CompositeInteractionContext) ContextCore.getContextManager()
-				.getActiveContext()).getContextMap().values().size() > 0;
+		return anyContextActive;
 	}
 
 	public void contextChanged(ContextChangeEvent event) {
 		if (event.getEventKind() == ContextChangeKind.ACTIVATED) {
-			for (IInteractionElement element : event.getContext()
-					.getAllElements()) {
-				refreshElement(element);
+			anyContextActive = true;
+			for (Entry<String, MylynDecorator> entry : decoratorForModel
+					.entrySet()) {
+				entry.getValue().refresh();
 			}
+			// for (IInteractionElement element : event.getContext()
+			// .getAllElements()) {
+			// refreshElement(element);
+			// }
 		} else if (event.getEventKind() == ContextChangeKind.DEACTIVATED) {
+			anyContextActive = false;
 			for (Entry<String, MylynDecorator> entry : decoratorForModel
 					.entrySet()) {
 				entry.getValue().deactivate();

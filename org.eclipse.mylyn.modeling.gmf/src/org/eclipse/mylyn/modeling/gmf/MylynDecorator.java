@@ -1,7 +1,15 @@
 package org.eclipse.mylyn.modeling.gmf;
 
+import org.eclipse.draw2d.Animation;
+import org.eclipse.draw2d.Animator;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutAnimator;
+import org.eclipse.draw2d.LayoutManager;
+import org.eclipse.draw2d.MouseEvent;
+import org.eclipse.draw2d.MouseMotionListener;
+import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.common.ui.services.parser.GetParserOperation;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoration;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
@@ -17,7 +25,7 @@ public class MylynDecorator implements IDecorator {
 	private IDecoration lastDecoration;
 
 	boolean initialized;
-	private IFigure decorationFigure;
+	private Shape decorationFigure;
 
 	private final IDecoratorTarget target;
 
@@ -45,20 +53,43 @@ public class MylynDecorator implements IDecorator {
 	public void refresh() {
 		boolean interesting = provider.isInteresting(model);
 		boolean focussed = provider.isFocussed();
-		if (focussed != wasFocussed || interesting != wasInteresting || !initialized) {
+		if (focussed != wasFocussed || interesting != wasInteresting
+				|| !initialized) {
 			removeDecoration();
 			if (focussed) {
-				IGraphicalEditPart part = (IGraphicalEditPart) getDecoratorTarget()
+				final IGraphicalEditPart part = (IGraphicalEditPart) getDecoratorTarget()
 						.getAdapter(IGraphicalEditPart.class);
 				decorationFigure = null;
 				final IFigure decorated = part.getFigure();
 				if (!interesting) {
 					decorationFigure = new MaskingFigure(part);
-				} else {
-					decorationFigure = new InterestingFigure(part);
+					// } else {
+					// decorationFigure = new InterestingFigure(part);
 				}
-				lastDecoration = getDecoratorTarget().addDecoration(
-						decorationFigure, new NodeLocator(decorated), false);
+				if (decorationFigure != null) {
+					lastDecoration = getDecoratorTarget()
+							.addDecoration(decorationFigure,
+									new NodeLocator(decorated), false);
+					decorationFigure
+							.addMouseMotionListener(new MouseMotionListener.Stub() {
+								public void mouseEntered(MouseEvent me) {
+									Animation.markBegin();
+									decorationFigure.setAlpha(150);
+									decorationFigure.validate();
+									// getDecoratorTarget().removeDecoration(lastDecoration);
+									Animation.run(2000);
+								}
+
+								@Override
+								public void mouseExited(MouseEvent me) {
+									Animation.markBegin();
+									decorationFigure.setAlpha(255);
+									decorationFigure.validate();
+									// getDecoratorTarget().removeDecoration(lastDecoration);
+									Animation.run(2000);
+								}
+							});
+				}
 			}
 		}
 		wasInteresting = interesting;

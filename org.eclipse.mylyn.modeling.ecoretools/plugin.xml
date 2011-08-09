@@ -36,4 +36,29 @@
             class="org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramUIBridgePlugin$EcoreDiagramBridgeStartup">
       </startup>
    </extension>
+   
+   
+        <extension point="org.eclipse.ui.popupMenus"> 
+     <objectContribution
+           adaptable="false"
+           id="org.eclipse.mylyn.modeling.ecore.interest.remove.contribution.elements"
+           objectClass="org.eclipse.emf.ecoretools.diagram.navigator.EcoreNavigatorItem">
+     	<action
+            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
+            definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
+            enablesFor="*"
+            icon="icons/elcl16/interest-decrease.gif"
+            id="org.eclipse.mylyn.modeling.ecore.interest.remove.contribution.elements"
+            label="%InterestDecrementAction.label"
+            menubarPath="group.reorganize"
+            tooltip="%InterestDecrementAction.tooltip">
+      </action>
+      <enablement>
+         <systemProperty
+               name="org.eclipse.mylyn.context.core.context.active"
+               value="true">
+         </systemProperty>
+      </enablement>
+     </objectContribution>
+	</extension>
 </plugin>

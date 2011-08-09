@@ -1,9 +1,11 @@
 package org.eclipse.mylyn.modeling.gmf;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
+import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.swt.graphics.Color;
 
 public class FadedFigure extends RectangleFigure {
@@ -20,9 +22,10 @@ public class FadedFigure extends RectangleFigure {
 	public FadedFigure(IGraphicalEditPart part) {
 		setLayoutManager(new XYLayout());
 		setOpaque(true);
-		IFigure figure = part.getFigure();
-		Color backgroundColor = figure.getBackgroundColor();
-		setBackgroundColor(backgroundColor);
+		IFigure parentFigure = part.getFigure();
+		Color backgroundColor = parentFigure.getBackgroundColor();
+		setSize(parentFigure.getSize().expand(10, 10));
+		setBackgroundColor(ColorConstants.blue);
 		setAlpha(255);
 	}
 }

@@ -12,13 +12,13 @@
 package org.eclipse.mylyn.modeling.gmf;
 
 import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.LineBorder;
+import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
 
-public class InterestingFigure extends Figure {
+public class InterestingFigure extends RectangleFigure {
 	/**
 	 * Constructor.
 	 * @param part 
@@ -33,5 +33,6 @@ public class InterestingFigure extends Figure {
 		setLayoutManager(new XYLayout());
 		setBorder(new LineBorder(color, 4));
 		setOpaque(false);
+		setFill(false);
 	}
 }

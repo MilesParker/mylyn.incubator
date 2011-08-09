@@ -24,8 +24,9 @@ public class MaskingFigure extends RectangleFigure {
 		setFill(true);
 		setOutline(false);
 		IFigure partFigure = part.getFigure();
+		setSize(partFigure.getSize().expand(10, 10));
 		if (partFigure.getParent() != null) {
-			partFigure =partFigure.getParent();
+			partFigure = partFigure.getParent();
 		}
 		Color backgroundColor = partFigure.getBackgroundColor();
 		setBackgroundColor(backgroundColor);

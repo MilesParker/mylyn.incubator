@@ -24,6 +24,7 @@ import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackage2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackageEditPart;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.gef.EditPart;
+import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IWorkbenchPart;
 
