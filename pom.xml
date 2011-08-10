@@ -12,6 +12,9 @@
   <artifactId>org.eclipse.mylyn.incubator-parent</artifactId>
   <version>3.7.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <properties>
+	<dist.repository>Mylyn Incubator for Mylyn 3.7</dist.repository>
+  </properties>
   <mailingLists>
     <mailingList>
       <name>Mylyn Incubator Mailing List</name>
@@ -56,6 +59,19 @@
 		</repository>
 	  </repositories>
 	</profile>
+    <profile>
+      <id>hudson.eclipse.org</id>
+      <activation>
+		<property>
+          <name>user.name</name>
+          <value>hudsonbuild</value>
+		</property>
+      </activation>
+      <properties>
+		<dist.site>/home/data/httpd/download.eclipse.org/mylyn/incubator</dist.site>
+		<dist.archive>${dist.site}/drops</dist.archive>
+      </properties>
+    </profile>
   </profiles>
   <modules>
     <module>org.eclipse.mylyn.examples.monitor.study</module>
