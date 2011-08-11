@@ -7,6 +7,7 @@ import org.eclipse.draw2d.LayoutAnimator;
 import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.MouseEvent;
 import org.eclipse.draw2d.MouseMotionListener;
+import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.common.ui.services.parser.GetParserOperation;
@@ -14,8 +15,28 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoration;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
+import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget.Direction;
 
 public class MylynDecorator implements IDecorator {
+
+	private final class RevealMouseHandler extends MouseMotionListener.Stub {
+		public void mouseEntered(MouseEvent me) {
+			Animation.markBegin();
+			decorationFigure.setAlpha(150);
+			decorationFigure.validate();
+			// getDecoratorTarget().removeDecoration(lastDecoration);
+			Animation.run(2000);
+		}
+
+		@Override
+		public void mouseExited(MouseEvent me) {
+			Animation.markBegin();
+			decorationFigure.setAlpha(255);
+			decorationFigure.validate();
+			// getDecoratorTarget().removeDecoration(lastDecoration);
+			Animation.run(2000);
+		}
+	}
 
 	private final MylynDecoratorProvider provider;
 
@@ -57,44 +78,35 @@ public class MylynDecorator implements IDecorator {
 				|| !initialized) {
 			removeDecoration();
 			if (focussed) {
-				final IGraphicalEditPart part = (IGraphicalEditPart) getDecoratorTarget()
-						.getAdapter(IGraphicalEditPart.class);
-				decorationFigure = null;
-				final IFigure decorated = part.getFigure();
-				if (!interesting) {
-					decorationFigure = new MaskingFigure(part);
-					// } else {
-					// decorationFigure = new InterestingFigure(part);
-				}
-				if (decorationFigure != null) {
-					lastDecoration = getDecoratorTarget()
-							.addDecoration(decorationFigure,
-									new NodeLocator(decorated), false);
-					decorationFigure
-							.addMouseMotionListener(new MouseMotionListener.Stub() {
-								public void mouseEntered(MouseEvent me) {
-									Animation.markBegin();
-									decorationFigure.setAlpha(150);
-									decorationFigure.validate();
-									// getDecoratorTarget().removeDecoration(lastDecoration);
-									Animation.run(2000);
-								}
-
-								@Override
-								public void mouseExited(MouseEvent me) {
-									Animation.markBegin();
-									decorationFigure.setAlpha(255);
-									decorationFigure.validate();
-									// getDecoratorTarget().removeDecoration(lastDecoration);
-									Animation.run(2000);
-								}
-							});
-				}
+				createDecoration(interesting);
 			}
 		}
 		wasInteresting = interesting;
 		wasFocussed = focussed;
 		initialized = true;
+	}
+
+	private void createDecoration(boolean interesting) {
+		final IGraphicalEditPart part = (IGraphicalEditPart) getDecoratorTarget()
+				.getAdapter(IGraphicalEditPart.class);
+		decorationFigure = null;
+		final IFigure decorated = part.getFigure();
+		if (!interesting) {
+			if (decorated instanceof PolylineConnection) {
+				decorationFigure = new MaskingEdgeFigure(part);
+				lastDecoration = getDecoratorTarget().addDecoration(
+						decorationFigure, new EdgeLocator(decorated), true);
+			} else {
+				decorationFigure = new MaskingNodeFigure(part);
+				lastDecoration = getDecoratorTarget().addDecoration(
+						decorationFigure, new NodeLocator(decorated), true);
+			}
+			// } else {
+			// decorationFigure = new InterestingFigure(part);
+		}
+		if (decorationFigure != null) {
+			decorationFigure.addMouseMotionListener(new RevealMouseHandler());
+		}
 	}
 
 	private void removeDecoration() {

@@ -5,9 +5,13 @@ public interface IModelStructureProvider {
 	
 	String getContentType();
 
-	Class<?> getDomainBaseClass();
+	Class<?> getDomainBaseNodeClass();
 
 	Class<?>[] getDomainNodeClasses();
+
+	Class<?> getDomainBaseEdgeClass();
+
+	Class<?>[] getDomainEdgeClasses();
 
 	String getLabel(Object object);
 }

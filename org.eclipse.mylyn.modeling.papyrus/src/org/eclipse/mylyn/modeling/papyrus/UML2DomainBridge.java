@@ -1,6 +1,9 @@
 package org.eclipse.mylyn.modeling.papyrus;
 
+import javax.management.relation.Relation;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
@@ -36,13 +39,22 @@ public class UML2DomainBridge implements IModelStructureProvider, IModelUIProvid
 	}
 	
 	@Override
-	public Class<?> getDomainBaseClass() {
+	public Class<?> getDomainBaseNodeClass() {
 		return Element.class;
 	}
 
 	@Override
 	public Class<?>[] getDomainNodeClasses() {
 		return new Class[]{Classifier.class};
+	}
+
+	public Class<?> getDomainBaseEdgeClass() {
+		return Relation.class;
+	}
+
+	@Override
+	public Class<?>[] getDomainEdgeClasses() {
+		return new Class[]{Relation.class};
 	}
 
 	public static UML2DomainBridge getInstance() {

@@ -16,12 +16,14 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EClass2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EEnum2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EEnumEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackage2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackageEditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EReferenceEditPart;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
@@ -40,6 +42,7 @@ public class EcoreDiagramDomainBridge extends EcoreDomainBridge {
 	@Override
 	public boolean acceptsEditPart(EObject domainObject,
 			EditPart part) {
+		//Nodes
 		if (domainObject instanceof EClass) {
 			return part instanceof EClassEditPart || part instanceof EClass2EditPart;
 		}
@@ -50,6 +53,10 @@ public class EcoreDiagramDomainBridge extends EcoreDomainBridge {
 		if (domainObject instanceof EPackage && ((EPackage) domainObject).eContainer() != null) {
 			 return part instanceof EPackageEditPart || part instanceof EPackage2EditPart;
 		}		
+		//Edges
+		if (domainObject instanceof EReference) {
+			return part instanceof EReferenceEditPart;
+		}
 		return false;
 	}
 
@@ -67,5 +74,7 @@ public class EcoreDiagramDomainBridge extends EcoreDomainBridge {
 		}
 		return INSTANCE;
 	}
+
+
 
 }

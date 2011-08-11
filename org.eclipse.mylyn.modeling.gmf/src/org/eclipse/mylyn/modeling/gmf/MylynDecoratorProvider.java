@@ -79,12 +79,15 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 			CreateDecoratorsOperation cdo = (CreateDecoratorsOperation) operation;
 			IDecoratorTarget target = cdo.getDecoratorTarget();
 			View view = (View) target.getAdapter(View.class);
-			EObject domainObject = view.getElement();
-			IGraphicalEditPart targetPart = (IGraphicalEditPart) target
-					.getAdapter(IGraphicalEditPart.class);
-			return getStructure().acceptsObject(domainObject)
-					&& getDomainUIBridge().acceptsEditPart(domainObject,
-							targetPart);
+			Object candidate = getStructure().getDomainObject(view);
+			if (candidate instanceof EObject) {
+				EObject domainObject = (EObject) candidate;
+				IGraphicalEditPart targetPart = (IGraphicalEditPart) target
+						.getAdapter(IGraphicalEditPart.class);
+				return getStructure().acceptsObject(domainObject)
+						&& getDomainUIBridge().acceptsEditPart(domainObject,
+								targetPart);
+			}
 		}
 		return false;
 	}

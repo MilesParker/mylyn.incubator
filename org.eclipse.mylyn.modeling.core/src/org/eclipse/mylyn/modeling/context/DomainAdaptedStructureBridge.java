@@ -18,18 +18,27 @@ public abstract class DomainAdaptedStructureBridge extends
 		}
 		if (object instanceof IAdaptable) {
 			Object diagramObject = ((IAdaptable) object)
-					.getAdapter(getDomainContextBridge().getDomainBaseClass());
+					.getAdapter(getDomainContextBridge().getDomainBaseNodeClass());
 			if (diagramObject != null
-					&& getDomainContextBridge().getDomainBaseClass()
+					&& getDomainContextBridge().getDomainBaseNodeClass()
 							.isAssignableFrom(diagramObject.getClass())) {
 				return getDomainObject(diagramObject);
 			}
 		}
 		//don't want to look at all classes unless it's relevant
-		if (getDomainContextBridge().getDomainBaseClass().isAssignableFrom(
+		if (getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(
 				object.getClass())) {
 			for (Class<?> domainClass : getDomainContextBridge()
 					.getDomainNodeClasses()) {
+				if (domainClass.isAssignableFrom(object.getClass())) {
+					return object;
+				}
+			}
+		}
+		if (getDomainContextBridge().getDomainBaseEdgeClass().isAssignableFrom(
+				object.getClass())) {
+			for (Class<?> domainClass : getDomainContextBridge()
+					.getDomainEdgeClasses()) {
 				if (domainClass.isAssignableFrom(object.getClass())) {
 					return object;
 				}
@@ -47,7 +56,7 @@ public abstract class DomainAdaptedStructureBridge extends
 	public String getHandleIdentifier(Object object) {
 		Object domainObject = getDomainObject(object);
 		if (domainObject != null
-				&& getDomainContextBridge().getDomainBaseClass()
+				&& getDomainContextBridge().getDomainBaseNodeClass()
 						.isAssignableFrom(domainObject.getClass())) {
 			return getDomainHandleIdentifier(domainObject);
 		}

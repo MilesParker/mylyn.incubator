@@ -7,7 +7,7 @@ import org.eclipse.draw2d.XYLayout;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
 
-public class MaskingFigure extends RectangleFigure {
+public class MaskingNodeFigure extends RectangleFigure {
 	/**
 	 * Constructor.
 	 * 
@@ -18,7 +18,7 @@ public class MaskingFigure extends RectangleFigure {
 	 * @param size
 	 *            the size of the border
 	 */
-	public MaskingFigure(IGraphicalEditPart part) {
+	public MaskingNodeFigure(IGraphicalEditPart part) {
 		setLayoutManager(new XYLayout());
 		setOpaque(true);
 		setFill(true);

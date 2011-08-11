@@ -18,7 +18,7 @@ import org.eclipse.draw2d.XYLayout;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
 
-public class InterestingFigure extends RectangleFigure {
+public class InterestingNodeFigure extends RectangleFigure {
 	/**
 	 * Constructor.
 	 * @param part 
@@ -28,10 +28,10 @@ public class InterestingFigure extends RectangleFigure {
 	 * @param size
 	 *            the size of the border
 	 */
-	public InterestingFigure(IGraphicalEditPart part) {
+	public InterestingNodeFigure(IGraphicalEditPart part) {
 		Color color = ColorConstants.black;
 		setLayoutManager(new XYLayout());
-		setBorder(new LineBorder(color, 4));
+		setBorder(new LineBorder(color, 2));
 		setOpaque(false);
 		setFill(false);
 	}
