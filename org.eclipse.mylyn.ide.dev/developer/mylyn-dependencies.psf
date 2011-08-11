@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.team.cvs.core.cvsnature">
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.google.gerrit.common,com.google.gerrit.common,v2_1_5"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.google.gerrit.prettify,com.google.gerrit.prettify,v2_1_5"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.google.gerrit.reviewdb,com.google.gerrit.reviewdb,v2_1_5"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.google.gson,com.google.gson,v1_6"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.google.gwt.user,com.google.gwt.user,v2_0_4"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.google.gwtjsonrpc,com.google.gwtjsonrpc,v1_2_2"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.google.gwtorm,com.google.gwtorm,v1_1_4"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.sun.syndication,com.sun.syndication,v0_9"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/com.sun.xml.bind,com.sun.xml.bind,v2_2"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.activation,javax.activation,v1_1_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.mail,javax.mail,v1_4_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.wsdl,javax.wsdl,v1_6_2"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.xml,javax.xml,v1_3_4"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.xml.bind,javax.xml.bind,v2_2"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.xml.rpc,javax.xml.rpc,v1_1_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.xml.soap,javax.xml.soap,v1_3_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/javax.xml.stream,javax.xml.stream,v1_0_1"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.antlr.runtime,org.antlr.runtime,v3_0_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.axis,org.apache.axis,v1_4_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.commons.codec,org.apache.commons.codec,v1_3"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.commons.discovery,org.apache.commons.discovery,v0_2_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.commons.httpclient,org.apache.commons.httpclient,v3_1_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.commons.io,org.apache.commons.io,v1_4"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.commons.lang,org.apache.commons.lang,v2_4"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.commons.logging,org.apache.commons.logging,v1_1_1"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.httpcomponents.httpclient,org.apache.httpcomponents.httpclient,v4_1"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.httpcomponents.httpcore,org.apache.httpcomponents.httpcore,v4_1"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.ws.commons.util,org.apache.ws.commons.util,v1_0_1"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.apache.xmlrpc,org.apache.xmlrpc,v3_0_0"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/eclipse,org.eclipse.test.performance,org.eclipse.test.performance"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.jdom,org.jdom,v1_1_1"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.mockito,org.mockito,v201102171835"/>
+<project reference="1.0,:pserver:dev.eclipse.org:/cvsroot/tools,org.eclipse.orbit/org.objenesis,org.objenesis,v201006030720"/>
+</provider>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" id="1311966972739_1" label="Mylyn Dependencies" name="Mylyn Dependencies">
+<item elementID="=javax.activation" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.xml" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.codec" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.sun.syndication" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.xml.bind" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.ws.commons.util" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.gson" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.gerrit.common" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.antlr.runtime" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.xml.soap" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.mail" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.xml.stream" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.mockito" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.sun.xml.bind" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jdom" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.httpcomponents.httpcore" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.gwt.user" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.logging" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.gwtjsonrpc" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.objenesis" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.discovery" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.xmlrpc" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.httpcomponents.httpclient" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.axis" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.gwtorm" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.wsdl" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.eclipse.test.performance" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.httpclient" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.io" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.xml.rpc" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.gerrit.prettify" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.lang" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.gerrit.reviewdb" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSets>
+</psf>
