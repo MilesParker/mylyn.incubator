@@ -9,16 +9,17 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.gmf;
+package org.eclipse.mylyn.modeling.gmf.figures;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
 
-public class InterestingNodeFigure extends RectangleFigure {
+public class NodeInterestingFigure extends RectangleFigure {
 	/**
 	 * Constructor.
 	 * @param part 
@@ -28,11 +29,17 @@ public class InterestingNodeFigure extends RectangleFigure {
 	 * @param size
 	 *            the size of the border
 	 */
-	public InterestingNodeFigure(IGraphicalEditPart part) {
-		Color color = ColorConstants.black;
+	public NodeInterestingFigure(IGraphicalEditPart part) {
 		setLayoutManager(new XYLayout());
-		setBorder(new LineBorder(color, 2));
-		setOpaque(false);
-		setFill(false);
+		setOpaque(true);
+		setFill(true);
+		setOutline(false);
+		IFigure partFigure = part.getFigure();
+		setSize(partFigure.getSize().expand(10, 10));
+		if (partFigure.getParent() != null) {
+			partFigure = partFigure.getParent();
+		}
+		setBackgroundColor(ColorConstants.yellow);
+		setAlpha(200);
 	}
 }

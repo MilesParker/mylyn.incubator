@@ -9,30 +9,25 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.gmf;
+package org.eclipse.mylyn.modeling.gmf.figures;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Locator;
-import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.Decoration;
 
-public class EdgeLocator implements Locator {
+public class NodeLocator implements Locator {
 
 	private final IFigure decorated;
 
-	public EdgeLocator(IFigure decorated) {
+	public NodeLocator(IFigure decorated) {
 		this.decorated = decorated;
 	}
 
 	@Override
 	public void relocate(IFigure target) {
-		if (target instanceof Decoration
-				&& decorated instanceof PolylineConnection) {
-			PolylineConnection edge = (PolylineConnection) decorated;
-			PolylineConnection decerator = (PolylineConnection) target
-					.getChildren().get(0);
-			decerator.setPoints(edge.getPoints().getCopy());
-			target.setBounds(decerator.getBounds().getCopy());
+		if (target instanceof Decoration) {
+			target.setBounds(decorated.getBounds().getCopy());
+			((IFigure) target.getChildren().get(0)).setBounds(decorated.getBounds().getCopy());
 		}
 	}
 

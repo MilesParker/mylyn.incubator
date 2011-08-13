@@ -11,14 +11,15 @@
 
 package org.eclipse.mylyn.modeling.gmf;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
@@ -35,17 +36,18 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.modeling.context.DomainAdaptedStructureBridge;
+import org.eclipse.mylyn.modeling.gmf.figures.IRevealable;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-public abstract class MylynDecoratorProvider extends AbstractProvider implements
-		IDecoratorProvider {
+public abstract class MylynDecoratorProvider extends AbstractProvider implements IDecoratorProvider, IPartListener {
 
 	public static final String MYLYN_MARKER = "mylyn-marker";
 
@@ -55,7 +57,9 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 
 	public static final String MYLYN_BORING = "mylyn-boring";
 
-	private Map<String, MylynDecorator> decoratorForModel;
+	private Map<String, Collection<ContextDecorator>> decoratorsForModel;
+
+	private Map<RootEditPart, RevealMouseListener> listenerForRoot;
 
 	private DomainAdaptedStructureBridge structure;
 
@@ -69,95 +73,112 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 
 	public MylynDecoratorProvider() {
 		ContextCore.getContextManager().addListener(contextListenerAdapter);
-		decoratorForModel = new HashMap<String, MylynDecorator>();
-		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
+		decoratorsForModel = new HashMap<String, Collection<ContextDecorator>>();
+		listenerForRoot = new HashMap<RootEditPart, RevealMouseListener>();
+		// workbench should be active as this is instantiated by GMF
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow.getActivePage() == null) {
+			activeWorkbenchWindow.addPageListener(new IPageListener() {
+
+				@Override
+				public void pageOpened(IWorkbenchPage page) {
+				}
+
+				@Override
+				public void pageClosed(IWorkbenchPage page) {
+				}
+
+				@Override
+				public void pageActivated(IWorkbenchPage page) {
+					page.addPartListener(MylynDecoratorProvider.this);
+				}
+			});
+		} else {
+			// Not sure if we'll ever get this situation, but it's worth covering
+			activeWorkbenchWindow.getActivePage().addPartListener(MylynDecoratorProvider.this);
+		}
 	}
 
 	public boolean provides(IOperation operation) {
 		if (operation instanceof CreateDecoratorsOperation) {
 			CreateDecoratorsOperation cdo = (CreateDecoratorsOperation) operation;
 			IDecoratorTarget target = cdo.getDecoratorTarget();
-			View view = (View) target.getAdapter(View.class);
-			Object candidate = getStructure().getDomainObject(view);
+			IGraphicalEditPart targetPart = (IGraphicalEditPart) target.getAdapter(IGraphicalEditPart.class);
+			return accepts(targetPart);
+		}
+		return false;
+	}
+
+	private boolean accepts(IGraphicalEditPart targetPart) {
+		if (targetPart instanceof ConnectionEditPart) {
+			ConnectionEditPart connection = (ConnectionEditPart) targetPart;
+			// TODO How could there not be graphical? Why doesn't the GEF API
+			// make that assumption?
+			IGraphicalEditPart connectionSource = (IGraphicalEditPart) connection.getSource();
+			IGraphicalEditPart connectionTarget = (IGraphicalEditPart) connection.getTarget();
+			// Only care if we care about sources and target
+			return accepts(connectionSource) && accepts(connectionTarget);
+		} else {
+			Object candidate = getStructure().getDomainObject(targetPart.getModel());
 			if (candidate instanceof EObject) {
 				EObject domainObject = (EObject) candidate;
-				IGraphicalEditPart targetPart = (IGraphicalEditPart) target
-						.getAdapter(IGraphicalEditPart.class);
 				return getStructure().acceptsObject(domainObject)
-						&& getDomainUIBridge().acceptsEditPart(domainObject,
-								targetPart);
+						&& getDomainUIBridge().acceptsEditPart(domainObject, targetPart);
 			}
 		}
 		return false;
 	}
 
-	public void hookEditor() {
-		// decorationFigure.addMouseMotionListener(new
-		// MouseMotionListener.Stub() {
-		// public void mouseEntered(MouseEvent me) {
-		// Animation.markBegin();
-		// // decorationFigure.setAlpha(150);
-		// // part.getFigure().getLayoutManager().layout(part.getFigure());
-		// getDecoratorTarget().removeDecoration(lastDecoration);
-		// Animation.run(2000);
-		// }
-		//
-		// // public void mouseExited(MouseEvent me) {
-		// // Animation.markBegin();
-		// // decorationFigure.setAlpha(255);
-		// // decorationFigure.validate();
-		// // // part.getFigure().revalidate();
-		// // // getDecoratorTarget().removeDecoration(lastDecoration);
-		// // Animation.run(2000);
-		// // }
-		// });
-		// part.getFigure().addMouseMotionListener(new
-		// MouseMotionListener.Stub() {
-		// @Override
-		// public void mouseExited(MouseEvent me) {
-		// Animation.markBegin();
-		// // decorationFigure.setAlpha(0);
-		// // decorationFigure.validate();
-		// lastDecoration = getDecoratorTarget().addDecoration(
-		// decorationFigure, new NodeLocator(decorated), false);
-		// Animation.run(2000);
-		// }
-		// });
-	}
-
 	public void createDecorators(IDecoratorTarget target) {
-		IGraphicalEditPart targetPart = (IGraphicalEditPart) target
-				.getAdapter(IGraphicalEditPart.class);
-		Object model = targetPart.getModel();
-		if (model instanceof View) {
-			model = ((View) model).getElement();
+		IGraphicalEditPart targetPart = (IGraphicalEditPart) target.getAdapter(IGraphicalEditPart.class);
+		if (targetPart instanceof ConnectionEditPart) {
+			ConnectionEditPart connectionPart = (ConnectionEditPart) targetPart;
+			EObject domainSource = (EObject) getStructure().getDomainObject(connectionPart.getSource().getModel());
+			EObject domainTarget = (EObject) getStructure().getDomainObject(connectionPart.getTarget().getModel());
+			ContextDecorator mylynDecorator = new EdgeDecorator(this, target, domainSource, domainTarget);
+			target.installDecorator(MYLYN_DETAIL, mylynDecorator);
+			addDecorator(domainSource, mylynDecorator);
+			addDecorator(domainTarget, mylynDecorator);
+		} else {
+			Object model = targetPart.getModel();
+			View view = null;
+			if (model instanceof View) {
+				view = (View) model;
+				model = view.getElement();
+			}
+			EObject domainObject = (EObject) getStructure().getDomainObject(model);
+			ContextDecorator mylynDecorator = new NodeDecorator(this, target, domainObject);
+			addDecorator(domainObject, mylynDecorator);
 		}
-		EObject domainObject = (EObject) getStructure().getDomainObject(model);
-		MylynDecorator mylynDecorator = new MylynDecorator(this, target,
-				domainObject);
-		target.installDecorator(MYLYN_DETAIL, mylynDecorator);
-		decoratorForModel.put(structure.getHandleIdentifier(domainObject),
-				mylynDecorator);
 	}
 
-	private void refreshEditors() {
-		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
+	private void addDecorator(EObject domainObject, ContextDecorator mylynDecorator) {
+		String handle = structure.getHandleIdentifier(domainObject);
+		Collection<ContextDecorator> list = decoratorsForModel.get(handle);
+		if (list == null) {
+			list = new HashSet<ContextDecorator>();
+			decoratorsForModel.put(handle, list);
+		}
+		list.add(mylynDecorator);
+	}
+
+	private Collection<RootEditPart> getRootEditParts() {
+		Collection<RootEditPart> parts = new ArrayList<RootEditPart>();
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (activeWorkbenchWindow != null) {
-			IEditorReference[] editorReferences = activeWorkbenchWindow
-					.getActivePage().getEditorReferences();
+			IEditorReference[] editorReferences = activeWorkbenchWindow.getActivePage().getEditorReferences();
 			for (IEditorReference reference : editorReferences) {
 				IEditorPart editor = reference.getEditor(false);
-				RootEditPart root = getRootEditPart(editor);
+				final RootEditPart root = getRootEditPart(editor);
 				if (root != null) {
-					root.refresh();
+					parts.add(root);
 				}
 			}
 		}
+		return parts;
 	}
 
-	private RootEditPart getRootEditPart(IEditorPart editor) {
+	private RootEditPart getRootEditPart(IWorkbenchPart editor) {
 		if (getDomainUIBridge().acceptsPart(editor)) {
 			if (editor instanceof DiagramEditor) {
 				DiagramEditor de = (DiagramEditor) editor;
@@ -174,8 +195,7 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	}
 
 	public boolean isInteresting(EObject object) {
-		IInteractionElement interation = ContextCore.getContextManager()
-				.getActiveContext()
+		IInteractionElement interation = ContextCore.getContextManager().getActiveContext()
 				.get(getStructure().getHandleIdentifier(object));
 		return interation != null && interation.getInterest().isInteresting();
 	}
@@ -190,51 +210,113 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		return anyContextActive;
 	}
 
-	public void contextChanged(ContextChangeEvent event) {
-		if (event.getEventKind() == ContextChangeKind.ACTIVATED) {
-			anyContextActive = true;
-			for (Entry<String, MylynDecorator> entry : decoratorForModel
-					.entrySet()) {
-				entry.getValue().refresh();
-			}
-			// for (IInteractionElement element : event.getContext()
-			// .getAllElements()) {
-			// refreshElement(element);
-			// }
-		} else if (event.getEventKind() == ContextChangeKind.DEACTIVATED) {
-			anyContextActive = false;
-			for (Entry<String, MylynDecorator> entry : decoratorForModel
-					.entrySet()) {
-				entry.getValue().deactivate();
-			}
-			decoratorForModel.clear();
-		} else {
-			List<IInteractionElement> elements = event.getElements();
-			for (IInteractionElement element : elements) {
-				refreshElement(element);
+	private void deactivate() {
+		anyContextActive = false;
+		for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
+			for (ContextDecorator decorator : values) {
+				decorator.deactivate();
 			}
 		}
-		refreshEditors();
+		for (RootEditPart root : getRootEditParts()) {
+			RevealMouseListener revealMouseListener = listenerForRoot.get(root);
+			if (revealMouseListener != null) {
+				root.getViewer().getControl().removeMouseMoveListener(revealMouseListener);
+			}
+			root.refresh();
+		}
+		decoratorsForModel.clear();
+		listenerForRoot.clear();
 	}
 
-	private void refreshElement(IInteractionElement element) {
-		if (element.getContentType().equals(
-				getDomainUIBridge().getContentType())) {
-			MylynDecorator mylynDecorator = decoratorForModel.get(element
-					.getHandleIdentifier());
-			if (mylynDecorator != null) {
-				mylynDecorator.refresh();
+	private void activate() {
+		anyContextActive = true;
+		refresh();
+	}
+
+	void refresh() {
+		for (RootEditPart root : getRootEditParts()) {
+			refresh(root);
+		}
+		for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
+			for (ContextDecorator decorator : values) {
+				decorator.refresh();
 			}
+		}
+	}
+
+	void refresh(RootEditPart root) {
+		RevealMouseListener revealMouseListener = listenerForRoot.get(root);
+		if (revealMouseListener == null) {
+			revealMouseListener = new RevealMouseListener(root);
+			listenerForRoot.put(root, revealMouseListener);
+			root.getViewer().getControl().addMouseMoveListener(revealMouseListener);
+		}
+		root.refresh();
+	}
+
+	void refresh(IWorkbenchPart part) {
+		RootEditPart rootEditPart = getRootEditPart(part);
+		if (rootEditPart != null) {
+			refresh(rootEditPart);
+		}
+	}
+
+	void refresh(ContextChangeEvent event) {
+		List<IInteractionElement> elements = event.getElements();
+		for (IInteractionElement element : elements) {
+			refresh(element);
+		}
+	}
+
+	void refresh(IInteractionElement element) {
+		if (element.getContentType().equals(getDomainUIBridge().getContentType())) {
+			Collection<ContextDecorator> values = decoratorsForModel.get(element.getHandleIdentifier());
+			if (values != null) {
+				for (ContextDecorator decorator : values) {
+					decorator.refresh();
+				}
+			}
+		}
+	}
+
+	public DomainAdaptedStructureBridge getStructure() {
+		if (structure == null) {
+			structure = (DomainAdaptedStructureBridge) ContextCore.getStructureBridge(getDomainUIBridge()
+					.getContentType());
+		}
+		return structure;
+	}
+
+	@Override
+	public void partActivated(IWorkbenchPart part) {
+		refresh(part);
+	}
+
+	@Override
+	public void partBroughtToTop(IWorkbenchPart part) {
+	}
+
+	@Override
+	public void partClosed(IWorkbenchPart part) {
+	}
+
+	@Override
+	public void partDeactivated(IWorkbenchPart part) {
+	}
+
+	@Override
+	public void partOpened(IWorkbenchPart part) {
+	}
+
+	public void contextChanged(ContextChangeEvent event) {
+		if (event.getEventKind() == ContextChangeKind.ACTIVATED) {
+			activate();
+		} else if (event.getEventKind() == ContextChangeKind.DEACTIVATED) {
+			deactivate();
+		} else {
+			refresh(event);
 		}
 	}
 
 	public abstract IModelUIProvider getDomainUIBridge();
-
-	public DomainAdaptedStructureBridge getStructure() {
-		if (structure == null) {
-			structure = (DomainAdaptedStructureBridge) ContextCore
-					.getStructureBridge(getDomainUIBridge().getContentType());
-		}
-		return structure;
-	}
 }
