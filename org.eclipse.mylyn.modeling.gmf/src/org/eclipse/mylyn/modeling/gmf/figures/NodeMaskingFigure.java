@@ -33,14 +33,14 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealable {
 		setBackgroundColor(backgroundColor);
 		setAlpha(255);
 	}
-
+	
 	@Override
-	public void reveal() {
-		setAlpha(150);
+	public void reveal(double nearness) {
+		FigureManagerHelper.INSTANCE.reveal(this, nearness);
 	}
 
 	@Override
-	public void refresh() {
-//		part.refresh();
+	public void unreveal() {
+		FigureManagerHelper.INSTANCE.unreveal(this);
 	}
 }

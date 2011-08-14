@@ -40,15 +40,4 @@ public class NodeDecorator extends ContextDecorator {
 	public boolean isInteresting() {
 		return getProvider().isInteresting(domainObject);
 	}
-	
-	@Override
-	public void reveal() {
-		super.reveal();
-		IGraphicalEditPart part = (IGraphicalEditPart) getTarget().getAdapter(IGraphicalEditPart.class);
-		List sourceConnections = part.getSourceConnections();
-		for (Object object : sourceConnections) {
-			Edge edge = (Edge) object;
-		}
-		final IFigure decorated = part.getFigure();
-	}
 }

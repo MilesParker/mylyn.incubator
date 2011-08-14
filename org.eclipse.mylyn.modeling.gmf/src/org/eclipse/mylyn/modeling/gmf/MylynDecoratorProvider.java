@@ -18,9 +18,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.RootEditPart;
+import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -36,7 +38,6 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.modeling.context.DomainAdaptedStructureBridge;
-import org.eclipse.mylyn.modeling.gmf.figures.IRevealable;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -247,7 +248,8 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	void refresh(RootEditPart root) {
 		RevealMouseListener revealMouseListener = listenerForRoot.get(root);
 		if (revealMouseListener == null) {
-			revealMouseListener = new RevealMouseListener(root);
+			IFigure rootFigure = ((AbstractGraphicalEditPart) root.getViewer().getRootEditPart()).getFigure();
+			revealMouseListener = new RevealMouseListener(rootFigure);
 			listenerForRoot.put(root, revealMouseListener);
 			root.getViewer().getControl().addMouseMoveListener(revealMouseListener);
 		}

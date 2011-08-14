@@ -56,10 +56,10 @@ public abstract class ContextDecorator implements IDecorator {
 
 	protected abstract void createDecoration(boolean interesting);
 
-	private void removeDecoration() {
-		if (decorationFigure != null) {
-			decorationFigure.refresh();
-		}
+	protected void removeDecoration() {
+//		if (decorationFigure != null) {
+//			decorationFigure.unreveal();
+//		}
 		if (getLastDecoration() != null && ((IFigure) getLastDecoration()).getParent() != null) {
 			getDecoratorTarget().removeDecoration(getLastDecoration());
 			setLastDecoration(null);
@@ -97,9 +97,5 @@ public abstract class ContextDecorator implements IDecorator {
 
 	public IDecoratorTarget getTarget() {
 		return target;
-	}
-
-	protected void reveal() {
-		getDecorationFigure().reveal();
 	}
 }

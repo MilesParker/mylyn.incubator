@@ -9,11 +9,11 @@ import org.eclipse.draw2d.IFigure;
  */
 public interface IRevealable extends IFigure {
 
-	void reveal();
+	void reveal(double nearness);
 //
 //	void revealChildren();
 
-	void refresh();
+	void unreveal();
 //
 //	void refreshChildren();
 }

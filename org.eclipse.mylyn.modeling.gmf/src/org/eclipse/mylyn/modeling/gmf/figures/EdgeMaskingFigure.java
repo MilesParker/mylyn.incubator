@@ -11,6 +11,7 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.ISizeProvider;
 
 public class EdgeMaskingFigure extends PolylineConnection implements IRevealable {
 
@@ -33,17 +34,28 @@ public class EdgeMaskingFigure extends PolylineConnection implements IRevealable
 	public EdgeMaskingFigure(IGraphicalEditPart part) {
 		this.part = (ConnectionNodeEditPart) part;
 		IFigure partFigure = part.getFigure();
-		if (partFigure.getParent() != null) {
-			partFigure = partFigure.getParent();
-		}
+		setOutline(false);
+		setFill(false)
+		;		// if (partFigure.getParent() != null) {
+		// partFigure = partFigure.getParent();
+		// }
 		setLineWidth(4);
-		partFigure = part.getFigure();
+	}
+
+	@Override
+	public void addNotify() {
+		// TODO Auto-generated method stub
+		super.addNotify();
+		IFigure partFigure = part.getFigure();
 		if (partFigure.getParent() != null) {
 			partFigure = partFigure.getParent();
 		}
+//		setLineWidth(4);
+		partFigure = part.getFigure();
+//		if (partFigure.getParent() != null) {
+//			partFigure = partFigure.getParent();
+//		}
 		maskColor = partFigure.getBackgroundColor();
-		setBackgroundColor(maskColor);
-		setForegroundColor(maskColor);
 		priorForegroundForFigure = new HashMap<IFigure, Color>();
 		priorBackgroundForFigure = new HashMap<IFigure, Color>();
 		setAlpha(255);
@@ -55,54 +67,70 @@ public class EdgeMaskingFigure extends PolylineConnection implements IRevealable
 				priorBackgroundForFigure.put(childFigure, childFigure.getBackgroundColor());
 			}
 		}
-		refreshChildren();
+		priorForegroundForFigure.put(this, getForegroundColor());
+		priorBackgroundForFigure.put(this, getBackgroundColor());
+		priorForegroundForFigure.put(partFigure, partFigure.getForegroundColor());
+		priorBackgroundForFigure.put(partFigure, partFigure.getBackgroundColor());
+		unreveal();
 	}
 
-	public void refresh() {
-		if (part.isActive()) {
-			part.refresh();
-		}
+	
+	@Override
+	public void removeNotify() {
+		revealChildren(0.0);
+		super.removeNotify();
+	}
+
+	public void unreveal() {
+		setForegroundColor(maskColor);
+		part.getFigure().setForegroundColor(maskColor);
+		unrevealChildren();
+		// FigureManagerHelper.INSTANCE.refresh(this);
+		// refreshChildren();
+		// if (part.isActive()) {
+		// part.refresh();
+		// }
 		// FigureManagerHelper.INSTANCE.refresh(this);
 	}
-
-	@Override
-	public void reveal() {
-		setAlpha(0);
-		// FigureManagerHelper.INSTANCE.reveal(this);
-	}
-
-	public void refreshChildren() {
+	
+	public void unrevealChildren() {
 		for (Object child : part.getChildren()) {
 			if (child instanceof IGraphicalEditPart) {
 				GraphicalEditPart childPart = (GraphicalEditPart) child;
 				IFigure figure = childPart.getFigure();
 				IFigure partFigure = figure.getParent();
-				figure.setBackgroundColor(maskColor);
+				FigureManagerHelper.INSTANCE.unreveal(figure);
+				// figure.setBackgroundColor(maskColor);
 				figure.setForegroundColor(maskColor);
-				partFigure.setBackgroundColor(maskColor);
+				// partFigure.setBackgroundColor(maskColor);
 				partFigure.setForegroundColor(maskColor);
 			}
 		}
-		part.getFigure().setBackgroundColor(maskColor);
+		// part.getFigure().setBackgroundColor(maskColor);
 		part.getFigure().setForegroundColor(maskColor);
-
 	}
 
-	public void revealChildren() {
+
+	@Override
+	public void reveal(double nearness) {
+		FigureManagerHelper.INSTANCE.reveal(this, maskColor, priorForegroundForFigure.get(part.getFigure()), nearness);
+		FigureManagerHelper.INSTANCE.reveal(part.getFigure(), maskColor, priorForegroundForFigure.get(part.getFigure()), nearness);
+//		part.getFigure().setForegroundColor(priorForegroundForFigure.get(part.getFigure()));
+		revealChildren(nearness);
+	}
+	
+	public void revealChildren(double nearness) {
 		for (Object child : part.getChildren()) {
 			if (child instanceof IGraphicalEditPart) {
 				GraphicalEditPart childPart = (GraphicalEditPart) child;
-				IFigure figure = childPart.getFigure();
-				FigureManagerHelper.INSTANCE.reveal(figure);
-				IFigure partFigure = figure.getParent();
-				partFigure.setBackgroundColor(priorBackgroundForFigure.get(figure));
-				partFigure.setForegroundColor(priorForegroundForFigure.get(figure));
-				figure.setBackgroundColor(priorBackgroundForFigure.get(figure));
-				figure.setForegroundColor(priorForegroundForFigure.get(figure));
+				IFigure childFigure = childPart.getFigure();
+				IFigure partFigure = childFigure.getParent();
+				Color childColor = priorForegroundForFigure.get(childFigure);
+				Color parentColor = priorForegroundForFigure.get(childFigure);
+				FigureManagerHelper.INSTANCE.reveal(childFigure, maskColor, childColor, nearness);
+				FigureManagerHelper.INSTANCE.reveal(partFigure, maskColor, parentColor, nearness);
 			}
 		}
-		part.getFigure().setBackgroundColor(ColorConstants.black);
-		part.getFigure().setForegroundColor(ColorConstants.black);
 	}
 
 }

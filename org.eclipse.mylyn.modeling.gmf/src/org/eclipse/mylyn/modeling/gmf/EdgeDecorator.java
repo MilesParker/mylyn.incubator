@@ -6,6 +6,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
 import org.eclipse.mylyn.modeling.gmf.figures.EdgeLocator;
 import org.eclipse.mylyn.modeling.gmf.figures.EdgeMaskingFigure;
+import org.eclipse.mylyn.modeling.gmf.figures.IRevealable;
 
 public class EdgeDecorator extends ContextDecorator {
 
@@ -30,6 +31,15 @@ public class EdgeDecorator extends ContextDecorator {
 					true));
 
 		}
+	}
+
+	@Override
+	protected void removeDecoration() {
+		IRevealable decorationFigure = getDecorationFigure();
+//		if (decorationFigure != null) {
+//			decorationFigure.reveal(1.0);
+//		}
+		super.removeDecoration();
 	}
 
 	@Override
