@@ -37,7 +37,7 @@
       </startup>
    </extension>
 
-        <extension point="org.eclipse.ui.popupMenus"> 
+     <extension point="org.eclipse.ui.popupMenus"> 
 
      <objectContribution
            adaptable="true"
@@ -61,6 +61,33 @@
       			</systemProperty>
 	               <objectClass
 	                     name="org.eclipse.emf.ecore.EObject">
+	               </objectClass>
+      		</and>
+      </visibility>
+     </objectContribution>
+     
+     <objectContribution
+           adaptable="true"
+           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.ecore_diagram.element"
+           objectClass="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
+     	<action
+            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
+            definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
+            enablesFor="*"
+            icon="icons/elcl16/interest-decrease.gif"
+            id="org.eclipse.mylyn.ecoretools.ui.interest.remove.element"
+            label="%InterestDecrementAction.label"
+            menubarPath="group.reorganize"
+            tooltip="%InterestDecrementAction.tooltip">
+      </action>
+            <visibility>
+      		<and>
+      			<systemProperty
+	               name="org.eclipse.mylyn.context.core.context.active"
+    	           value="true">
+      			</systemProperty>
+	               <objectClass
+	                     name="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
 	               </objectClass>
       		</and>
       </visibility>

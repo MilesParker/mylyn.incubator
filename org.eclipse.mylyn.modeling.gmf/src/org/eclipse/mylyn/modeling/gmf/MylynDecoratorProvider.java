@@ -67,7 +67,7 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 
 	private boolean anyContextActive;
 
-	AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
+	private AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
 		public void contextChanged(ContextChangeEvent event) {
 			MylynDecoratorProvider.this.contextChanged(event);
 		}
@@ -238,8 +238,6 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 				for (ContextDecorator decorator : values) {
 					IGraphicalEditPart editPart = (IGraphicalEditPart) decorator.getTarget().getAdapter(
 							IGraphicalEditPart.class);
-					// if (editPart.getViewer().getControl().get)
-					// if (decorator.getDecoratorTarget())
 					if (editPart.getDiagramEditDomain() == editor.getDiagramEditDomain()) {
 						removedDecorators.add(decorator);
 					}
@@ -253,17 +251,6 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	private void activate() {
 		anyContextActive = true;
 		refresh();
-	}
-
-	void refresh() {
-		for (RootEditPart root : getRootEditParts()) {
-			refresh(root);
-		}
-		for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
-			for (ContextDecorator decorator : values) {
-				decorator.refresh();
-			}
-		}
 	}
 
 	void refresh(RootEditPart root) {
@@ -284,10 +271,12 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		}
 	}
 
-	void refresh(ContextChangeEvent event) {
-		List<IInteractionElement> elements = event.getElements();
-		for (IInteractionElement element : elements) {
-			refresh(element);
+	void refresh() {
+		for (RootEditPart root : getRootEditParts()) {
+			refresh(root);
+		}
+		for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
+			refresh(values);
 		}
 	}
 
@@ -295,10 +284,21 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		if (element.getContentType().equals(getDomainUIBridge().getContentType())) {
 			Collection<ContextDecorator> values = decoratorsForModel.get(element.getHandleIdentifier());
 			if (values != null) {
-				for (ContextDecorator decorator : values) {
-					decorator.refresh();
-				}
+				refresh(values);
 			}
+		}
+	}
+
+	private void refresh(Collection<ContextDecorator> values) {
+		for (ContextDecorator decorator : values) {
+			decorator.refresh();
+		}
+	}
+	
+	void refresh(ContextChangeEvent event) {
+		List<IInteractionElement> elements = event.getElements();
+		for (IInteractionElement element : elements) {
+			refresh(element);
 		}
 	}
 
@@ -342,6 +342,10 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 			refresh(event);
 		}
 	}
-
+	
+	public RevealMouseListener getListenerForRoot(RootEditPart part) {
+		return listenerForRoot.get(part);
+	}
+	
 	public abstract IModelUIProvider getDomainUIBridge();
 }

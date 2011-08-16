@@ -41,7 +41,7 @@ final class RevealMouseListener implements MouseMoveListener {
 			IFigure child = (IFigure) object;
 			if (revealBounds.intersects(child.getClientArea())) {
 				// only reveal outer-most
-				if (isRevealableMember(child)) {
+				if (isRevealableMember(child) && child.getParent() != null & child.getParent().getParent() != null) {
 					found.add(child);
 				} else {
 					findChildFigure(child, revealBounds, found);
@@ -91,7 +91,9 @@ final class RevealMouseListener implements MouseMoveListener {
 			Collection<IFigure> removedFigures = new HashSet<IFigure>(lastDecorations);
 			removedFigures.removeAll(newDecorations);
 			for (IFigure removedFigure : removedFigures) {
-				FigureManagerHelper.INSTANCE.unreveal(removedFigure);
+				if (removedFigure.getParent() != null & removedFigure.getParent().getParent() != null) {
+					FigureManagerHelper.INSTANCE.unreveal(removedFigure);
+				}
 			}
 		}
 		for (IFigure figure : newDecorations) {
@@ -99,5 +101,9 @@ final class RevealMouseListener implements MouseMoveListener {
 			FigureManagerHelper.INSTANCE.reveal(figure, n);
 		}
 		lastDecorations = newDecorations;
+	}
+	
+	public void removeDecoration(IFigure decoration) {
+		lastDecorations.remove(decoration);
 	}
 }

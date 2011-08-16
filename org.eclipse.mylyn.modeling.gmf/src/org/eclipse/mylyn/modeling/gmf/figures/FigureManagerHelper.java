@@ -28,7 +28,7 @@ public class FigureManagerHelper {
 	}
 
 	/**
-	 * Note: Remeber taht we are working with a masking figure. Therefore "revealed" is when this mask is fully transparent, i.e. alpha is 225.
+	 * Note: We are working with a masking figure. Therefore "revealed" is when this mask is fully transparent, i.e. alpha is 0.
 	 * @param figure
 	 * @param nearness bounded in [0,1] where 1.0 is touching and 0.0 is furtherest away
 	 */
@@ -46,7 +46,7 @@ public class FigureManagerHelper {
 	}
 
 	/**
-	 * Note: Remeber taht we are working with a masking figure. Therefore "revealed" is when this mask is fully transparent, i.e. alpha is 225.
+	 * Note: We are working with a masking figure. Therefore "revealed" is when this mask is fully transparent, i.e. alpha is 0.
 	 * @param figure
 	 * @param nearness bounded in [0,1] with 
 	 */

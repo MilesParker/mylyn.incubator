@@ -74,13 +74,6 @@ public class EdgeMaskingFigure extends PolylineConnection implements IRevealable
 		unreveal();
 	}
 
-	
-	@Override
-	public void removeNotify() {
-		revealChildren(0.0);
-		super.removeNotify();
-	}
-
 	public void unreveal() {
 		setForegroundColor(maskColor);
 		part.getFigure().setForegroundColor(maskColor);
@@ -115,7 +108,6 @@ public class EdgeMaskingFigure extends PolylineConnection implements IRevealable
 	public void reveal(double nearness) {
 		FigureManagerHelper.INSTANCE.reveal(this, maskColor, priorForegroundForFigure.get(part.getFigure()), nearness);
 		FigureManagerHelper.INSTANCE.reveal(part.getFigure(), maskColor, priorForegroundForFigure.get(part.getFigure()), nearness);
-//		part.getFigure().setForegroundColor(priorForegroundForFigure.get(part.getFigure()));
 		revealChildren(nearness);
 	}
 	
@@ -126,11 +118,35 @@ public class EdgeMaskingFigure extends PolylineConnection implements IRevealable
 				IFigure childFigure = childPart.getFigure();
 				IFigure partFigure = childFigure.getParent();
 				Color childColor = priorForegroundForFigure.get(childFigure);
-				Color parentColor = priorForegroundForFigure.get(childFigure);
+				Color parentColor = priorForegroundForFigure.get(partFigure);
 				FigureManagerHelper.INSTANCE.reveal(childFigure, maskColor, childColor, nearness);
 				FigureManagerHelper.INSTANCE.reveal(partFigure, maskColor, parentColor, nearness);
 			}
 		}
 	}
 
+	/**
+	 * Edges must also return their non-alpha capable child figures to their orginal state.
+	 */
+	@Override
+	public void restore() {
+		Color childColor = priorForegroundForFigure.get(this);
+		Color parentColor = priorForegroundForFigure.get(part.getFigure());
+		this.setForegroundColor(childColor);
+		part.getFigure().setForegroundColor(parentColor);
+	}
+	
+	public void restoreChildren(double nearness) {
+		for (Object child : part.getChildren()) {
+			if (child instanceof IGraphicalEditPart) {
+				GraphicalEditPart childPart = (GraphicalEditPart) child;
+				IFigure childFigure = childPart.getFigure();
+				IFigure partFigure = childFigure.getParent();
+				Color childColor = priorForegroundForFigure.get(childFigure);
+				Color parentColor = priorForegroundForFigure.get(partFigure);
+				this.setForegroundColor(childColor);
+				partFigure.setForegroundColor(parentColor);
+			}
+		}
+	}
 }

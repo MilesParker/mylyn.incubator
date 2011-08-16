@@ -43,4 +43,10 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealable {
 	public void unreveal() {
 		FigureManagerHelper.INSTANCE.unreveal(this);
 	}
+	/**
+	 * Nodes are handled normally.
+	 */
+	@Override
+	public void restore() {
+	}
 }
