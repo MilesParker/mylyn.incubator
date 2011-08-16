@@ -1,6 +1,7 @@
 package org.eclipse.mylyn.modeling.context;
 
 
+
 public interface IModelStructureProvider {
 	
 	String getContentType();

@@ -25,6 +25,7 @@ import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
@@ -229,6 +230,26 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		listenerForRoot.clear();
 	}
 
+	private void deactivate(IWorkbenchPart part) {
+		if (part instanceof DiagramEditor) {
+			DiagramEditor editor = (DiagramEditor) part;
+			for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
+				Collection<ContextDecorator> removedDecorators = new HashSet<ContextDecorator>();
+				for (ContextDecorator decorator : values) {
+					IGraphicalEditPart editPart = (IGraphicalEditPart) decorator.getTarget().getAdapter(
+							IGraphicalEditPart.class);
+					// if (editPart.getViewer().getControl().get)
+					// if (decorator.getDecoratorTarget())
+					if (editPart.getDiagramEditDomain() == editor.getDiagramEditDomain()) {
+						removedDecorators.add(decorator);
+					}
+				}
+				values.removeAll(removedDecorators);
+			}
+			listenerForRoot.remove(editor.getDiagramEditPart().getRoot());
+		}
+	}
+
 	private void activate() {
 		anyContextActive = true;
 		refresh();
@@ -300,10 +321,12 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 
 	@Override
 	public void partClosed(IWorkbenchPart part) {
+		deactivate(part);
 	}
 
 	@Override
 	public void partDeactivated(IWorkbenchPart part) {
+		// deactivate(part);
 	}
 
 	@Override

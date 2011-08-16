@@ -36,9 +36,9 @@ public class EdgeDecorator extends ContextDecorator {
 	@Override
 	protected void removeDecoration() {
 		IRevealable decorationFigure = getDecorationFigure();
-//		if (decorationFigure != null) {
-//			decorationFigure.reveal(1.0);
-//		}
+		if (decorationFigure != null) {
+			decorationFigure.reveal(0.0);
+		}
 		super.removeDecoration();
 	}
 

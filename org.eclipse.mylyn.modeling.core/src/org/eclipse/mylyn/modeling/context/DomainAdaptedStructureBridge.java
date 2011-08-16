@@ -1,8 +1,10 @@
 package org.eclipse.mylyn.modeling.context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 
 public abstract class DomainAdaptedStructureBridge extends
@@ -73,12 +75,6 @@ public abstract class DomainAdaptedStructureBridge extends
 	public abstract Object getDomainObjectForHandle(String handle);
 
 	@Override
-	public List<String> getChildHandles(String handle) {
-		// ignore
-		return null;
-	}
-
-	@Override
 	public String getLabel(Object object) {
 		return object.toString();
 	}
@@ -109,7 +105,6 @@ public abstract class DomainAdaptedStructureBridge extends
 
 	@Override
 	public String getContentType() {
-		// TODO Auto-generated method stub
 		return getDomainContextBridge().getContentType();
 	}
 

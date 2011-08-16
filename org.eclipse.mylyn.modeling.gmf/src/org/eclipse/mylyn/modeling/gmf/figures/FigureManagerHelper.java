@@ -30,7 +30,7 @@ public class FigureManagerHelper {
 	/**
 	 * Note: Remeber taht we are working with a masking figure. Therefore "revealed" is when this mask is fully transparent, i.e. alpha is 225.
 	 * @param figure
-	 * @param nearness bounded in [0,1]
+	 * @param nearness bounded in [0,1] where 1.0 is touching and 0.0 is furtherest away
 	 */
 	public void reveal(IFigure figure, double nearness) {
 		int alpha = (int) (255 - (nearness * 255.0));
@@ -48,17 +48,12 @@ public class FigureManagerHelper {
 	/**
 	 * Note: Remeber taht we are working with a masking figure. Therefore "revealed" is when this mask is fully transparent, i.e. alpha is 225.
 	 * @param figure
-	 * @param nearness bounded in [0,1]
+	 * @param nearness bounded in [0,1] with 
 	 */
 	public void reveal(IFigure figure, Color color1, Color color2, double nearness) {
 		figure.setForegroundColor(getColor(color1, color2, (float) nearness));
 	}
 	
-	/**
-	 * 
-	 * @param figure
-	 * @param nearness bounded in [0,1]
-	 */
 	public void unreveal(IFigure figure) {
 		if (figure instanceof Shape) {
 			((Shape) figure).setAlpha(255);

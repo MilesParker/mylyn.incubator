@@ -1,36 +1,35 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Ecoretools
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.mylyn.modeling.ecoretools;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramUIBridgePlugin
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.mylyn.modeling.core;bundle-version="1.0.0",
- org.eclipse.mylyn.modeling.ui;bundle-version="3.7.0",
- org.eclipse.jface.text;bundle-version="3.7.0",
- org.eclipse.mylyn.context.core,
- org.eclipse.uml2.uml;bundle-version="3.2.0",
- org.eclipse.mylyn.modeling.gmf;bundle-version="1.0.0",
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.views,
+ org.eclipse.ui.navigator,
+ org.eclipse.ui.navigator.resources,
+ org.eclipse.jface.text,
  org.eclipse.gmf.runtime.common.core;bundle-version="1.4.1",
  org.eclipse.gmf.runtime.diagram.core;bundle-version="1.4.1",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.5.0",
  org.eclipse.emf.ecoretools.diagram;bundle-version="1.0.0",
- org.eclipse.ui.ide;bundle-version="3.7.0",
  org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.4.1",
  org.eclipse.mylyn.context.core;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.mylyn.context.ui;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.mylyn.commons.core;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.mylyn.commons.ui;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.mylyn.monitor.ui;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.mylyn.resources.ui;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.mylyn.tasks.core;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.mylyn.monitor.core;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.mylyn.ide.ui;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.mylyn.monitor.ui;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.ui.navigator;bundle-version="3.5.100",
- org.eclipse.ui.navigator.resources;bundle-version="3.4.300",
- org.eclipse.gmf.runtime.notation.edit;bundle-version="1.4.0"
+ org.eclipse.mylyn.modeling.core;bundle-version="1.0.0",
+ org.eclipse.mylyn.modeling.ui;bundle-version="3.7.0",
+ org.eclipse.mylyn.modeling.gmf;bundle-version="1.0.0",
+ org.eclipse.gmf.runtime.notation.edit;bundle-version="1.4.0",
+  org.eclipse.mylyn.ide.ui;bundle-version="[3.0.0,4.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.mylyn.modeling.ecoretools
