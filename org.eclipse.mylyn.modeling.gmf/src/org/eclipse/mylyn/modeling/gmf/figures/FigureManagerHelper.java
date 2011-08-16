@@ -33,6 +33,8 @@ public class FigureManagerHelper {
 	 * @param nearness bounded in [0,1] where 1.0 is touching and 0.0 is furtherest away
 	 */
 	public void reveal(IFigure figure, double nearness) {
+		//We don't actually want to fully reveal.
+		nearness *= .9;
 		int alpha = (int) (255 - (nearness * 255.0));
 		if (figure instanceof Shape) {
 			((Shape) figure).setAlpha(alpha);
@@ -51,6 +53,8 @@ public class FigureManagerHelper {
 	 * @param nearness bounded in [0,1] with 
 	 */
 	public void reveal(IFigure figure, Color color1, Color color2, double nearness) {
+		//We don't actually want to fully reveal.
+		nearness *= .9;
 		figure.setForegroundColor(getColor(color1, color2, (float) nearness));
 	}
 	

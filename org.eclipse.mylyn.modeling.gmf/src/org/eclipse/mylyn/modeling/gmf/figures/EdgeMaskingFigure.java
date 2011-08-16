@@ -50,15 +50,10 @@ public class EdgeMaskingFigure extends PolylineConnection implements IRevealable
 		if (partFigure.getParent() != null) {
 			partFigure = partFigure.getParent();
 		}
-//		setLineWidth(4);
 		partFigure = part.getFigure();
-//		if (partFigure.getParent() != null) {
-//			partFigure = partFigure.getParent();
-//		}
 		maskColor = partFigure.getBackgroundColor();
 		priorForegroundForFigure = new HashMap<IFigure, Color>();
 		priorBackgroundForFigure = new HashMap<IFigure, Color>();
-		setAlpha(255);
 		for (Object child : part.getChildren()) {
 			if (child instanceof IGraphicalEditPart) {
 				GraphicalEditPart childPart = (GraphicalEditPart) child;

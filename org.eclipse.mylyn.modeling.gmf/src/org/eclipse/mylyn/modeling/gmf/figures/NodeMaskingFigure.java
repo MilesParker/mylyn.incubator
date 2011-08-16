@@ -31,12 +31,11 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealable {
 		}
 		Color backgroundColor = partFigure.getBackgroundColor();
 		setBackgroundColor(backgroundColor);
-		setAlpha(255);
 	}
 	
 	@Override
 	public void reveal(double nearness) {
-		FigureManagerHelper.INSTANCE.reveal(this, nearness);
+		FigureManagerHelper.INSTANCE.reveal(this, nearness * .5 + .5);
 	}
 
 	@Override
