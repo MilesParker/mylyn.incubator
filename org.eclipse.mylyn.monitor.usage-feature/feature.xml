@@ -29,10 +29,10 @@
    </license>
 
    <requires>
-      <import plugin="org.eclipse.mylyn.commons.core" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.commons.net" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.context.core" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.monitor.core" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.mylyn.commons.core" version="3.7.0" match="compatible"/>
+      <import plugin="org.eclipse.mylyn.commons.net" version="3.7.0" match="compatible"/>
+      <import plugin="org.eclipse.mylyn.context.core" version="3.7.0" match="compatible"/>
+      <import plugin="org.eclipse.mylyn.monitor.core" version="3.7.0" match="compatible"/>
       <import feature="org.eclipse.rcp" version="3.3.0" match="greaterOrEqual"/>
    </requires>
 
