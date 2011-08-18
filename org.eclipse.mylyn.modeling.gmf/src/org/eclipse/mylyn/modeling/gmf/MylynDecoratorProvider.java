@@ -190,17 +190,18 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 				// part w/o explicit dependencies..
 				IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) editor
 						.getAdapter(IDiagramGraphicalViewer.class);
-				return viewer.getRootEditPart();
+				if (viewer != null) {
+					return viewer.getRootEditPart();
+				}
 			}
 		}
 		return null;
 	}
 
 	private IInteractionElement getRecentInteraction(EObject object) {
-		return ContextCore.getContextManager().getActiveContext()
-				.get(getStructure().getHandleIdentifier(object));
+		return ContextCore.getContextManager().getActiveContext().get(getStructure().getHandleIdentifier(object));
 	}
-	
+
 	public boolean isInteresting(EObject object) {
 		IInteractionElement interation = getRecentInteraction(object);
 		return interation != null && interation.getInterest().isInteresting();
@@ -303,7 +304,7 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 			decorator.refresh();
 		}
 	}
-	
+
 	void refresh(ContextChangeEvent event) {
 		List<IInteractionElement> elements = event.getElements();
 		for (IInteractionElement element : elements) {
@@ -351,10 +352,10 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 			refresh(event);
 		}
 	}
-	
+
 	public RevealMouseListener getListenerForRoot(RootEditPart part) {
 		return listenerForRoot.get(part);
 	}
-	
+
 	public abstract IModelUIProvider getDomainUIBridge();
 }
