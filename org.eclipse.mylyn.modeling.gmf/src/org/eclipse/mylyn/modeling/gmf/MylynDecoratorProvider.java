@@ -196,10 +196,19 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		return null;
 	}
 
-	public boolean isInteresting(EObject object) {
-		IInteractionElement interation = ContextCore.getContextManager().getActiveContext()
+	private IInteractionElement getRecentInteraction(EObject object) {
+		return ContextCore.getContextManager().getActiveContext()
 				.get(getStructure().getHandleIdentifier(object));
+	}
+	
+	public boolean isInteresting(EObject object) {
+		IInteractionElement interation = getRecentInteraction(object);
 		return interation != null && interation.getInterest().isInteresting();
+	}
+
+	public boolean isLandmark(EObject object) {
+		IInteractionElement interation = getRecentInteraction(object);
+		return interation != null && interation.getInterest().isLandmark();
 	}
 
 	/**

@@ -1,13 +1,16 @@
 package org.eclipse.mylyn.modeling.gmf.figures;
 
+import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.XYLayout;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.services.decorator.Decoration;
 import org.eclipse.swt.graphics.Color;
 
-public class NodeMaskingFigure extends RectangleFigure implements IRevealable {
-	private final IGraphicalEditPart part;
+public class NodeMaskingFigure extends RectangleFigure implements IRevealableFigure {
+
+	private final IFigure decorated;
+
 
 	/**
 	 * Constructor.
@@ -19,33 +22,44 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealable {
 	 * @param size
 	 *            the size of the border
 	 */
-	public NodeMaskingFigure(IGraphicalEditPart part) {
-		this.part = part;
+	public NodeMaskingFigure(IFigure decorated) {
+		this.decorated = decorated;
 		setLayoutManager(new XYLayout());
 		setOpaque(true);
 		setFill(true);
 		setOutline(false);
-		IFigure partFigure = part.getFigure();
-		if (partFigure.getParent() != null) {
-			partFigure = partFigure.getParent();
+		
+		if (decorated.getParent() != null) {
+			decorated = decorated.getParent();
 		}
-		Color backgroundColor = partFigure.getBackgroundColor();
+		Color backgroundColor = decorated.getBackgroundColor();
 		setBackgroundColor(backgroundColor);
+		setAlpha(255);
 	}
 	
 	@Override
 	public void reveal(double nearness) {
-		FigureManagerHelper.INSTANCE.reveal(this, nearness * .5 + .5);
+		FigureManagerHelper.INSTANCE.reveal(this, nearness);
 	}
 
 	@Override
 	public void unreveal() {
 		FigureManagerHelper.INSTANCE.unreveal(this);
 	}
+
 	/**
 	 * Nodes are handled normally.
 	 */
 	@Override
 	public void restore() {
+	}
+	
+
+	@Override
+	public void relocate(IFigure target) {
+		if (target instanceof Decoration) {
+			target.setBounds(decorated.getBounds().getCopy());
+			((IFigure) target.getChildren().get(0)).setBounds(decorated.getBounds().getCopy());
+		}
 	}
 }

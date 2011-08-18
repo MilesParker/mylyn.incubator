@@ -1,30 +1,35 @@
 package org.eclipse.mylyn.modeling.gmf;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.MouseEvent;
-import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoration;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
-import org.eclipse.mylyn.modeling.gmf.figures.IRevealable;
+import org.eclipse.mylyn.modeling.gmf.figures.IRevealableFigure;
 
 public abstract class ContextDecorator implements IDecorator {
 
 	private final MylynDecoratorProvider provider;
 
 	boolean wasInteresting;
+	boolean wasLandmark;
 	boolean wasFocussed;
-	private IDecoration lastDecoration;
 
+	private IFigure decoratedFigure;
 	boolean initialized;
-	private IRevealable decorationFigure;
+	private List<IRevealableFigure> decorationFigures;
+	private List<IDecoration> decorations;
 
 	private final IDecoratorTarget target;
 
 	public ContextDecorator(MylynDecoratorProvider provider, IDecoratorTarget target) {
 		this.provider = provider;
 		this.target = target;
+		decorationFigures = new ArrayList<IRevealableFigure>();
+		decorations = new ArrayList<IDecoration>();
 		target.installDecorator(MylynDecoratorProvider.MYLYN_DETAIL, this);
 	}
 
@@ -36,39 +41,49 @@ public abstract class ContextDecorator implements IDecorator {
 	@Override
 	public void deactivate() {
 		initialized = false;
-		removeDecoration();
+		removeDecorations();
 	}
 
 	@Override
 	public void refresh() {
 		boolean interesting = isInteresting();
+		boolean landmark = isLandmark();
 		boolean focussed = provider.isFocussed();
-		if (focussed != wasFocussed || interesting != wasInteresting || !initialized) {
-			removeDecoration();
+		if (focussed != wasFocussed || interesting != wasInteresting || landmark != wasLandmark || !initialized) {
+			removeDecorations();
 			if (focussed) {
-				createDecoration(interesting);
+				createDecoration();
 			}
 		}
 		wasInteresting = interesting;
+		wasLandmark = landmark;
 		wasFocussed = focussed;
 		initialized = true;
 	}
 
-	protected abstract void createDecoration(boolean interesting);
+	protected abstract void createDecoration();
 
-	protected void removeDecoration() {
-		if (decorationFigure != null) {
-			decorationFigure.restore();
+	IDecoration addDecoration(IRevealableFigure decorationFigure) {
+		IDecoration decoration = getDecoratorTarget().addDecoration(decorationFigure, decorationFigure, true);
+		decorationFigures.add(decorationFigure);
+		decorations.add(decoration);
+		return decoration;
+	}
+
+	protected void removeDecorations() {
+		for (IRevealableFigure figure : decorationFigures) {
+			figure.restore();
 			IGraphicalEditPart part = (IGraphicalEditPart) getTarget().getAdapter(IGraphicalEditPart.class);
 			RevealMouseListener listenerForRoot = provider.getListenerForRoot(part.getRoot());
 			if (listenerForRoot != null) {
-				listenerForRoot.removeDecoration(decorationFigure);
+				listenerForRoot.removeDecoration(figure);
 			}
 		}
-		if (getLastDecoration() != null && ((IFigure) getLastDecoration()).getParent() != null) {
-			getDecoratorTarget().removeDecoration(getLastDecoration());
-			setLastDecoration(null);
+		decorationFigures.clear();
+		for (IDecoration decoration : decorations) {
+			getDecoratorTarget().removeDecoration(decoration);
 		}
+		decorations.clear();
 	}
 
 	public MylynDecoratorProvider getProvider() {
@@ -81,26 +96,28 @@ public abstract class ContextDecorator implements IDecorator {
 
 	public abstract boolean isInteresting();
 
-	public IRevealable getDecorationFigure() {
-		return decorationFigure;
-	}
-
-	public void setDecorationFigure(IRevealable decorationFigure) {
-		// if (decorationFigure == null && this.decorationFigure != null) {
-		// ((IRevealable) this.decorationFigure).restore();
-		// }
-		this.decorationFigure = decorationFigure;
-	}
-
-	public IDecoration getLastDecoration() {
-		return lastDecoration;
-	}
-
-	public void setLastDecoration(IDecoration lastDecoration) {
-		this.lastDecoration = lastDecoration;
-	}
-
+	public abstract boolean isLandmark();
+	
 	public IDecoratorTarget getTarget() {
 		return target;
+	}
+
+	IGraphicalEditPart getEditPart() {
+		return (IGraphicalEditPart) getTarget().getAdapter(IGraphicalEditPart.class);
+	}
+	
+	/**
+	 * Assumes that part has already been created.
+	 * @return
+	 */
+	public IFigure getDecoratedFigure() {
+		if (decoratedFigure == null && getEditPart() != null) {
+			return getEditPart().getFigure();
+		}
+		return decoratedFigure;
+	}
+
+	public List<IRevealableFigure> getDecorationFigures() {
+		return decorationFigures;
 	}
 }

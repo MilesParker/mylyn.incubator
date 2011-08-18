@@ -7,10 +7,8 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gef.RootEditPart;
-import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
-import org.eclipse.mylyn.modeling.gmf.figures.FigureManagerHelper;
-import org.eclipse.mylyn.modeling.gmf.figures.IRevealable;
+import org.eclipse.gmf.runtime.diagram.ui.services.decorator.Decoration;
+import org.eclipse.mylyn.modeling.gmf.figures.IRevealableFigure;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 
@@ -20,7 +18,7 @@ final class RevealMouseListener implements MouseMoveListener {
 
 	// private final RootEditPart root;
 
-	private Collection<IFigure> lastDecorations = new HashSet<IFigure>();
+	private Collection<IRevealableFigure> lastDecorations = new HashSet<IRevealableFigure>();
 
 	private final IFigure layer;
 
@@ -28,35 +26,42 @@ final class RevealMouseListener implements MouseMoveListener {
 		this.layer = layer;
 	}
 
-	private Collection<IFigure> getTargetFigures(Point mousePoint) {
+	private Collection<IRevealableFigure> getTargetFigures(Point mousePoint) {
 		Rectangle revealBounds = new Rectangle(mousePoint, new Dimension(REVEAL_DISTANCE * 2, REVEAL_DISTANCE * 2));
 		revealBounds.translate(-REVEAL_DISTANCE, -REVEAL_DISTANCE);
-		HashSet<IFigure> found = new HashSet<IFigure>();
+		HashSet<IRevealableFigure> found = new HashSet<IRevealableFigure>();
 		findChildFigure(layer, revealBounds, found);
 		return found;
 	}
 
-	private void findChildFigure(IFigure parent, Rectangle revealBounds, HashSet<IFigure> found) {
+	private void findChildFigure(IFigure parent, Rectangle revealBounds, HashSet<IRevealableFigure> found) {
 		for (Object object : parent.getChildren()) {
 			IFigure child = (IFigure) object;
 			if (revealBounds.intersects(child.getClientArea())) {
 				// only reveal outer-most
-				if (isRevealableMember(child) && child.getParent() != null & child.getParent().getParent() != null) {
-					found.add(child);
-				} else {
-					findChildFigure(child, revealBounds, found);
+				IRevealableFigure figure = getRevealableMember(child);
+				if (figure != null) {
+					found.add(figure);
 				}
+				findChildFigure(child, revealBounds, found);
 			}
 		}
 	}
 
-	public boolean isRevealableMember(IFigure candFigure) {
-		if (candFigure instanceof IRevealable) {
-			return true;
+	public IRevealableFigure getRevealableMember(IFigure candFigure) {
+		if (candFigure instanceof IRevealableFigure) {
+			return (IRevealableFigure) candFigure;
+		} else if (candFigure instanceof Decoration) {
+			for (Object object : ((Decoration) candFigure).getChildren()) {
+				//there should only be one for each decoration?
+				if (object instanceof IRevealableFigure) {
+					return (IRevealableFigure) object;
+				}
+			}
 		} else if (candFigure.getParent() != null) {
-			return isRevealableMember(candFigure.getParent());
+			return getRevealableMember(candFigure.getParent());
 		}
-		return false;
+		return null;
 	}
 
 	private int distance(Rectangle rectangle, Point point) {
@@ -85,24 +90,24 @@ final class RevealMouseListener implements MouseMoveListener {
 	public void mouseMove(MouseEvent e) {
 		Point mousePoint = new Point(e.x, e.y);
 		layer.translateFromParent(mousePoint);
-		Collection<IFigure> newDecorations = getTargetFigures(mousePoint);
+		Collection<IRevealableFigure> newDecorations = getTargetFigures(mousePoint);
 
 		if (!newDecorations.equals(lastDecorations)) {
-			Collection<IFigure> removedFigures = new HashSet<IFigure>(lastDecorations);
+			Collection<IRevealableFigure> removedFigures = new HashSet<IRevealableFigure>(lastDecorations);
 			removedFigures.removeAll(newDecorations);
-			for (IFigure removedFigure : removedFigures) {
+			for (IRevealableFigure removedFigure : removedFigures) {
 				if (removedFigure.getParent() != null & removedFigure.getParent().getParent() != null) {
-					FigureManagerHelper.INSTANCE.unreveal(removedFigure);
+					removedFigure.unreveal();
 				}
 			}
 		}
-		for (IFigure figure : newDecorations) {
+		for (IRevealableFigure figure : newDecorations) {
 			double n = nearness(figure, mousePoint);
-			FigureManagerHelper.INSTANCE.reveal(figure, n);
+			figure.reveal(n);
 		}
 		lastDecorations = newDecorations;
 	}
-	
+
 	public void removeDecoration(IFigure decoration) {
 		lastDecorations.remove(decoration);
 	}

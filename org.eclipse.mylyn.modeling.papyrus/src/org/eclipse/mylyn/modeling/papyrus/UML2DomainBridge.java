@@ -3,7 +3,6 @@ package org.eclipse.mylyn.modeling.papyrus;
 import javax.management.relation.Relation;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;

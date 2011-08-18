@@ -8,7 +8,7 @@ import org.eclipse.draw2d.IFigure;
  * @author milesparker
  * 
  */
-public interface IRevealable extends IFigure {
+public interface IRevealable {
 
 	void reveal(double nearness);
 
