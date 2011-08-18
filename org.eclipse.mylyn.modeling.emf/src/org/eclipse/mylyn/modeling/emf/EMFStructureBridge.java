@@ -9,29 +9,25 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.context;
+package org.eclipse.mylyn.modeling.emf;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
 
 /**
  * @author Benjamin Muskalla
  * @author milesparker
  */
-public abstract class EMFStructureBridge extends DomainAdaptedStructureBridge {
+public abstract class EMFStructureBridge extends DomainDelegatedStructureBridge {
 
 	public String getDomainHandleIdentifier(Object object) {
 		EObject eobject = ((EObject) object);
@@ -84,14 +80,6 @@ public abstract class EMFStructureBridge extends DomainAdaptedStructureBridge {
 			return ((ENamedElement) object).getName();
 		}
 		return super.getLabel(object.toString());
-	}
-
-	@Override
-	public Object getDomainObject(Object object) {
-		if (object instanceof View) {
-			return ((View) object).getElement();
-		}
-		return super.getDomainObject(object);
 	}
 
 	@Override

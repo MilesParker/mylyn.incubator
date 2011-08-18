@@ -18,7 +18,7 @@ import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
-import org.eclipse.mylyn.modeling.context.EMFStructureBridge;
+import org.eclipse.mylyn.modeling.emf.EMFStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUIEditingMonitor;
 import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;

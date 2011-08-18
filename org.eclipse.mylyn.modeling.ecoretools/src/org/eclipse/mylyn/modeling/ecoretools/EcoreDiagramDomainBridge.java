@@ -27,32 +27,29 @@ import org.eclipse.emf.ecoretools.diagram.edit.parts.EReferenceEditPart;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
-import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IWorkbenchPart;
 
 public class EcoreDiagramDomainBridge extends EcoreDomainBridge {
 
 	private static EcoreDiagramDomainBridge INSTANCE;
-	
-	@Override
+
 	public boolean acceptsPart(IWorkbenchPart part) {
 		return part instanceof EcoreDiagramEditor;
 	}
 
 	@Override
-	public boolean acceptsEditPart(EObject domainObject,
-			EditPart part) {
+	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
 		//Nodes
 		if (domainObject instanceof EClass) {
 			return part instanceof EClassEditPart || part instanceof EClass2EditPart;
 		}
 		if (domainObject instanceof EEnum) {
-			 return part instanceof EEnumEditPart || part instanceof EEnum2EditPart;
-		}		
+			return part instanceof EEnumEditPart || part instanceof EEnum2EditPart;
+		}
 		//We don't want the root-most package or we'll get the whole diagram!
 		if (domainObject instanceof EPackage && ((EPackage) domainObject).eContainer() != null) {
-			 return part instanceof EPackageEditPart || part instanceof EPackage2EditPart;
-		}		
+			return part instanceof EPackageEditPart || part instanceof EPackage2EditPart;
+		}
 		//Edges
 		if (domainObject instanceof EReference) {
 			return part instanceof EReferenceEditPart;
@@ -74,7 +71,5 @@ public class EcoreDiagramDomainBridge extends EcoreDomainBridge {
 		}
 		return INSTANCE;
 	}
-
-
 
 }

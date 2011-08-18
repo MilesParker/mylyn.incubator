@@ -35,9 +35,6 @@ public abstract class DiagramUIBridge extends AbstractContextUiBridge {
 
 	@Override
 	public void close(IInteractionElement element) {
-		// ignore
-		System.err.println("close" + element);
-
 	}
 
 	@Override

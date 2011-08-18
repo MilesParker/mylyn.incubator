@@ -16,44 +16,38 @@ import org.eclipse.uml2.uml.NamedElement;
 public class UML2DomainBridge implements IModelStructureProvider, IModelUIProvider {
 
 	private static UML2DomainBridge INSTANCE = new UML2DomainBridge();
-	
+
 	public static final String UML2_CONTENT_TYPE = "uml2"; //$NON-NLS-1$
 
-	@Override
 	public boolean acceptsPart(IWorkbenchPart part) {
 		return part instanceof PapyrusMultiDiagramEditor;
 	}
 
-	@Override
 	public String getContentType() {
 		return UML2_CONTENT_TYPE;
 	}
-	
-	@Override
+
 	public String getLabel(Object object) {
 		if (object instanceof NamedElement) {
 			return ((NamedElement) object).getName();
 		}
 		return null;
 	}
-	
-	@Override
+
 	public Class<?> getDomainBaseNodeClass() {
 		return Element.class;
 	}
 
-	@Override
 	public Class<?>[] getDomainNodeClasses() {
-		return new Class[]{Classifier.class};
+		return new Class[] { Classifier.class };
 	}
 
 	public Class<?> getDomainBaseEdgeClass() {
 		return Relation.class;
 	}
 
-	@Override
 	public Class<?>[] getDomainEdgeClasses() {
-		return new Class[]{Relation.class};
+		return new Class[] { Relation.class };
 	}
 
 	public static UML2DomainBridge getInstance() {
@@ -63,7 +57,6 @@ public class UML2DomainBridge implements IModelStructureProvider, IModelUIProvid
 		return INSTANCE;
 	}
 
-	@Override
 	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
 		if (domainObject instanceof Classifier) {
 			return part instanceof ClassEditPart;

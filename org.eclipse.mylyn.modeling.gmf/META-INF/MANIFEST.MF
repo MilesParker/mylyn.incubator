@@ -1,20 +1,23 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Ui
+Bundle-Name: %Bundle-Name
+Bundle-Vendor: %Bundle-Vendor
+Bundle-Localization: plugin
 Bundle-SymbolicName: org.eclipse.mylyn.modeling.gmf;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.modeling.gmf.GMFUIBridgePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.mylyn.modeling.ui;bundle-version="3.7.0",
+ org.eclipse.ui.ide,
  org.eclipse.mylyn.context.core,
- org.eclipse.gmf.runtime.diagram.ui,
  org.eclipse.mylyn.context.ui,
- org.eclipse.mylyn.modeling.core;bundle-version="1.0.0",
- org.eclipse.gmf.runtime.diagram.ui.providers;bundle-version="1.5.0",
- org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.4.1",
- org.eclipse.emf.ecoretools.diagram;bundle-version="1.0.0",
- org.eclipse.ui.ide;bundle-version="3.7.0"
+ org.eclipse.gmf.runtime.diagram.ui,
+ org.eclipse.gmf.runtime.diagram.ui.providers,
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor,
+ org.eclipse.mylyn.modeling.core;bundle-version="0.9.0",
+ org.eclipse.mylyn.modeling.ui;bundle-version="0.9.0",
+ org.eclipse.mylyn.modeling.emf;bundle-version="0.9.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.mylyn.modeling.gmf
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.eclipse.mylyn.modeling.gmf,
+ org.eclipse.mylyn.modeling.gmf.figures

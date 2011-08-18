@@ -15,13 +15,18 @@ public abstract class ContextDecorator implements IDecorator {
 	private final MylynDecoratorProvider provider;
 
 	boolean wasInteresting;
+
 	boolean wasLandmark;
+
 	boolean wasFocussed;
 
 	private IFigure decoratedFigure;
+
 	boolean initialized;
-	private List<IRevealableFigure> decorationFigures;
-	private List<IDecoration> decorations;
+
+	private final List<IRevealableFigure> decorationFigures;
+
+	private final List<IDecoration> decorations;
 
 	private final IDecoratorTarget target;
 
@@ -33,18 +38,15 @@ public abstract class ContextDecorator implements IDecorator {
 		target.installDecorator(MylynDecoratorProvider.MYLYN_DETAIL, this);
 	}
 
-	@Override
 	public void activate() {
 		refresh();
 	}
 
-	@Override
 	public void deactivate() {
 		initialized = false;
 		removeDecorations();
 	}
 
-	@Override
 	public void refresh() {
 		boolean interesting = isInteresting();
 		boolean landmark = isLandmark();
@@ -97,7 +99,7 @@ public abstract class ContextDecorator implements IDecorator {
 	public abstract boolean isInteresting();
 
 	public abstract boolean isLandmark();
-	
+
 	public IDecoratorTarget getTarget() {
 		return target;
 	}
@@ -105,9 +107,10 @@ public abstract class ContextDecorator implements IDecorator {
 	IGraphicalEditPart getEditPart() {
 		return (IGraphicalEditPart) getTarget().getAdapter(IGraphicalEditPart.class);
 	}
-	
+
 	/**
 	 * Assumes that part has already been created.
+	 * 
 	 * @return
 	 */
 	public IFigure getDecoratedFigure() {

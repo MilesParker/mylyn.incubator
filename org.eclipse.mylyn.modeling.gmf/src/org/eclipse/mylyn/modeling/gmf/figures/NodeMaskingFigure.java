@@ -1,6 +1,5 @@
 package org.eclipse.mylyn.modeling.gmf.figures;
 
-import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.XYLayout;
@@ -11,12 +10,10 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealableFig
 
 	private final IFigure decorated;
 
-
 	/**
 	 * Constructor.
 	 * 
 	 * @param part
-	 * 
 	 * @param color
 	 *            the highlight color
 	 * @param size
@@ -28,7 +25,7 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealableFig
 		setOpaque(true);
 		setFill(true);
 		setOutline(false);
-		
+
 		if (decorated.getParent() != null) {
 			decorated = decorated.getParent();
 		}
@@ -36,26 +33,19 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealableFig
 		setBackgroundColor(backgroundColor);
 		setAlpha(255);
 	}
-	
-	@Override
+
 	public void reveal(double nearness) {
 		FigureManagerHelper.INSTANCE.reveal(this, nearness);
 	}
 
-	@Override
 	public void unreveal() {
 		FigureManagerHelper.INSTANCE.unreveal(this);
 	}
 
-	/**
-	 * Nodes are handled normally.
-	 */
-	@Override
 	public void restore() {
+		//noop, nodes are handled normally.
 	}
-	
 
-	@Override
 	public void relocate(IFigure target) {
 		if (target instanceof Decoration) {
 			target.setBounds(decorated.getBounds().getCopy());

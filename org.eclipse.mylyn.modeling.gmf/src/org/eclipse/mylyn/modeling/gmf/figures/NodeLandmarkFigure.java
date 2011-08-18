@@ -18,21 +18,18 @@ import org.eclipse.draw2d.Locator;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.Decoration;
-import org.eclipse.swt.graphics.Color;
 
 public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFigure, Locator {
-	
 
 	private static final int BORDER_SIZE = 2;
+
 	private final IFigure decorated;
 
 	/**
 	 * Constructor.
-	 * @param part 
 	 * 
+	 * @param part
 	 * @param color
 	 *            the highlight color
 	 * @param size
@@ -50,7 +47,6 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 		setAlpha(255);
 	}
 
-	@Override
 	public void relocate(IFigure target) {
 		if (target instanceof Decoration) {
 			//bounds may be returned by reference
@@ -59,23 +55,20 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 			((IFigure) target.getChildren().get(0)).setBounds(borderBounds);
 		}
 	}
-	
+
 	@Override
 	public void paintFigure(Graphics graphics) {
 		super.paintFigure(graphics);
 	}
 
-	@Override
 	public void reveal(double nearness) {
 		//noop, landmarks are never hidden
 	}
 
-	@Override
 	public void unreveal() {
 		//noop, landmarks are never hidden
 	}
 
-	@Override
 	public void restore() {
 		//noop, landmarks are never hidden
 	}

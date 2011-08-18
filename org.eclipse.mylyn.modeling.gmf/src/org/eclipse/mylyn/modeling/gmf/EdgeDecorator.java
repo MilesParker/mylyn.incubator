@@ -11,7 +11,6 @@ import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.GraphicalEditPart;
@@ -27,27 +26,28 @@ public class EdgeDecorator extends ContextDecorator {
 	private Map<IFigure, Color> priorForegroundForFigure;
 
 	private final EObject connectionSource;
+
 	private final EObject connectionTarget;
 
-	private List<EdgeMaskingFigure> edgeMaskHandles = new ArrayList<EdgeMaskingFigure>();
+	private final List<EdgeMaskingFigure> edgeMaskHandles = new ArrayList<EdgeMaskingFigure>();
 
 	/**
 	 * These really aren't masks per se, they're just invisible figures that we can use as handle to get to the figure
 	 * parts we're actually itnerested in.
 	 * 
 	 * @author milesparker
-	 * 
 	 */
 	class EdgeMaskingFigure extends RectangleFigure implements IRevealableFigure {
 		double nearness;
+
 		private final IFigure decorated;
+
 		private final Point point;
 
 		/**
 		 * Constructor.
 		 * 
 		 * @param part
-		 * 
 		 * @param color
 		 *            the highlight color
 		 * @param size
@@ -61,14 +61,12 @@ public class EdgeDecorator extends ContextDecorator {
 			unreveal();
 		}
 
-		@Override
 		public void relocate(IFigure target) {
 			if (target instanceof Decoration && decorated instanceof PolylineConnection) {
 				target.setBounds(new Rectangle(point, new Dimension(1, 1)));
 			}
 		}
 
-		@Override
 		public void reveal(double nearness) {
 			this.nearness = nearness;
 			EdgeDecorator.this.reveal();
@@ -77,12 +75,10 @@ public class EdgeDecorator extends ContextDecorator {
 		/**
 		 * Edges must also return their non-alpha capable child figures to their orginal state.
 		 */
-		@Override
 		public void restore() {
 			EdgeDecorator.this.restore();
 		}
 
-		@Override
 		public void unreveal() {
 			EdgeDecorator.this.unreveal();
 		}

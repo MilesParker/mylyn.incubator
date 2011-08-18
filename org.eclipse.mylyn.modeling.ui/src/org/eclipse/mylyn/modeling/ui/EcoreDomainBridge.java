@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 
 /**
@@ -55,5 +56,10 @@ public abstract class EcoreDomainBridge implements IModelStructureProvider, IMod
 			return ((ENamedElement) object).getName();
 		}
 		return object.toString();
+	}
+
+	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
+		// ignore
+		return false;
 	}
 }

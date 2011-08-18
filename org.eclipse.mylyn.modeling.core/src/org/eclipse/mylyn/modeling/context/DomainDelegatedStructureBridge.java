@@ -1,14 +1,16 @@
 package org.eclipse.mylyn.modeling.context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 
-public abstract class DomainAdaptedStructureBridge extends
-		AbstractContextStructureBridge {
+/**
+ * Provides support for using a simple structure provider to define appropriate domain classes that can then determine
+ * appropriate responses for structure bridge.
+ * 
+ * @author milesparker
+ * 
+ */
+public abstract class DomainDelegatedStructureBridge extends AbstractContextStructureBridge {
 
 	public abstract String getDomainHandleIdentifier(Object object);
 
@@ -19,28 +21,22 @@ public abstract class DomainAdaptedStructureBridge extends
 			return null;
 		}
 		if (object instanceof IAdaptable) {
-			Object diagramObject = ((IAdaptable) object)
-					.getAdapter(getDomainContextBridge().getDomainBaseNodeClass());
+			Object diagramObject = ((IAdaptable) object).getAdapter(getDomainContextBridge().getDomainBaseNodeClass());
 			if (diagramObject != null
-					&& getDomainContextBridge().getDomainBaseNodeClass()
-							.isAssignableFrom(diagramObject.getClass())) {
+					&& getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(diagramObject.getClass())) {
 				return getDomainObject(diagramObject);
 			}
 		}
-		//don't want to look at all classes unless it's relevant
-		if (getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(
-				object.getClass())) {
-			for (Class<?> domainClass : getDomainContextBridge()
-					.getDomainNodeClasses()) {
+		// don't want to look at all classes unless it's relevant
+		if (getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(object.getClass())) {
+			for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
 				if (domainClass.isAssignableFrom(object.getClass())) {
 					return object;
 				}
 			}
 		}
-		if (getDomainContextBridge().getDomainBaseEdgeClass().isAssignableFrom(
-				object.getClass())) {
-			for (Class<?> domainClass : getDomainContextBridge()
-					.getDomainEdgeClasses()) {
+		if (getDomainContextBridge().getDomainBaseEdgeClass().isAssignableFrom(object.getClass())) {
+			for (Class<?> domainClass : getDomainContextBridge().getDomainEdgeClasses()) {
 				if (domainClass.isAssignableFrom(object.getClass())) {
 					return object;
 				}
@@ -58,8 +54,7 @@ public abstract class DomainAdaptedStructureBridge extends
 	public String getHandleIdentifier(Object object) {
 		Object domainObject = getDomainObject(object);
 		if (domainObject != null
-				&& getDomainContextBridge().getDomainBaseNodeClass()
-						.isAssignableFrom(domainObject.getClass())) {
+				&& getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(domainObject.getClass())) {
 			return getDomainHandleIdentifier(domainObject);
 		}
 		return null;
@@ -82,8 +77,7 @@ public abstract class DomainAdaptedStructureBridge extends
 	@Override
 	public boolean canBeLandmark(String handle) {
 		Object object = getObjectForHandle(handle);
-		for (Class<?> domainClass : getDomainContextBridge()
-				.getDomainNodeClasses()) {
+		for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
 			if (domainClass.isAssignableFrom(object.getClass())) {
 				return true;
 			}
@@ -93,13 +87,13 @@ public abstract class DomainAdaptedStructureBridge extends
 
 	@Override
 	public boolean canFilter(Object element) {
-		// ignore
+		// TODO Is this true? Can wee filter?
 		return true;
 	}
 
 	@Override
 	public String getHandleForOffsetInObject(Object resource, int offset) {
-		// ignore
+		// Seems only appropriate for text.
 		return null;
 	}
 

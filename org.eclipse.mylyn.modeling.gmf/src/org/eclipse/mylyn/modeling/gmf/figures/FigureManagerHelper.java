@@ -3,9 +3,7 @@ package org.eclipse.mylyn.modeling.gmf.figures;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.swt.graphics.Color;

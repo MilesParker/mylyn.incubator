@@ -25,7 +25,6 @@ import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
@@ -38,7 +37,7 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
-import org.eclipse.mylyn.modeling.context.DomainAdaptedStructureBridge;
+import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -51,23 +50,24 @@ import org.eclipse.ui.PlatformUI;
 
 public abstract class MylynDecoratorProvider extends AbstractProvider implements IDecoratorProvider, IPartListener {
 
-	public static final String MYLYN_MARKER = "mylyn-marker";
+	public static final String MYLYN_MARKER = "mylyn-marker"; //$NON-NLS-1$
 
-	public static final String MYLYN_DETAIL = "mylyn-detail";
+	public static final String MYLYN_DETAIL = "mylyn-detail"; //$NON-NLS-1$
 
-	public static final String MYLYN_INTERESTING = "mylyn-interesting";
+	public static final String MYLYN_INTERESTING = "mylyn-interesting"; //$NON-NLS-1$
 
-	public static final String MYLYN_BORING = "mylyn-boring";
+	public static final String MYLYN_BORING = "mylyn-boring"; //$NON-NLS-1$
 
-	private Map<String, Collection<ContextDecorator>> decoratorsForModel;
+	private final Map<String, Collection<ContextDecorator>> decoratorsForModel;
 
-	private Map<RootEditPart, RevealMouseListener> listenerForRoot;
+	private final Map<RootEditPart, RevealMouseListener> listenerForRoot;
 
-	private DomainAdaptedStructureBridge structure;
+	private DomainDelegatedStructureBridge structure;
 
 	private boolean anyContextActive;
 
-	private AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
+	private final AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
+		@Override
 		public void contextChanged(ContextChangeEvent event) {
 			MylynDecoratorProvider.this.contextChanged(event);
 		}
@@ -82,15 +82,12 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		if (activeWorkbenchWindow.getActivePage() == null) {
 			activeWorkbenchWindow.addPageListener(new IPageListener() {
 
-				@Override
 				public void pageOpened(IWorkbenchPage page) {
 				}
 
-				@Override
 				public void pageClosed(IWorkbenchPage page) {
 				}
 
-				@Override
 				public void pageActivated(IWorkbenchPage page) {
 					page.addPartListener(MylynDecoratorProvider.this);
 				}
@@ -188,8 +185,7 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 			} else {
 				// Seems to be the only way to get Papyrus root edit
 				// part w/o explicit dependencies..
-				IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) editor
-						.getAdapter(IDiagramGraphicalViewer.class);
+				IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) editor.getAdapter(IDiagramGraphicalViewer.class);
 				if (viewer != null) {
 					return viewer.getRootEditPart();
 				}
@@ -312,34 +308,28 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		}
 	}
 
-	public DomainAdaptedStructureBridge getStructure() {
+	public DomainDelegatedStructureBridge getStructure() {
 		if (structure == null) {
-			structure = (DomainAdaptedStructureBridge) ContextCore.getStructureBridge(getDomainUIBridge()
-					.getContentType());
+			structure = (DomainDelegatedStructureBridge) ContextCore.getStructureBridge(getDomainUIBridge().getContentType());
 		}
 		return structure;
 	}
 
-	@Override
 	public void partActivated(IWorkbenchPart part) {
 		refresh(part);
 	}
 
-	@Override
 	public void partBroughtToTop(IWorkbenchPart part) {
 	}
 
-	@Override
 	public void partClosed(IWorkbenchPart part) {
 		deactivate(part);
 	}
 
-	@Override
 	public void partDeactivated(IWorkbenchPart part) {
 		// deactivate(part);
 	}
 
-	@Override
 	public void partOpened(IWorkbenchPart part) {
 	}
 

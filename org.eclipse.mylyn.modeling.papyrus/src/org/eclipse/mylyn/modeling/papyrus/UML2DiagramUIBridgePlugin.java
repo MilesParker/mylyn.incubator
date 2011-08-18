@@ -15,7 +15,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
-import org.eclipse.mylyn.modeling.context.EMFStructureBridge;
+import org.eclipse.mylyn.modeling.emf.EMFStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUIEditingMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
