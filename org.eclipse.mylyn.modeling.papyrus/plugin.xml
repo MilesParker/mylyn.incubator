@@ -36,4 +36,62 @@
          </startup>
       </extension>
 
+     <extension point="org.eclipse.ui.popupMenus"> 
+     
+     <objectContribution
+     	   adaptable="false"
+           id="org.eclipse.mylyn.modeling.uml.ui.interest.landmark.diagram.element"
+           objectClass="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+	    <action
+           class="org.eclipse.mylyn.internal.context.ui.actions.InterestIncrementAction"
+           definitionId="org.eclipse.mylyn.context.ui.commands.interest.increment"
+           enablesFor="*"
+           icon="icons/elcl16/interest-increase.gif"
+           id="org.eclipse.mylyn.papyrus.ui.interest.landmark.element"
+           label="%InterestIncrementAction.label"
+           menubarPath="group.reorganize"
+           tooltip="%InterestIncrementAction.tooltip">
+     </action>
+     <visibility>
+     	<and>
+	     	<systemProperty
+	               name="org.eclipse.mylyn.context.core.context.active"
+    	           value="true">
+    	    </systemProperty>
+           <objectClass
+                 name="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+           </objectClass>
+        </and>
+     </visibility>
+	 </objectContribution>
+
+     
+     <objectContribution
+           adaptable="true"
+           id="org.eclipse.mylyn.modeling.papyrus.ui.interest.remove.element"
+           objectClass="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+     	<action
+            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
+            definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
+            enablesFor="*"
+            icon="icons/elcl16/interest-decrease.gif"
+            id="org.eclipse.mylyn.papyrus.ui.interest.remove.element"
+            label="%InterestDecrementAction.label"
+            menubarPath="group.reorganize"
+            overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.remove.element"
+            tooltip="%InterestDecrementAction.tooltip">
+      </action>
+            <visibility>
+      		<and>
+      			<systemProperty
+	               name="org.eclipse.mylyn.context.core.context.active"
+    	           value="true">
+      			</systemProperty>
+	               <objectClass
+	                     name="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+	               </objectClass>
+      		</and>
+      </visibility>
+     </objectContribution>
+	</extension>
 </plugin>

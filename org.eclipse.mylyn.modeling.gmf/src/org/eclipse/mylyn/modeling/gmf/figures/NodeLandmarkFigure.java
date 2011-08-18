@@ -11,6 +11,7 @@
 
 package org.eclipse.mylyn.modeling.gmf.figures;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Locator;
@@ -43,11 +44,7 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 		setOpaque(false);
 		setFill(false);
 		setOutline(true);
-		//(size is returned by value)
-//		if (decorated.getParent() != null) {
-//			decorated = decorated.getParent();
-//		}
-		setForegroundColor(decorated.getForegroundColor());
+		setForegroundColor(ColorConstants.black);
 		setSize(decorated.getSize().expand(BORDER_SIZE * 2, BORDER_SIZE * 2));
 		setLineWidth(BORDER_SIZE);
 		setAlpha(255);
