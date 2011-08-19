@@ -11,7 +11,7 @@
 
 package org.eclipse.mylyn.modeling.context;
 
-import org.eclipse.mylyn.context.sdk.util.AbstractContextTest;
+import org.eclipse.mylyn.context.tests.AbstractContextTest;
 import org.eclipse.mylyn.internal.context.core.ContextCorePlugin;
 import org.eclipse.mylyn.internal.context.core.InteractionContext;
 import org.eclipse.mylyn.internal.context.core.InteractionContextManager;
