@@ -15,14 +15,17 @@ import javax.management.relation.Relation;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 import org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart;
+import org.eclipse.papyrus.diagram.clazz.edit.parts.PackageEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Relationship;
 
 /**
  * @author Miles Parker
@@ -37,15 +40,18 @@ public class Uml2DomainBridge implements IModelStructureProvider, IModelUiProvid
 		return part instanceof PapyrusMultiDiagramEditor;
 	}
 
-	public String getContentType() {
-		return UML2_CONTENT_TYPE;
-	}
-
-	public String getLabel(Object object) {
-		if (object instanceof NamedElement) {
-			return ((NamedElement) object).getName();
+	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
+		if (domainObject instanceof Classifier) {
+			return part instanceof ClassEditPart;
 		}
-		return null;
+		if (domainObject instanceof Package) {
+			return part instanceof PackageEditPart;
+		}
+		//Edges
+		if (domainObject instanceof Relationship) {
+			return part instanceof ConnectionNodeEditPart;
+		}
+		return false;
 	}
 
 	public Class<?> getDomainBaseNodeClass() {
@@ -64,18 +70,22 @@ public class Uml2DomainBridge implements IModelStructureProvider, IModelUiProvid
 		return new Class[] { Relation.class };
 	}
 
+	public String getLabel(Object object) {
+		if (object instanceof NamedElement) {
+			return ((NamedElement) object).getName();
+		}
+		return null;
+	}
+
+	public String getContentType() {
+		return UML2_CONTENT_TYPE;
+	}
+
 	public static Uml2DomainBridge getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new Uml2DomainBridge();
 		}
 		return INSTANCE;
-	}
-
-	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
-		if (domainObject instanceof Classifier) {
-			return part instanceof ClassEditPart;
-		}
-		return false;
 	}
 
 }

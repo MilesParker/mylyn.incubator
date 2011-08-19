@@ -56,7 +56,7 @@ public class EdgeDecorator extends ContextDecorator {
 
 		private final IFigure decorated;
 
-		private final Point point;
+		private final boolean head;
 
 		/**
 		 * Constructor.
@@ -67,9 +67,9 @@ public class EdgeDecorator extends ContextDecorator {
 		 * @param size
 		 *            the size of the border
 		 */
-		public EdgeMaskingFigure(IFigure decorated, Point point) {
+		public EdgeMaskingFigure(IFigure decorated, boolean head) {
 			this.decorated = decorated;
-			this.point = point;
+			this.head = head;
 			setOutline(false);
 			setFill(true);
 			unreveal();
@@ -77,6 +77,14 @@ public class EdgeDecorator extends ContextDecorator {
 
 		public void relocate(IFigure target) {
 			if (target instanceof Decoration && decorated instanceof PolylineConnection) {
+				PolylineConnection connection = (PolylineConnection) decorated;
+				Point point;
+				if (head) {
+					point = connection.getPoints().getFirstPoint();
+				} else {
+					point = connection.getPoints().getLastPoint();
+
+				}
 				target.setBounds(new Rectangle(point, new Dimension(1, 1)));
 			}
 		}
@@ -115,11 +123,10 @@ public class EdgeDecorator extends ContextDecorator {
 			for (IFigure figure : getManagedFigures()) {
 				priorForegroundForFigure.put(figure, figure.getForegroundColor());
 			}
-			PolylineConnection edge = (PolylineConnection) getDecoratedFigure();
-			EdgeMaskingFigure edgeHandle = new EdgeMaskingFigure(getDecoratedFigure(), edge.getStart());
+			EdgeMaskingFigure edgeHandle = new EdgeMaskingFigure(getDecoratedFigure(), true);
 			edgeMaskHandles.add(edgeHandle);
 			addDecoration(edgeHandle);
-			EdgeMaskingFigure edgeHandle2 = new EdgeMaskingFigure(getDecoratedFigure(), edge.getEnd());
+			EdgeMaskingFigure edgeHandle2 = new EdgeMaskingFigure(getDecoratedFigure(), false);
 			edgeMaskHandles.add(edgeHandle2);
 			addDecoration(edgeHandle2);
 			unreveal();

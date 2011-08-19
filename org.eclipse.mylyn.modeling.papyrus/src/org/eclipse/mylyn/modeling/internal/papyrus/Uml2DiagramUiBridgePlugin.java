@@ -11,13 +11,18 @@
 
 package org.eclipse.mylyn.modeling.internal.papyrus;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
 import org.eclipse.mylyn.modeling.papyrus.Uml2DomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
+import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
+import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -31,7 +36,9 @@ public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 
 	private static Uml2DiagramUiBridgePlugin INSTANCE;
 
-	private DiagramUiEditingMonitor monitor;
+	private DiagramUiEditingMonitor diagramMonitor;
+
+	private AbstractUserInteractionMonitor navigatorMonitor;
 
 	public Uml2DiagramUiBridgePlugin() {
 	}
@@ -48,15 +55,19 @@ public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 	private void lazyStart() {
 		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(Uml2DomainBridge.UML2_CONTENT_TYPE);
 		if (structureBridge instanceof EmfStructureBridge) {
-			structureBridge = new Uml2StructureBridge();
+			EmfStructureBridge bridge = (EmfStructureBridge) structureBridge;
+			diagramMonitor = new DiagramUiEditingMonitor(bridge, Uml2DomainBridge.getInstance());
+			MonitorUi.getSelectionMonitors().add(diagramMonitor);
+		} else {
+			StatusHandler.log(new Status(IStatus.WARNING, ID_PLUGIN,
+					"Couldn't load EMFStructure Bridge for " + EcoreDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
 		}
-		EmfStructureBridge bridge = (EmfStructureBridge) structureBridge;
-		monitor = new DiagramUiEditingMonitor(bridge, Uml2DomainBridge.getInstance());
-		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 
 	private void lazyStop() {
-		MonitorUi.getSelectionMonitors().remove(monitor);
+		if (diagramMonitor != null) {
+			MonitorUi.getSelectionMonitors().remove(diagramMonitor);
+		}
 	}
 
 	@Override

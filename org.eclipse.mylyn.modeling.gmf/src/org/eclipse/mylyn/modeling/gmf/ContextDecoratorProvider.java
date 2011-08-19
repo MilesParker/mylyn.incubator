@@ -137,10 +137,10 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 			ConnectionEditPart connectionPart = (ConnectionEditPart) targetPart;
 			EObject domainSource = (EObject) getStructure().getDomainObject(connectionPart.getSource().getModel());
 			EObject domainTarget = (EObject) getStructure().getDomainObject(connectionPart.getTarget().getModel());
-			ContextDecorator mylynDecorator = new EdgeDecorator(this, target, domainSource, domainTarget);
-			target.installDecorator(MYLYN_DETAIL, mylynDecorator);
-			addDecorator(domainSource, mylynDecorator);
-			addDecorator(domainTarget, mylynDecorator);
+			ContextDecorator edgeDecorator = new EdgeDecorator(this, target, domainSource, domainTarget);
+			target.installDecorator(MYLYN_DETAIL, edgeDecorator);
+			addDecorator(domainSource, edgeDecorator);
+			addDecorator(domainTarget, edgeDecorator);
 		} else {
 			Object model = targetPart.getModel();
 			View view = null;
@@ -240,20 +240,21 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	private void deactivate(IWorkbenchPart part) {
-		if (part instanceof DiagramEditor) {
-			DiagramEditor editor = (DiagramEditor) part;
+		RootEditPart rootEditPart = getRootEditPart(part);
+		if (rootEditPart != null) {
 			for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
 				Collection<ContextDecorator> removedDecorators = new HashSet<ContextDecorator>();
 				for (ContextDecorator decorator : values) {
-					IGraphicalEditPart editPart = (IGraphicalEditPart) decorator.getTarget().getAdapter(
+					IGraphicalEditPart decoratorEditPart = (IGraphicalEditPart) decorator.getTarget().getAdapter(
 							IGraphicalEditPart.class);
-					if (editPart.getDiagramEditDomain() == editor.getDiagramEditDomain()) {
+					if (decoratorEditPart.getRoot() == rootEditPart) {
+						decorator.deactivate();
 						removedDecorators.add(decorator);
 					}
 				}
 				values.removeAll(removedDecorators);
 			}
-			listenerForRoot.remove(editor.getDiagramEditPart().getRoot());
+			listenerForRoot.remove(rootEditPart);
 		}
 	}
 
@@ -330,10 +331,12 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void partDeactivated(IWorkbenchPart part) {
+		deactivate(part);
 		// deactivate(part);
 	}
 
 	public void partOpened(IWorkbenchPart part) {
+		refresh(part);
 	}
 
 	public void contextChanged(ContextChangeEvent event) {

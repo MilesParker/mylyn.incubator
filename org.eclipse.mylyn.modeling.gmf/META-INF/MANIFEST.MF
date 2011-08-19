@@ -20,4 +20,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.mylyn.modeling.gmf,
- org.eclipse.mylyn.modeling.gmf.figures
+ org.eclipse.mylyn.modeling.gmf.figures,
+ org.eclipse.mylyn.modeling.internal.gmf

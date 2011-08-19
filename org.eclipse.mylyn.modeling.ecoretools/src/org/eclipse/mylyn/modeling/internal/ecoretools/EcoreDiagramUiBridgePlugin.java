@@ -72,6 +72,7 @@ public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
 	private void lazyStop() {
 		if (diagramMonitor != null) {
 			MonitorUi.getSelectionMonitors().remove(diagramMonitor);
+			MonitorUi.getSelectionMonitors().remove(navigatorMonitor);
 		}
 	}
 
