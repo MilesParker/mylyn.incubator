@@ -74,5 +74,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.modeling.ecoretools,
  org.eclipse.mylyn.modeling.emf
 Export-Package: org.eclipse.mylyn.modeling.context,
- org.eclipse.mylyn.modeling.tests;x-internal:=true
+ org.eclipse.mylyn.modeling.tests;x-internal:=true,
+ org.eclipse.mylyn.modeling.ui
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
