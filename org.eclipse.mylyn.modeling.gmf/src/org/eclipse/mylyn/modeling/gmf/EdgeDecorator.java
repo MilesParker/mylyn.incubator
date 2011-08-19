@@ -98,7 +98,7 @@ public class EdgeDecorator extends ContextDecorator {
 		}
 	}
 
-	public EdgeDecorator(MylynDecoratorProvider provider, IDecoratorTarget target, EObject connectionSource,
+	public EdgeDecorator(ContextDecoratorProvider provider, IDecoratorTarget target, EObject connectionSource,
 			EObject connectionTarget) {
 		super(provider, target);
 		this.connectionSource = connectionSource;

@@ -51,7 +51,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author Miles Parker
  */
-public abstract class MylynDecoratorProvider extends AbstractProvider implements IDecoratorProvider, IPartListener {
+public abstract class ContextDecoratorProvider extends AbstractProvider implements IDecoratorProvider, IPartListener {
 
 	public static final String MYLYN_MARKER = "mylyn-marker"; //$NON-NLS-1$
 
@@ -72,11 +72,11 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 	private final AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
 		@Override
 		public void contextChanged(ContextChangeEvent event) {
-			MylynDecoratorProvider.this.contextChanged(event);
+			ContextDecoratorProvider.this.contextChanged(event);
 		}
 	};
 
-	public MylynDecoratorProvider() {
+	public ContextDecoratorProvider() {
 		ContextCore.getContextManager().addListener(contextListenerAdapter);
 		decoratorsForModel = new HashMap<String, Collection<ContextDecorator>>();
 		listenerForRoot = new HashMap<RootEditPart, RevealMouseListener>();
@@ -92,12 +92,12 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 				}
 
 				public void pageActivated(IWorkbenchPage page) {
-					page.addPartListener(MylynDecoratorProvider.this);
+					page.addPartListener(ContextDecoratorProvider.this);
 				}
 			});
 		} else {
 			// Not sure if we'll ever get this situation, but it's worth covering
-			activeWorkbenchWindow.getActivePage().addPartListener(MylynDecoratorProvider.this);
+			activeWorkbenchWindow.getActivePage().addPartListener(ContextDecoratorProvider.this);
 		}
 	}
 

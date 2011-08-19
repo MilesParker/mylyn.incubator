@@ -12,13 +12,13 @@
 package org.eclipse.mylyn.modeling.internal.ecoretools;
 
 import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
-import org.eclipse.mylyn.modeling.gmf.MylynDecoratorProvider;
+import org.eclipse.mylyn.modeling.gmf.ContextDecoratorProvider;
 import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 
 /**
  * @author Miles Parker
  */
-public class EcoreDiagramDecoratorProvider extends MylynDecoratorProvider {
+public class EcoreDiagramDecoratorProvider extends ContextDecoratorProvider {
 
 	@Override
 	public IModelUiProvider getDomainUIBridge() {

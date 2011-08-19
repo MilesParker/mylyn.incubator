@@ -26,7 +26,7 @@ import org.eclipse.mylyn.modeling.gmf.figures.IRevealableFigure;
  */
 public abstract class ContextDecorator implements IDecorator {
 
-	private final MylynDecoratorProvider provider;
+	private final ContextDecoratorProvider provider;
 
 	boolean wasInteresting;
 
@@ -44,12 +44,12 @@ public abstract class ContextDecorator implements IDecorator {
 
 	private final IDecoratorTarget target;
 
-	public ContextDecorator(MylynDecoratorProvider provider, IDecoratorTarget target) {
+	public ContextDecorator(ContextDecoratorProvider provider, IDecoratorTarget target) {
 		this.provider = provider;
 		this.target = target;
 		decorationFigures = new ArrayList<IRevealableFigure>();
 		decorations = new ArrayList<IDecoration>();
-		target.installDecorator(MylynDecoratorProvider.MYLYN_DETAIL, this);
+		target.installDecorator(ContextDecoratorProvider.MYLYN_DETAIL, this);
 	}
 
 	public void activate() {
@@ -102,7 +102,7 @@ public abstract class ContextDecorator implements IDecorator {
 		decorations.clear();
 	}
 
-	public MylynDecoratorProvider getProvider() {
+	public ContextDecoratorProvider getProvider() {
 		return provider;
 	}
 

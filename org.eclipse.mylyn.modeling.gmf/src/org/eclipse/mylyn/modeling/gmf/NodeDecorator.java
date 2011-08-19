@@ -25,7 +25,7 @@ public class NodeDecorator extends ContextDecorator {
 
 	private final EObject domainObject;
 
-	public NodeDecorator(MylynDecoratorProvider provider, IDecoratorTarget target, EObject domainObject) {
+	public NodeDecorator(ContextDecoratorProvider provider, IDecoratorTarget target, EObject domainObject) {
 		super(provider, target);
 		this.domainObject = domainObject;
 	}
