@@ -28,10 +28,6 @@
       %license
    </license>
 
-   <requires>
-      <import feature="org.eclipse.mylyn_feature" version="3.7.0" match="equivalent"/>
-   </requires>
-
    <plugin
          id="org.eclipse.mylyn.modeling.gmf"
          download-size="0"

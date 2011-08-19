@@ -3,10 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.mylyn.modeling.core;singleton:=true
 Bundle-Version: 0.9.0.qualifier
+Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.context.core,
- org.eclipse.core.resources;bundle-version="3.5.0"
-Bundle-ActivationPolicy: lazy
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.mylyn.modeling.context
 Bundle-Vendor: %Bundle-Vendor
