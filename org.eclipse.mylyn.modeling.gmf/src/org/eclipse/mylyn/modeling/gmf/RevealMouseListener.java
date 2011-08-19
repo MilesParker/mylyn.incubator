@@ -26,7 +26,7 @@ import org.eclipse.swt.events.MouseMoveListener;
 /**
  * @author Miles Parker
  */
-final class RevealMouseListener implements MouseMoveListener {
+public class RevealMouseListener implements MouseMoveListener {
 
 	private static final int REVEAL_DISTANCE = 180;
 

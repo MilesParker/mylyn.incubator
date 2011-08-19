@@ -12,14 +12,14 @@
 <plugin>
    <extension point="org.eclipse.mylyn.context.ui.bridges">
     <uiBridge
-          class="org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramUiBridge"
+          class="org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramUiBridge"
           contentType="uml2"/>
   </extension>
 	
 	     <extension
            point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
         <decoratorProvider
-              class="org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDecoratorProvider">
+              class="org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramDecoratorProvider">
            <Priority
                  name="Highest">
            </Priority>
@@ -35,14 +35,14 @@
       <extension
             point="org.eclipse.mylyn.context.core.bridges">
          <structureBridge
-               class="org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramStructureBridge">
+               class="org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramStructureBridge">
          </structureBridge>
       </extension>
 
    <extension
          point="org.eclipse.mylyn.context.ui.startup">
       <startup
-            class="org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramUiBridgePlugin$EcoreDiagramBridgeStartup">
+            class="org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramUiBridgePlugin$EcoreDiagramBridgeStartup">
       </startup>
    </extension>
 

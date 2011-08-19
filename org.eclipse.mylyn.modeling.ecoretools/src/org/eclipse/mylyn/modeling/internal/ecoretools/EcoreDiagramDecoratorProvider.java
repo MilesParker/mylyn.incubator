@@ -9,19 +9,20 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.papyrus;
+package org.eclipse.mylyn.modeling.internal.ecoretools;
 
+import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
 import org.eclipse.mylyn.modeling.gmf.MylynDecoratorProvider;
 import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 
 /**
  * @author Miles Parker
  */
-public class Uml2DiagramDecoratorProvider extends MylynDecoratorProvider {
+public class EcoreDiagramDecoratorProvider extends MylynDecoratorProvider {
 
 	@Override
 	public IModelUiProvider getDomainUIBridge() {
-		return Uml2DomainBridge.getInstance();
+		return EcoreDiagramDomainBridge.getInstance();
 	}
 
 }

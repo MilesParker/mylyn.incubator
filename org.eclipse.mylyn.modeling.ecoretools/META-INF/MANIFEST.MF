@@ -5,7 +5,7 @@ Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
 Bundle-SymbolicName: org.eclipse.mylyn.modeling.ecoretools;singleton:=true
 Bundle-Version: 0.9.0.qualifier
-Bundle-Activator: org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramUiBridgePlugin
+Bundle-Activator: org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramUiBridgePlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.ui.editors,

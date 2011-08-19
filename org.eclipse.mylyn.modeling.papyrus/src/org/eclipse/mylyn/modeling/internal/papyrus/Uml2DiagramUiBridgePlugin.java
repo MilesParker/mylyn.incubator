@@ -9,13 +9,14 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.papyrus;
+package org.eclipse.mylyn.modeling.internal.papyrus;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
+import org.eclipse.mylyn.modeling.papyrus.Uml2DomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

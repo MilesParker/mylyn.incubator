@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.ecoretools;
+package org.eclipse.mylyn.modeling.internal.ecoretools;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -18,6 +18,8 @@ import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
+import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
+import org.eclipse.mylyn.modeling.ecoretools.EcoreToolsNavigatorDomainBridge;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
 import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
