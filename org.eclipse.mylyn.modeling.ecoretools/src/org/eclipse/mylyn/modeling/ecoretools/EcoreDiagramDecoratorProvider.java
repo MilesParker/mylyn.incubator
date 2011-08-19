@@ -12,7 +12,7 @@
 package org.eclipse.mylyn.modeling.ecoretools;
 
 import org.eclipse.mylyn.modeling.gmf.MylynDecoratorProvider;
-import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
+import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 
 /**
  * @author Miles Parker
@@ -20,7 +20,7 @@ import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 public class EcoreDiagramDecoratorProvider extends MylynDecoratorProvider {
 
 	@Override
-	public IModelUIProvider getDomainUIBridge() {
+	public IModelUiProvider getDomainUIBridge() {
 		return EcoreDiagramDomainBridge.getInstance();
 	}
 

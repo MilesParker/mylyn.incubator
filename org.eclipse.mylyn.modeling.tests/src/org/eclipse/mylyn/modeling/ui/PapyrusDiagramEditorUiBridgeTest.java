@@ -23,8 +23,8 @@ import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.modeling.context.AbstractDiagramContextTest;
 import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
-import org.eclipse.mylyn.modeling.papyrus.UML2DomainBridge;
-import org.eclipse.mylyn.modeling.papyrus.UML2StructureBridge;
+import org.eclipse.mylyn.modeling.papyrus.Uml2DomainBridge;
+import org.eclipse.mylyn.modeling.papyrus.Uml2StructureBridge;
 import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
 import org.eclipse.papyrus.diagram.common.editparts.IPapyrusEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
@@ -36,7 +36,7 @@ import org.eclipse.uml2.uml.internal.impl.ClassImpl;
 /**
  * @author Miles Parker
  */
-public class PapyrusDiagramEditorUIBridgeTest extends AbstractDiagramContextTest {
+public class PapyrusDiagramEditorUiBridgeTest extends AbstractDiagramContextTest {
 
 	private static final String RESOURCE_URI = "platform:/resource/org.eclipse.mylyn.emf.tests.papyrus/model/model.uml#_xkh2ALJFEeCYupgj-BJj-Q";
 
@@ -44,14 +44,14 @@ public class PapyrusDiagramEditorUIBridgeTest extends AbstractDiagramContextTest
 
 	private IJavaProject papyrusProject;
 
-	private DiagramUIEditingMonitor monitor;
+	private DiagramUiEditingMonitor monitor;
 
 	@Override
 	protected void setUp() throws Exception {
 		// ignore
 		super.setUp();
-		structureBridge = new UML2StructureBridge();
-		monitor = new DiagramUIEditingMonitor(structureBridge, UML2DomainBridge.getInstance());
+		structureBridge = new Uml2StructureBridge();
+		monitor = new DiagramUiEditingMonitor(structureBridge, Uml2DomainBridge.getInstance());
 		papyrusProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip(
 				"org.eclipse.mylyn.modeling.tests.papyrus", "papyrus.zip");
 		papyrusProject.open(new NullProgressMonitor());

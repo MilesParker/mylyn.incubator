@@ -12,12 +12,12 @@
 package org.eclipse.mylyn.modeling.ecoretools;
 
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
-import org.eclipse.mylyn.modeling.gmf.GMFStructureBridge;
+import org.eclipse.mylyn.modeling.gmf.GmfStructureBridge;
 
 /**
  * @author Miles Parker
  */
-public class EcoreDiagramStructureBridge extends GMFStructureBridge {
+public class EcoreDiagramStructureBridge extends GmfStructureBridge {
 
 	@Override
 	public IModelStructureProvider getDomainContextBridge() {

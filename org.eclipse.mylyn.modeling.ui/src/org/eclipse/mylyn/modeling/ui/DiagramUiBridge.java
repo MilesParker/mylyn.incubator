@@ -28,7 +28,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 /**
  * @author Miles Parker
  */
-public abstract class DiagramUIBridge extends AbstractContextUiBridge {
+public abstract class DiagramUiBridge extends AbstractContextUiBridge {
 
 	boolean initialized;
 
@@ -86,5 +86,5 @@ public abstract class DiagramUIBridge extends AbstractContextUiBridge {
 		return getDomainUIBridge().getContentType();
 	}
 
-	public abstract IModelUIProvider getDomainUIBridge();
+	public abstract IModelUiProvider getDomainUIBridge();
 }

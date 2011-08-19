@@ -20,7 +20,7 @@ import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
 /**
  * @author Miles Parker
  */
-public class AbstractEMFContextTest extends AbstractDiagramContextTest {
+public class AbstractEmfContextTest extends AbstractDiagramContextTest {
 
 	protected DomainDelegatedStructureBridge structureBridge;
 

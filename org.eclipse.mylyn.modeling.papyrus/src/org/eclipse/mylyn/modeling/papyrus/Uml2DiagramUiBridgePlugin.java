@@ -15,8 +15,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
-import org.eclipse.mylyn.modeling.emf.EMFStructureBridge;
-import org.eclipse.mylyn.modeling.ui.DiagramUIEditingMonitor;
+import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
+import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -24,15 +24,15 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Miles Parker
  */
-public class UML2DiagramUIBridgePlugin extends AbstractUIPlugin {
+public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 
 	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.papyrus"; //$NON-NLS-1$
 
-	private static UML2DiagramUIBridgePlugin INSTANCE;
+	private static Uml2DiagramUiBridgePlugin INSTANCE;
 
-	private DiagramUIEditingMonitor monitor;
+	private DiagramUiEditingMonitor monitor;
 
-	public UML2DiagramUIBridgePlugin() {
+	public Uml2DiagramUiBridgePlugin() {
 	}
 
 	/**
@@ -45,12 +45,12 @@ public class UML2DiagramUIBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStart() {
-		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(UML2DomainBridge.UML2_CONTENT_TYPE);
-		if (structureBridge instanceof EMFStructureBridge) {
-			structureBridge = new UML2StructureBridge();
+		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(Uml2DomainBridge.UML2_CONTENT_TYPE);
+		if (structureBridge instanceof EmfStructureBridge) {
+			structureBridge = new Uml2StructureBridge();
 		}
-		EMFStructureBridge bridge = (EMFStructureBridge) structureBridge;
-		monitor = new DiagramUIEditingMonitor(bridge, UML2DomainBridge.getInstance());
+		EmfStructureBridge bridge = (EmfStructureBridge) structureBridge;
+		monitor = new DiagramUiEditingMonitor(bridge, Uml2DomainBridge.getInstance());
 		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 
@@ -69,7 +69,7 @@ public class UML2DiagramUIBridgePlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the shared instance.
 	 */
-	public static UML2DiagramUIBridgePlugin getDefault() {
+	public static Uml2DiagramUiBridgePlugin getDefault() {
 		return INSTANCE;
 	}
 
@@ -87,7 +87,7 @@ public class UML2DiagramUIBridgePlugin extends AbstractUIPlugin {
 	public static class UML2DiagramBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
-			UML2DiagramUIBridgePlugin.getDefault().lazyStart();
+			Uml2DiagramUiBridgePlugin.getDefault().lazyStart();
 		}
 
 	}

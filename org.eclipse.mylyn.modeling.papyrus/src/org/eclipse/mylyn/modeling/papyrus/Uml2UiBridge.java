@@ -11,17 +11,17 @@
 
 package org.eclipse.mylyn.modeling.papyrus;
 
-import org.eclipse.mylyn.modeling.ui.DiagramUIBridge;
-import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
+import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
+import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 
 /**
  * @author Miles Parker
  */
-public class UML2UIBridge extends DiagramUIBridge {
+public class Uml2UiBridge extends DiagramUiBridge {
 
 	@Override
-	public IModelUIProvider getDomainUIBridge() {
-		return UML2DomainBridge.getInstance();
+	public IModelUiProvider getDomainUIBridge() {
+		return Uml2DomainBridge.getInstance();
 	}
 
 }

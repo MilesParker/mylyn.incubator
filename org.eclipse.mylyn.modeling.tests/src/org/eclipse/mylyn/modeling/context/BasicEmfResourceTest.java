@@ -26,7 +26,7 @@ import org.eclipse.mylyn.internal.resources.ui.ResourcesUiPreferenceInitializer;
 /**
  * @author Miles Parker
  */
-public class BasicEMFResourceTest extends AbstractEMFContextTest {
+public class BasicEmfResourceTest extends AbstractEmfContextTest {
 
 	protected ResourceInteractionMonitor resmonitor = new ResourceInteractionMonitor();
 

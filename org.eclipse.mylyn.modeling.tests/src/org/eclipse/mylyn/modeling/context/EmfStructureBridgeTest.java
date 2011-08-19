@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * @author Miles Parker
  */
-public class EMFStructureBridgeTest extends AbstractEMFContextTest {
+public class EmfStructureBridgeTest extends AbstractEmfContextTest {
 
 	public void testSimpleHandle() {
 		String elementHandle = "platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book";

@@ -18,8 +18,8 @@ import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
-import org.eclipse.mylyn.modeling.emf.EMFStructureBridge;
-import org.eclipse.mylyn.modeling.ui.DiagramUIEditingMonitor;
+import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
+import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
 import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
 import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
@@ -29,17 +29,17 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Miles Parker
  */
-public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
+public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
 
 	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.ecoretools"; //$NON-NLS-1$
 
-	private static EcoreDiagramUIBridgePlugin INSTANCE;
+	private static EcoreDiagramUiBridgePlugin INSTANCE;
 
-	private DiagramUIEditingMonitor diagramMonitor;
+	private DiagramUiEditingMonitor diagramMonitor;
 
 	private AbstractUserInteractionMonitor navigatorMonitor;
 
-	public EcoreDiagramUIBridgePlugin() {
+	public EcoreDiagramUiBridgePlugin() {
 	}
 
 	/**
@@ -55,11 +55,11 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(EcoreDomainBridge.ECORE_CONTENT_TYPE);
 		// we'll get resource by default -- shouldn't we get null as failure
 		// case? https://bugs.eclipse.org/bugs/show_bug.cgi?id=353439
-		if (structureBridge instanceof EMFStructureBridge) {
-			EMFStructureBridge bridge = (EMFStructureBridge) structureBridge;
-			diagramMonitor = new DiagramUIEditingMonitor(bridge, EcoreDiagramDomainBridge.getInstance());
+		if (structureBridge instanceof EmfStructureBridge) {
+			EmfStructureBridge bridge = (EmfStructureBridge) structureBridge;
+			diagramMonitor = new DiagramUiEditingMonitor(bridge, EcoreDiagramDomainBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(diagramMonitor);
-			navigatorMonitor = new DiagramUIEditingMonitor(bridge, EcoreToolsNavigatorDomainBridge.getInstance());
+			navigatorMonitor = new DiagramUiEditingMonitor(bridge, EcoreToolsNavigatorDomainBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(navigatorMonitor);
 		} else {
 			StatusHandler.log(new Status(IStatus.WARNING, ID_PLUGIN,
@@ -84,7 +84,7 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the shared instance.
 	 */
-	public static EcoreDiagramUIBridgePlugin getDefault() {
+	public static EcoreDiagramUiBridgePlugin getDefault() {
 		return INSTANCE;
 	}
 
@@ -102,7 +102,7 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 	public static class EcoreDiagramBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
-			EcoreDiagramUIBridgePlugin.getDefault().lazyStart();
+			EcoreDiagramUiBridgePlugin.getDefault().lazyStart();
 		}
 
 	}

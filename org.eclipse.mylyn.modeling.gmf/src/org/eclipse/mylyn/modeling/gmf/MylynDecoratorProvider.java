@@ -38,7 +38,7 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
-import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
+import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
@@ -350,5 +350,5 @@ public abstract class MylynDecoratorProvider extends AbstractProvider implements
 		return listenerForRoot.get(part);
 	}
 
-	public abstract IModelUIProvider getDomainUIBridge();
+	public abstract IModelUiProvider getDomainUIBridge();
 }

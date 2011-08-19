@@ -20,12 +20,12 @@ import org.osgi.framework.BundleContext;
  * 
  * @author Miles Parker
  */
-public class GMFUIBridgePlugin extends AbstractUIPlugin {
+public class GmfUiBridgePlugin extends AbstractUIPlugin {
 
 	public static class GMFUiBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
-			GMFUIBridgePlugin.getDefault().lazyStart();
+			GmfUiBridgePlugin.getDefault().lazyStart();
 		}
 
 	}
@@ -33,12 +33,12 @@ public class GMFUIBridgePlugin extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.mylyn.gmf.ui"; //$NON-NLS-1$
 
-	private static GMFUIBridgePlugin INSTANCE;
+	private static GmfUiBridgePlugin INSTANCE;
 
 	/**
 	 * The constructor
 	 */
-	public GMFUIBridgePlugin() {
+	public GmfUiBridgePlugin() {
 	}
 
 	private void lazyStart() {
@@ -61,7 +61,7 @@ public class GMFUIBridgePlugin extends AbstractUIPlugin {
 		INSTANCE = null;
 	}
 
-	public static GMFUIBridgePlugin getDefault() {
+	public static GmfUiBridgePlugin getDefault() {
 		return INSTANCE;
 	}
 

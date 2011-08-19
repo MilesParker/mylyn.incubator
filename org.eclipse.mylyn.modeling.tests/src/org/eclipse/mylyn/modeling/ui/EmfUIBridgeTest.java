@@ -20,7 +20,7 @@ import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
-import org.eclipse.mylyn.modeling.context.AbstractEMFContextTest;
+import org.eclipse.mylyn.modeling.context.AbstractEmfContextTest;
 import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.IWorkbenchPage;
@@ -30,15 +30,15 @@ import org.eclipse.ui.part.FileEditorInput;
 /**
  * @author Miles Parker
  */
-public class EMFUIBridgeTest extends AbstractEMFContextTest {
+public class EmfUIBridgeTest extends AbstractEmfContextTest {
 
-	private DiagramUIEditingMonitor monitor;
+	private DiagramUiEditingMonitor monitor;
 
 	@Override
 	protected void setUp() throws Exception {
 		// ignore
 		super.setUp();
-		monitor = new DiagramUIEditingMonitor(structureBridge, new EcoreDiagramDomainBridge());
+		monitor = new DiagramUiEditingMonitor(structureBridge, new EcoreDiagramDomainBridge());
 		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 

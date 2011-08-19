@@ -23,7 +23,7 @@ import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 /**
  * @author Miles Parker
  */
-public abstract class EcoreDomainBridge implements IModelStructureProvider, IModelUIProvider {
+public abstract class EcoreDomainBridge implements IModelStructureProvider, IModelUiProvider {
 
 	private static final Class<?>[] NODE_CLASSES = new Class[] { EClass.class, EEnum.class, EPackage.class };
 

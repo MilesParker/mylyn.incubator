@@ -16,7 +16,7 @@ import javax.management.relation.Relation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
-import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
+import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 import org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.ui.IWorkbenchPart;
@@ -27,9 +27,9 @@ import org.eclipse.uml2.uml.NamedElement;
 /**
  * @author Miles Parker
  */
-public class UML2DomainBridge implements IModelStructureProvider, IModelUIProvider {
+public class Uml2DomainBridge implements IModelStructureProvider, IModelUiProvider {
 
-	private static UML2DomainBridge INSTANCE = new UML2DomainBridge();
+	private static Uml2DomainBridge INSTANCE = new Uml2DomainBridge();
 
 	public static final String UML2_CONTENT_TYPE = "uml2"; //$NON-NLS-1$
 
@@ -64,9 +64,9 @@ public class UML2DomainBridge implements IModelStructureProvider, IModelUIProvid
 		return new Class[] { Relation.class };
 	}
 
-	public static UML2DomainBridge getInstance() {
+	public static Uml2DomainBridge getInstance() {
 		if (INSTANCE == null) {
-			INSTANCE = new UML2DomainBridge();
+			INSTANCE = new Uml2DomainBridge();
 		}
 		return INSTANCE;
 	}

@@ -22,13 +22,13 @@ import org.eclipse.ui.IWorkbenchPart;
 /**
  * @author Miles Parker
  */
-public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
+public class DiagramUiEditingMonitor extends AbstractUserInteractionMonitor {
 
 	private final AbstractContextStructureBridge structure;
 
-	private final IModelUIProvider ui;
+	private final IModelUiProvider ui;
 
-	public DiagramUIEditingMonitor(AbstractContextStructureBridge structure, IModelUIProvider ui) {
+	public DiagramUiEditingMonitor(AbstractContextStructureBridge structure, IModelUiProvider ui) {
 		super();
 		this.structure = structure;
 		this.ui = ui;

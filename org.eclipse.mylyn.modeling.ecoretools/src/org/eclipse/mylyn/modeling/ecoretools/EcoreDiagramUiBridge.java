@@ -9,23 +9,17 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.gmf;
+package org.eclipse.mylyn.modeling.ecoretools;
 
-import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.mylyn.modeling.emf.EMFStructureBridge;
+import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
+import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 
 /**
- * @author Benjamin Muskalla
  * @author Miles Parker
  */
-public abstract class GMFStructureBridge extends EMFStructureBridge {
-
+public class EcoreDiagramUiBridge extends DiagramUiBridge {
 	@Override
-	public Object getDomainObject(Object object) {
-		if (object instanceof View) {
-			return ((View) object).getElement();
-		}
-		return super.getDomainObject(object);
-	}
-
+	public IModelUiProvider getDomainUIBridge() {
+		return EcoreDiagramDomainBridge.getInstance();
+	};
 }

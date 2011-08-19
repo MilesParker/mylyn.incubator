@@ -9,19 +9,19 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.ui;
+package org.eclipse.mylyn.modeling.papyrus;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.EditPart;
-import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.mylyn.modeling.gmf.MylynDecoratorProvider;
+import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 
 /**
  * @author Miles Parker
  */
-public interface IModelUIProvider extends IModelStructureProvider {
+public class Uml2DiagramDecoratorProvider extends MylynDecoratorProvider {
 
-	boolean acceptsPart(IWorkbenchPart part);
+	@Override
+	public IModelUiProvider getDomainUIBridge() {
+		return Uml2DomainBridge.getInstance();
+	}
 
-	boolean acceptsEditPart(EObject object, EditPart part);
 }

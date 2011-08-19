@@ -5,7 +5,7 @@ Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
 Bundle-SymbolicName: org.eclipse.mylyn.modeling.papyrus;singleton:=true
 Bundle-Version: 0.9.0.qualifier
-Bundle-Activator: org.eclipse.mylyn.modeling.papyrus.UML2DiagramUIBridgePlugin
+Bundle-Activator: org.eclipse.mylyn.modeling.papyrus.Uml2DiagramUiBridgePlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.ui.editors,
