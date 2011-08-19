@@ -23,4 +23,5 @@ public class UML2UIBridge extends DiagramUIBridge {
 	public IModelUIProvider getDomainUIBridge() {
 		return UML2DomainBridge.getInstance();
 	}
+
 }

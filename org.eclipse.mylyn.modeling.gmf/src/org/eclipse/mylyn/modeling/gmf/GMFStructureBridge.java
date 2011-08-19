@@ -27,4 +27,5 @@ public abstract class GMFStructureBridge extends EMFStructureBridge {
 		}
 		return super.getDomainObject(object);
 	}
+
 }

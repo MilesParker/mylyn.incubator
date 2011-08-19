@@ -111,4 +111,5 @@ public class FigureManagerHelper {
 		}
 		return create(new RGB(hsb[0], hsb[1], hsb[2]));
 	}
+
 }

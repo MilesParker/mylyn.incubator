@@ -23,4 +23,5 @@ public class EcoreDiagramStructureBridge extends GMFStructureBridge {
 	public IModelStructureProvider getDomainContextBridge() {
 		return EcoreDiagramDomainBridge.getInstance();
 	}
+
 }

@@ -72,4 +72,5 @@ public class BasicEMFResourceTest extends AbstractEMFContextTest {
 				.getPreferenceStore()
 				.setValue(ResourcesUiPreferenceInitializer.PREF_MODIFIED_DATE_EXCLUSIONS, true);
 	}
+
 }

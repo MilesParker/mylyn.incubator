@@ -20,6 +20,7 @@ import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.modeling.emf.EMFStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUIEditingMonitor;
+import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
 import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -51,23 +52,18 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStart() {
-		AbstractContextStructureBridge structureBridge = ContextCore
-				.getStructureBridge(EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE);
+		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(EcoreDomainBridge.ECORE_CONTENT_TYPE);
 		// we'll get resource by default -- shouldn't we get null as failure
 		// case? https://bugs.eclipse.org/bugs/show_bug.cgi?id=353439
 		if (structureBridge instanceof EMFStructureBridge) {
 			EMFStructureBridge bridge = (EMFStructureBridge) structureBridge;
-			diagramMonitor = new DiagramUIEditingMonitor(bridge,
-					EcoreDiagramDomainBridge.getInstance());
+			diagramMonitor = new DiagramUIEditingMonitor(bridge, EcoreDiagramDomainBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(diagramMonitor);
 			navigatorMonitor = new DiagramUIEditingMonitor(bridge, EcoreToolsNavigatorDomainBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(navigatorMonitor);
 		} else {
-			StatusHandler
-					.log(new Status(
-							IStatus.WARNING,
-							ID_PLUGIN,
-							"Couldn't load EMFStructure Bridge for " + EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
+			StatusHandler.log(new Status(IStatus.WARNING, ID_PLUGIN,
+					"Couldn't load EMFStructure Bridge for " + EcoreDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
 		}
 	}
 
@@ -93,8 +89,7 @@ public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given plug-in
-	 * relative path.
+	 * Returns an image descriptor for the image file at the given plug-in relative path.
 	 * 
 	 * @param path
 	 *            the path

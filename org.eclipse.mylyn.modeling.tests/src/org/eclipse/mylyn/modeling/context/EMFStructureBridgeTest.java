@@ -50,4 +50,5 @@ public class EMFStructureBridgeTest extends AbstractEMFContextTest {
 		assertTrue("Same eobject", !eObject.equals(objectForHandle));
 		assertEquals(fragmentClass.getClassifierID(), obtainedClass.getClassifierID());
 	}
+
 }

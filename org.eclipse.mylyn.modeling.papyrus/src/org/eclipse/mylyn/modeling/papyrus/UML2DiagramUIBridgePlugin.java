@@ -32,7 +32,6 @@ public class UML2DiagramUIBridgePlugin extends AbstractUIPlugin {
 
 	private DiagramUIEditingMonitor monitor;
 
-
 	public UML2DiagramUIBridgePlugin() {
 	}
 

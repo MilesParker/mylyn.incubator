@@ -77,4 +77,5 @@ public class EMFUIBridgeTest extends AbstractEMFContextTest {
 
 		assertEquals(element2.getContentType(), EcoreDomainBridge.ECORE_CONTENT_TYPE);
 	}
+
 }

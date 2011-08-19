@@ -46,4 +46,5 @@ public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
 			}
 		}
 	}
+
 }

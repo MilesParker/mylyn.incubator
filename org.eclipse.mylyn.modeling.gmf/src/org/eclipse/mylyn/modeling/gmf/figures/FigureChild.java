@@ -52,4 +52,5 @@ class FigureChild {
 			((Shape) figure).setAlpha(255);
 		}
 	}
+
 }

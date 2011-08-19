@@ -125,4 +125,5 @@ final class RevealMouseListener implements MouseMoveListener {
 	public void removeDecoration(IFigure decoration) {
 		lastDecorations.remove(decoration);
 	}
+
 }

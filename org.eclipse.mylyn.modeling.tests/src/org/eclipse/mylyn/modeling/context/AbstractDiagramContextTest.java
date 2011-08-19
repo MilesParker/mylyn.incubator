@@ -59,4 +59,5 @@ public class AbstractDiagramContextTest extends AbstractContextTest {
 		assertFalse(manager.isContextActive());
 		super.tearDown();
 	}
+
 }

@@ -75,4 +75,5 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 	public void restore() {
 		//noop, landmarks are never hidden
 	}
+
 }

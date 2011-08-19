@@ -137,4 +137,5 @@ public abstract class ContextDecorator implements IDecorator {
 	public List<IRevealableFigure> getDecorationFigures() {
 		return decorationFigures;
 	}
+
 }

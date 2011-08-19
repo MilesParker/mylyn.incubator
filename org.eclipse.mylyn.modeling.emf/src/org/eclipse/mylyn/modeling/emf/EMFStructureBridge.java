@@ -29,6 +29,7 @@ import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
  */
 public abstract class EMFStructureBridge extends DomainDelegatedStructureBridge {
 
+	@Override
 	public String getDomainHandleIdentifier(Object object) {
 		EObject eobject = ((EObject) object);
 		URI uri = EcoreUtil.getURI(eobject);
@@ -103,4 +104,5 @@ public abstract class EMFStructureBridge extends DomainDelegatedStructureBridge 
 		//Resources don't have parents, unless we want to get the file hierarchy, which probably isn't what we want.
 		return null;
 	}
+
 }

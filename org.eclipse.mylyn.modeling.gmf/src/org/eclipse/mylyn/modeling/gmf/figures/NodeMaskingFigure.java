@@ -66,4 +66,5 @@ public class NodeMaskingFigure extends RectangleFigure implements IRevealableFig
 			((IFigure) target.getChildren().get(0)).setBounds(decorated.getBounds().getCopy());
 		}
 	}
+
 }

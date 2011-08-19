@@ -53,4 +53,5 @@ public class NodeDecorator extends ContextDecorator {
 	public boolean isLandmark() {
 		return getProvider().isLandmark(domainObject);
 	}
+
 }

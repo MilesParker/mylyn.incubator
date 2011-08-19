@@ -62,4 +62,5 @@ public abstract class EcoreDomainBridge implements IModelStructureProvider, IMod
 		// ignore
 		return false;
 	}
+
 }

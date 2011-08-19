@@ -8,7 +8,6 @@ import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
  * appropriate responses for structure bridge.
  * 
  * @author Miles Parker
- * 
  */
 public abstract class DomainDelegatedStructureBridge extends AbstractContextStructureBridge {
 

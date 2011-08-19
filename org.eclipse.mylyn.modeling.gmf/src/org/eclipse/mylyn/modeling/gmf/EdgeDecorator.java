@@ -187,4 +187,5 @@ public class EdgeDecorator extends ContextDecorator {
 		// Edges can never be landmarked
 		return false;
 	}
+
 }

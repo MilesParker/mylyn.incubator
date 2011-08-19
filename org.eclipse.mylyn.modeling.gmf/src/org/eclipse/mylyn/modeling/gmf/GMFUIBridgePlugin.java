@@ -64,4 +64,5 @@ public class GMFUIBridgePlugin extends AbstractUIPlugin {
 	public static GMFUIBridgePlugin getDefault() {
 		return INSTANCE;
 	}
+
 }

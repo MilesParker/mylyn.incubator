@@ -44,4 +44,5 @@ public class AbstractEMFContextTest extends AbstractDiagramContextTest {
 	public IJavaProject getEmfProject() {
 		return emfProject;
 	}
+
 }
