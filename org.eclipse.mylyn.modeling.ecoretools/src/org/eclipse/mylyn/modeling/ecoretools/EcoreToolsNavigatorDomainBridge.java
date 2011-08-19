@@ -17,6 +17,9 @@ import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
 
+/**
+ * @author Miles Parker
+ */
 public class EcoreToolsNavigatorDomainBridge extends EcoreDomainBridge {
 
 	private static EcoreToolsNavigatorDomainBridge INSTANCE;

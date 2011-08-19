@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2009 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,7 +26,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * @author mparker
+ * @author Miles Parker
  */
 public class EcoreDiagramUIBridgePlugin extends AbstractUIPlugin {
 

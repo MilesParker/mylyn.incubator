@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies and others.
+w * Copyright (c) 2011 Tasktop Technologies and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,6 +20,9 @@ import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.Decoration;
 
+/**
+ * @author Miles Parker
+ */
 public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFigure, Locator {
 
 	private static final int BORDER_SIZE = 2;

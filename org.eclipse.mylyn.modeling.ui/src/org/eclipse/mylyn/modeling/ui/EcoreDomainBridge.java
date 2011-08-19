@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2009 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,7 +21,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
 
 /**
- * @author milesparker
+ * @author Miles Parker
  */
 public abstract class EcoreDomainBridge implements IModelStructureProvider, IModelUIProvider {
 

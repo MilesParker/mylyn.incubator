@@ -16,7 +16,7 @@ import org.eclipse.mylyn.modeling.emf.EMFStructureBridge;
 
 /**
  * @author Benjamin Muskalla
- * @author milesparker
+ * @author Miles Parker
  */
 public abstract class GMFStructureBridge extends EMFStructureBridge {
 

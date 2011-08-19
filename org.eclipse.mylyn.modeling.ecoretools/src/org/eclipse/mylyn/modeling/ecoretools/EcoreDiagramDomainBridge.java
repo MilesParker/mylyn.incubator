@@ -29,6 +29,9 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
 import org.eclipse.ui.IWorkbenchPart;
 
+/**
+ * @author Miles Parker
+ */
 public class EcoreDiagramDomainBridge extends EcoreDomainBridge {
 
 	private static EcoreDiagramDomainBridge INSTANCE;

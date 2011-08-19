@@ -15,7 +15,7 @@ import org.eclipse.mylyn.modeling.ui.DiagramUIBridge;
 import org.eclipse.mylyn.modeling.ui.IModelUIProvider;
 
 /**
- * @author milesparker
+ * @author Miles Parker
  */
 public class UML2UIBridge extends DiagramUIBridge {
 

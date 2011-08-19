@@ -36,6 +36,9 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader;
 import org.eclipse.osgi.util.NLS;
 
+/**
+ * @author Miles Parker
+ */
 @SuppressWarnings("restriction")
 public class CommonTestUtil {
 

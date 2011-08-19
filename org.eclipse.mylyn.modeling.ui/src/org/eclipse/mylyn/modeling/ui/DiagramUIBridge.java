@@ -25,6 +25,9 @@ import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
+/**
+ * @author Miles Parker
+ */
 public abstract class DiagramUIBridge extends AbstractContextUiBridge {
 
 	boolean initialized;

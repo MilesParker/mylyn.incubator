@@ -22,6 +22,7 @@ import org.eclipse.mylyn.modeling.ui.PapyrusDiagramEditorUIBridgeTest;
 
 /**
  * @author Benjamin Muskalla
+ * @author Miles Parker
  */
 public class AllEMFTests {
 

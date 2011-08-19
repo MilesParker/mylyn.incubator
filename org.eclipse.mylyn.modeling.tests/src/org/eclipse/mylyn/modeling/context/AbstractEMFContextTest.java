@@ -17,6 +17,9 @@ import org.eclipse.mylyn.commons.sdk.util.ResourceTestUtil;
 import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramStructureBridge;
 import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
 
+/**
+ * @author Miles Parker
+ */
 public class AbstractEMFContextTest extends AbstractDiagramContextTest {
 
 	protected DomainDelegatedStructureBridge structureBridge;

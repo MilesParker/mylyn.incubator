@@ -23,6 +23,9 @@ import org.eclipse.mylyn.internal.resources.ui.ResourceStructureBridge;
 import org.eclipse.mylyn.internal.resources.ui.ResourcesUiBridgePlugin;
 import org.eclipse.mylyn.internal.resources.ui.ResourcesUiPreferenceInitializer;
 
+/**
+ * @author Miles Parker
+ */
 public class BasicEMFResourceTest extends AbstractEMFContextTest {
 
 	protected ResourceInteractionMonitor resmonitor = new ResourceInteractionMonitor();

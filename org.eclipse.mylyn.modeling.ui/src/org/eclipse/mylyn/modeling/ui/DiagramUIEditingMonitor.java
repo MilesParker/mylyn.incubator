@@ -20,7 +20,7 @@ import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
- * @author milesparker
+ * @author Miles Parker
  */
 public class DiagramUIEditingMonitor extends AbstractUserInteractionMonitor {
 

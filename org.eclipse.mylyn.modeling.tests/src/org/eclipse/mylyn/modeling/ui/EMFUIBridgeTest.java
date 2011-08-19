@@ -27,6 +27,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+/**
+ * @author Miles Parker
+ */
 public class EMFUIBridgeTest extends AbstractEMFContextTest {
 
 	private DiagramUIEditingMonitor monitor;
@@ -72,6 +75,6 @@ public class EMFUIBridgeTest extends AbstractEMFContextTest {
 				"platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecore#//Book");
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), EcoreDiagramDomainBridge.ECORE_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), EcoreDomainBridge.ECORE_CONTENT_TYPE);
 	}
 }

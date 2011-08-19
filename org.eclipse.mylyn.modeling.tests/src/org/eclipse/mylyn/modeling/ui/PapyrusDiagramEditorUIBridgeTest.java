@@ -33,6 +33,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.uml2.uml.internal.impl.ClassImpl;
 
+/**
+ * @author Miles Parker
+ */
 public class PapyrusDiagramEditorUIBridgeTest extends AbstractDiagramContextTest {
 
 	private static final String RESOURCE_URI = "platform:/resource/org.eclipse.mylyn.emf.tests.papyrus/model/model.uml#_xkh2ALJFEeCYupgj-BJj-Q";

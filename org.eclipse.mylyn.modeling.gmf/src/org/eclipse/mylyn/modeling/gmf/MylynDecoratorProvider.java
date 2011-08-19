@@ -48,6 +48,9 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * @author Miles Parker
+ */
 public abstract class MylynDecoratorProvider extends AbstractProvider implements IDecoratorProvider, IPartListener {
 
 	public static final String MYLYN_MARKER = "mylyn-marker"; //$NON-NLS-1$

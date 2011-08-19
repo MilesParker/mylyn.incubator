@@ -31,6 +31,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+/**
+ * @author Miles Parker
+ */
 public class EcoreDiagramEditorUIBridgeTest extends AbstractEMFContextTest {
 
 	protected DiagramUIEditingMonitor monitor;

@@ -25,7 +25,7 @@ import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
 
 /**
  * @author Benjamin Muskalla
- * @author milesparker
+ * @author Miles Parker
  */
 public abstract class EMFStructureBridge extends DomainDelegatedStructureBridge {
 

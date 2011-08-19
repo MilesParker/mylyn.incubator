@@ -7,7 +7,7 @@ import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
  * Provides support for using a simple structure provider to define appropriate domain classes that can then determine
  * appropriate responses for structure bridge.
  * 
- * @author milesparker
+ * @author Miles Parker
  * 
  */
 public abstract class DomainDelegatedStructureBridge extends AbstractContextStructureBridge {

@@ -20,6 +20,9 @@ import org.eclipse.mylyn.internal.context.ui.ContextUiPlugin;
 import org.eclipse.mylyn.internal.ide.ui.IdeUiBridgePlugin;
 import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
 
+/**
+ * @author Miles Parker
+ */
 public class AbstractDiagramContextTest extends AbstractContextTest {
 
 	protected InteractionContextManager manager = ContextCorePlugin.getContextManager();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2009 Tasktop Technologies and others.
+ * Copyright (c) 2011 Tasktop Technologies and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,6 +37,9 @@ import org.eclipse.mylyn.internal.context.core.InteractionContextScaling;
 import org.eclipse.pde.internal.core.natures.PDE;
 import org.eclipse.pde.internal.core.natures.PluginProject;
 
+/**
+ * @author Miles Parker
+ */
 public class WorkspaceSetupHelper {
 
 	private static final String HELPER_CONTEXT_ID = "helper-context";
