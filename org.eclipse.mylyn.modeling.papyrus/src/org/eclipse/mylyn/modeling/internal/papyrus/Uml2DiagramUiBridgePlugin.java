@@ -22,7 +22,6 @@ import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
 import org.eclipse.mylyn.modeling.papyrus.Uml2DomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
 import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
-import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -37,8 +36,6 @@ public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 	private static Uml2DiagramUiBridgePlugin INSTANCE;
 
 	private DiagramUiEditingMonitor diagramMonitor;
-
-	private AbstractUserInteractionMonitor navigatorMonitor;
 
 	public Uml2DiagramUiBridgePlugin() {
 	}
