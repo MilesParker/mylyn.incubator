@@ -9,7 +9,7 @@
     <groupId>org.eclipse.mylyn.incubator</groupId>
     <version>3.7.0-SNAPSHOT</version>
   </parent>
-  <artifactId>org.eclipse.mylyn.sandbox.search_feature</artifactId>
+  <artifactId>org.eclipse.mylyn.sandbox.search</artifactId>
   <version>3.7.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
   <build>
