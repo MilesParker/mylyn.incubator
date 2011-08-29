@@ -76,9 +76,11 @@ public abstract class DomainDelegatedStructureBridge extends AbstractContextStru
 	@Override
 	public boolean canBeLandmark(String handle) {
 		Object object = getObjectForHandle(handle);
-		for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
-			if (domainClass.isAssignableFrom(object.getClass())) {
-				return true;
+		if (object != null) {
+			for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
+				if (domainClass.isAssignableFrom(object.getClass())) {
+					return true;
+				}
 			}
 		}
 		return false;
