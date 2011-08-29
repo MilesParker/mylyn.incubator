@@ -28,6 +28,13 @@
       %license
    </license>
 
+   <requires>
+      <import feature="org.eclipse.mylyn.modeling.emf" version="0.9.0.qualifier"/>
+      <import feature="org.eclipse.mylyn.context_feature" version="3.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.gmf" version="1.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.gmf.runtime.notation" version="1.5.0" match="greaterOrEqual"/>
+   </requires>
+
    <plugin
          id="org.eclipse.mylyn.modeling.gmf"
          download-size="0"

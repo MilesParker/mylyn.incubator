@@ -28,6 +28,17 @@
       %license
    </license>
 
+   <requires>
+      <import feature="org.eclipse.emf.ecoretools" version="1.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.mylyn.context_feature" version="3.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.common" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.common.ui" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.ecore.edit" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.edit" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.edit.ui" version="2.5.0" match="greaterOrEqual"/>
+   </requires>
+
    <plugin
          id="org.eclipse.mylyn.modeling.core"
          download-size="0"
