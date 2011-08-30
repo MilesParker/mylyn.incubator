@@ -9,36 +9,40 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.ecoretools;
+package org.eclipse.mylyn.modeling.internal.ecoretools;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
-import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
+import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
 
 /**
  * @author Miles Parker
  */
-public class EcoreToolsNavigatorDomainBridge extends EcoreDomainBridge {
+public class EcoreToolsNavigatorUiBridge extends DiagramUiBridge {
 
-	private static EcoreToolsNavigatorDomainBridge INSTANCE;
+	private static EcoreToolsNavigatorUiBridge INSTANCE;
 
+	@Override
 	public boolean acceptsPart(IWorkbenchPart part) {
 		return part instanceof ProjectExplorer;
 	}
 
 	@Override
-	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
+	public boolean acceptsEditPart(Object domainObject, EditPart part) {
 		//We only support views
 		return false;
 	}
 
-	public static EcoreToolsNavigatorDomainBridge getInstance() {
+	public static EcoreToolsNavigatorUiBridge getInstance() {
 		if (INSTANCE == null) {
-			INSTANCE = new EcoreToolsNavigatorDomainBridge();
+			INSTANCE = new EcoreToolsNavigatorUiBridge();
 		}
 		return INSTANCE;
 	}
 
+	@Override
+	public String getContentType() {
+		return EcoreDomainBridge.ECORE_CONTENT_TYPE;
+	}
 }

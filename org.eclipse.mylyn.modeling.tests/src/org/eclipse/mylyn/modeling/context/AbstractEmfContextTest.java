@@ -14,7 +14,7 @@ package org.eclipse.mylyn.modeling.context;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.mylyn.commons.sdk.util.ResourceTestUtil;
-import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramStructureBridge;
+import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDomainBridge;
 import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
 
 /**
@@ -29,7 +29,7 @@ public class AbstractEmfContextTest extends AbstractDiagramContextTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		structureBridge = new EcoreDiagramStructureBridge();
+		structureBridge = new EcoreDomainBridge();
 		emfProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip(
 				"org.eclipse.mylyn.modeling.tests.ecorediagram", "ecorediagram.zip");
 		emfProject.open(new NullProgressMonitor());

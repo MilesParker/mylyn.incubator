@@ -26,9 +26,9 @@ public class DiagramUiEditingMonitor extends AbstractUserInteractionMonitor {
 
 	private final AbstractContextStructureBridge structure;
 
-	private final IModelUiProvider ui;
+	private final DiagramUiBridge ui;
 
-	public DiagramUiEditingMonitor(AbstractContextStructureBridge structure, IModelUiProvider ui) {
+	public DiagramUiEditingMonitor(AbstractContextStructureBridge structure, DiagramUiBridge ui) {
 		super();
 		this.structure = structure;
 		this.ui = ui;

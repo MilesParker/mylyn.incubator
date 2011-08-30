@@ -20,22 +20,21 @@ public abstract class DomainDelegatedStructureBridge extends AbstractContextStru
 			return null;
 		}
 		if (object instanceof IAdaptable) {
-			Object diagramObject = ((IAdaptable) object).getAdapter(getDomainContextBridge().getDomainBaseNodeClass());
-			if (diagramObject != null
-					&& getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(diagramObject.getClass())) {
+			Object diagramObject = ((IAdaptable) object).getAdapter(getDomainBaseNodeClass());
+			if (diagramObject != null && getDomainBaseNodeClass().isAssignableFrom(diagramObject.getClass())) {
 				return getDomainObject(diagramObject);
 			}
 		}
 		// don't want to look at all classes unless it's relevant
-		if (getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(object.getClass())) {
-			for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
+		if (getDomainBaseNodeClass().isAssignableFrom(object.getClass())) {
+			for (Class<?> domainClass : getDomainNodeClasses()) {
 				if (domainClass.isAssignableFrom(object.getClass())) {
 					return object;
 				}
 			}
 		}
-		if (getDomainContextBridge().getDomainBaseEdgeClass().isAssignableFrom(object.getClass())) {
-			for (Class<?> domainClass : getDomainContextBridge().getDomainEdgeClasses()) {
+		if (getDomainBaseEdgeClass().isAssignableFrom(object.getClass())) {
+			for (Class<?> domainClass : getDomainEdgeClasses()) {
 				if (domainClass.isAssignableFrom(object.getClass())) {
 					return object;
 				}
@@ -52,8 +51,7 @@ public abstract class DomainDelegatedStructureBridge extends AbstractContextStru
 	@Override
 	public String getHandleIdentifier(Object object) {
 		Object domainObject = getDomainObject(object);
-		if (domainObject != null
-				&& getDomainContextBridge().getDomainBaseNodeClass().isAssignableFrom(domainObject.getClass())) {
+		if (domainObject != null && getDomainBaseNodeClass().isAssignableFrom(domainObject.getClass())) {
 			return getDomainHandleIdentifier(domainObject);
 		}
 		return null;
@@ -77,7 +75,7 @@ public abstract class DomainDelegatedStructureBridge extends AbstractContextStru
 	public boolean canBeLandmark(String handle) {
 		Object object = getObjectForHandle(handle);
 		if (object != null) {
-			for (Class<?> domainClass : getDomainContextBridge().getDomainNodeClasses()) {
+			for (Class<?> domainClass : getDomainNodeClasses()) {
 				if (domainClass.isAssignableFrom(object.getClass())) {
 					return true;
 				}
@@ -99,14 +97,18 @@ public abstract class DomainDelegatedStructureBridge extends AbstractContextStru
 	}
 
 	@Override
-	public String getContentType() {
-		return getDomainContextBridge().getContentType();
-	}
-
-	@Override
 	public String getContentType(String elementHandle) {
 		return getContentType();
 	}
 
-	public abstract IModelStructureProvider getDomainContextBridge();
+	@Override
+	public abstract String getContentType();
+
+	public abstract Class<?> getDomainBaseNodeClass();
+
+	public abstract Class<?>[] getDomainNodeClasses();
+
+	public abstract Class<?> getDomainBaseEdgeClass();
+
+	public abstract Class<?>[] getDomainEdgeClasses();
 }

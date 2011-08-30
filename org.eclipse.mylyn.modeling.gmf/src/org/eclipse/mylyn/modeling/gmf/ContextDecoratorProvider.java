@@ -38,7 +38,7 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
-import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
+import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
@@ -292,7 +292,8 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 
 	void refresh(IInteractionElement element) {
 		if (element.getContentType().equals(getDomainUIBridge().getContentType())) {
-			Collection<ContextDecorator> values = decoratorsForModel.get(element.getHandleIdentifier());
+			String handleIdentifier = element.getHandleIdentifier();
+			Collection<ContextDecorator> values = decoratorsForModel.get(handleIdentifier);
 			if (values != null) {
 				refresh(values);
 			}
@@ -331,7 +332,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void partDeactivated(IWorkbenchPart part) {
-		deactivate(part);
+//		deactivate(part);
 		// deactivate(part);
 	}
 
@@ -353,5 +354,5 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 		return listenerForRoot.get(part);
 	}
 
-	public abstract IModelUiProvider getDomainUIBridge();
+	public abstract DiagramUiBridge getDomainUIBridge();
 }

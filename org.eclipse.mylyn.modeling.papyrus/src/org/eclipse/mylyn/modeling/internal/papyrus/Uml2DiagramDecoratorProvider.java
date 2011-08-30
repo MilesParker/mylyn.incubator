@@ -12,8 +12,7 @@
 package org.eclipse.mylyn.modeling.internal.papyrus;
 
 import org.eclipse.mylyn.modeling.gmf.ContextDecoratorProvider;
-import org.eclipse.mylyn.modeling.papyrus.Uml2DomainBridge;
-import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
+import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 
 /**
  * @author Miles Parker
@@ -21,8 +20,8 @@ import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
 public class Uml2DiagramDecoratorProvider extends ContextDecoratorProvider {
 
 	@Override
-	public IModelUiProvider getDomainUIBridge() {
-		return Uml2DomainBridge.getInstance();
+	public DiagramUiBridge getDomainUIBridge() {
+		return Uml2UiBridge.getInstance();
 	}
 
 }

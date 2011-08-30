@@ -19,9 +19,7 @@ import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
-import org.eclipse.mylyn.modeling.papyrus.Uml2DomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
-import org.eclipse.mylyn.modeling.ui.EcoreDomainBridge;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -50,14 +48,14 @@ public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStart() {
-		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(Uml2DomainBridge.UML2_CONTENT_TYPE);
+		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(Uml2UiBridge.UML2_CONTENT_TYPE);
 		if (structureBridge instanceof EmfStructureBridge) {
 			EmfStructureBridge bridge = (EmfStructureBridge) structureBridge;
-			diagramMonitor = new DiagramUiEditingMonitor(bridge, Uml2DomainBridge.getInstance());
+			diagramMonitor = new DiagramUiEditingMonitor(bridge, Uml2UiBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(diagramMonitor);
 		} else {
 			StatusHandler.log(new Status(IStatus.WARNING, ID_PLUGIN,
-					"Couldn't load EMFStructure Bridge for " + EcoreDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
+					"Couldn't load Bridge for " + Uml2UiBridge.UML2_CONTENT_TYPE)); //$NON-NLS-1$	
 		}
 	}
 

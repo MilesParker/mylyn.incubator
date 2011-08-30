@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.ui;
+package org.eclipse.mylyn.modeling.internal.ecoretools;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -17,13 +17,12 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.gef.EditPart;
-import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
+import org.eclipse.mylyn.modeling.gmf.GmfStructureBridge;
 
 /**
  * @author Miles Parker
  */
-public abstract class EcoreDomainBridge implements IModelStructureProvider, IModelUiProvider {
+public class EcoreDomainBridge extends GmfStructureBridge {
 
 	private static final Class<?>[] NODE_CLASSES = new Class[] { EClass.class, EEnum.class, EPackage.class };
 
@@ -31,36 +30,36 @@ public abstract class EcoreDomainBridge implements IModelStructureProvider, IMod
 
 	public static final String ECORE_CONTENT_TYPE = "ecore"; //$NON-NLS-1$
 
+	@Override
 	public String getContentType() {
 		return ECORE_CONTENT_TYPE;
 	}
 
+	@Override
 	public Class<?> getDomainBaseNodeClass() {
 		return EObject.class;
 	}
 
+	@Override
 	public Class<?>[] getDomainNodeClasses() {
 		return NODE_CLASSES;
 	}
 
+	@Override
 	public Class<?>[] getDomainEdgeClasses() {
 		return EDGE_CLASSES;
 	}
 
+	@Override
 	public Class<?> getDomainBaseEdgeClass() {
 		return EReference.class;
 	}
 
+	@Override
 	public String getLabel(Object object) {
 		if (object instanceof ENamedElement) {
 			return ((ENamedElement) object).getName();
 		}
 		return object.toString();
 	}
-
-	public boolean acceptsEditPart(EObject domainObject, EditPart part) {
-		// ignore
-		return false;
-	}
-
 }

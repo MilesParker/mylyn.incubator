@@ -19,5 +19,4 @@ Require-Bundle: org.eclipse.mylyn.context.core,
  org.eclipse.mylyn.modeling.gmf;bundle-version="0.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.mylyn.modeling.internal.papyrus,
- org.eclipse.mylyn.modeling.papyrus
+Export-Package: org.eclipse.mylyn.modeling.internal.papyrus

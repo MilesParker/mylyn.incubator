@@ -73,7 +73,7 @@ public abstract class EmfStructureBridge extends DomainDelegatedStructureBridge 
 
 	@Override
 	public String getLabel(Object object) {
-		String label = getDomainContextBridge().getLabel(object);
+		String label = super.getLabel(object);
 		if (label != null) {
 			return label;
 		}

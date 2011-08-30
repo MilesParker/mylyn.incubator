@@ -11,16 +11,63 @@
 
 package org.eclipse.mylyn.modeling.internal.ecoretools;
 
-import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EClass2EditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EEnum2EditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EEnumEditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackage2EditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackageEditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EReferenceEditPart;
+import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
+import org.eclipse.gef.EditPart;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
-import org.eclipse.mylyn.modeling.ui.IModelUiProvider;
+import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * @author Miles Parker
  */
 public class EcoreDiagramUiBridge extends DiagramUiBridge {
+
+	private static EcoreDiagramUiBridge INSTANCE;
+
 	@Override
-	public IModelUiProvider getDomainUIBridge() {
-		return EcoreDiagramDomainBridge.getInstance();
-	};
+	public boolean acceptsPart(IWorkbenchPart part) {
+		return part instanceof EcoreDiagramEditor;
+	}
+
+	@Override
+	public boolean acceptsEditPart(Object domainObject, EditPart part) {
+		//Nodes
+		if (domainObject instanceof EClass) {
+			return part instanceof EClassEditPart || part instanceof EClass2EditPart;
+		}
+		if (domainObject instanceof EEnum) {
+			return part instanceof EEnumEditPart || part instanceof EEnum2EditPart;
+		}
+		//We don't want the root-most package or we'll get the whole diagram!
+		if (domainObject instanceof EPackage && ((EPackage) domainObject).eContainer() != null) {
+			return part instanceof EPackageEditPart || part instanceof EPackage2EditPart;
+		}
+		//Edges
+		if (domainObject instanceof EReference) {
+			return part instanceof EReferenceEditPart;
+		}
+		return false;
+	}
+
+	public static EcoreDiagramUiBridge getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new EcoreDiagramUiBridge();
+		}
+		return INSTANCE;
+	}
+
+	@Override
+	public String getContentType() {
+		return EcoreDomainBridge.ECORE_CONTENT_TYPE;
+	}
 }

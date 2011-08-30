@@ -14,6 +14,7 @@ package org.eclipse.mylyn.modeling.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.gef.EditPart;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -21,6 +22,7 @@ import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.context.ui.AbstractContextUiBridge;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
@@ -76,15 +78,12 @@ public abstract class DiagramUiBridge extends AbstractContextUiBridge {
 		return null;
 	}
 
+	public abstract boolean acceptsPart(IWorkbenchPart part);
+
+	public abstract boolean acceptsEditPart(Object object, EditPart part);
+
 	@Override
 	public boolean acceptsEditor(IEditorPart editorPart) {
-		return getDomainUIBridge().acceptsPart(editorPart);
+		return acceptsPart(editorPart);
 	}
-
-	@Override
-	public String getContentType() {
-		return getDomainUIBridge().getContentType();
-	}
-
-	public abstract IModelUiProvider getDomainUIBridge();
 }

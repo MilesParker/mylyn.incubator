@@ -21,7 +21,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.modeling.context.AbstractEmfContextTest;
-import org.eclipse.mylyn.modeling.ecoretools.EcoreDiagramDomainBridge;
+import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramUiBridge;
+import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDomainBridge;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -38,7 +39,7 @@ public class EmfUIBridgeTest extends AbstractEmfContextTest {
 	protected void setUp() throws Exception {
 		// ignore
 		super.setUp();
-		monitor = new DiagramUiEditingMonitor(structureBridge, new EcoreDiagramDomainBridge());
+		monitor = new DiagramUiEditingMonitor(structureBridge, new EcoreDiagramUiBridge());
 		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 

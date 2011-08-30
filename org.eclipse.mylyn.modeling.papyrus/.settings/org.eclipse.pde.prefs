@@ -1,4 +1,4 @@
-#Fri Aug 19 12:07:57 PDT 2011
+#Mon Aug 29 14:50:48 PDT 2011
 compilers.f.unresolved-features=1
 compilers.f.unresolved-plugins=1
 compilers.incompatible-environment=1
@@ -22,7 +22,7 @@ compilers.p.missing-version-require-bundle=2
 compilers.p.no-required-att=0
 compilers.p.not-externalized-att=2
 compilers.p.unknown-attribute=0
-compilers.p.unknown-class=2
+compilers.p.unknown-class=1
 compilers.p.unknown-element=0
 compilers.p.unknown-identifier=1
 compilers.p.unknown-resource=0

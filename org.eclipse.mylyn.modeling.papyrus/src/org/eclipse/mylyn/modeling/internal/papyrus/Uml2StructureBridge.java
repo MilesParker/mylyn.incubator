@@ -11,16 +11,50 @@
 
 package org.eclipse.mylyn.modeling.internal.papyrus;
 
-import org.eclipse.mylyn.modeling.context.IModelStructureProvider;
+import javax.management.relation.Relation;
+
 import org.eclipse.mylyn.modeling.gmf.GmfStructureBridge;
-import org.eclipse.mylyn.modeling.papyrus.Uml2DomainBridge;
+import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.NamedElement;
 
 /**
  * @author Miles Parker
  */
 public class Uml2StructureBridge extends GmfStructureBridge {
+
+	public static final String UML2_CONTENT_TYPE = "uml2"; //$NON-NLS-1$
+
 	@Override
-	public IModelStructureProvider getDomainContextBridge() {
-		return Uml2DomainBridge.getInstance();
-	};
+	public Class<?> getDomainBaseNodeClass() {
+		return Element.class;
+	}
+
+	@Override
+	public Class<?>[] getDomainNodeClasses() {
+		return new Class[] { Classifier.class };
+	}
+
+	@Override
+	public Class<?> getDomainBaseEdgeClass() {
+		return Relation.class;
+	}
+
+	@Override
+	public Class<?>[] getDomainEdgeClasses() {
+		return new Class[] { Relation.class };
+	}
+
+	@Override
+	public String getLabel(Object object) {
+		if (object instanceof NamedElement) {
+			return ((NamedElement) object).getName();
+		}
+		return null;
+	}
+
+	@Override
+	public String getContentType() {
+		return UML2_CONTENT_TYPE;
+	}
 }

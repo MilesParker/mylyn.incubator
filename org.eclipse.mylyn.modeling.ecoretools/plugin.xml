@@ -35,7 +35,7 @@
       <extension
             point="org.eclipse.mylyn.context.core.bridges">
          <structureBridge
-               class="org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramStructureBridge">
+               class="org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDomainBridge">
          </structureBridge>
       </extension>
 
