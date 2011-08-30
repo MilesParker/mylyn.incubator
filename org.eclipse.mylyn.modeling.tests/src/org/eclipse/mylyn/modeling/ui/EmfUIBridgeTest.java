@@ -22,7 +22,7 @@ import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.modeling.context.AbstractEmfContextTest;
 import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDiagramUiBridge;
-import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreDomainBridge;
+import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreGmfDomainBridge;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -76,7 +76,7 @@ public class EmfUIBridgeTest extends AbstractEmfContextTest {
 				"platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecore#//Book");
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), EcoreDomainBridge.ECORE_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), EcoreGmfDomainBridge.ECORE_CONTENT_TYPE);
 	}
 
 }

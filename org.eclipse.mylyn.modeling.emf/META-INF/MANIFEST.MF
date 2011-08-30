@@ -11,5 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.context.core,
  org.eclipse.emf.common,
  org.eclipse.emf.ecore
-Export-Package: org.eclipse.mylyn.modeling.emf
+Export-Package: org.eclipse.mylyn.modeling.emf,
+ org.eclipse.mylyn.modeling.emf.ecore
 Bundle-ActivationPolicy: lazy

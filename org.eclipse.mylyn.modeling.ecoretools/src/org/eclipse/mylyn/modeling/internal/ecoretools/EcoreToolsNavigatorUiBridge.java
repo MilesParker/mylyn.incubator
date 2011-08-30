@@ -43,6 +43,6 @@ public class EcoreToolsNavigatorUiBridge extends DiagramUiBridge {
 
 	@Override
 	public String getContentType() {
-		return EcoreDomainBridge.ECORE_CONTENT_TYPE;
+		return EcoreGmfDomainBridge.ECORE_CONTENT_TYPE;
 	}
 }
