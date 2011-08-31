@@ -36,7 +36,7 @@
    </requires>
 
    <plugin
-         id="org.eclipse.mylyn.modeling.gmf"
+         id="org.eclipse.mylyn.modeling.gmf.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
