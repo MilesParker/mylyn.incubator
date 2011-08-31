@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Localization: plugin
-Bundle-SymbolicName: org.eclipse.mylyn.modeling.gmf;singleton:=true
+Bundle-SymbolicName: org.eclipse.mylyn.modeling.gmf.ui;singleton:=true
 Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.modeling.internal.gmf.GmfUiBridgePlugin
 Require-Bundle: org.eclipse.mylyn.context.core,
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.mylyn.context.core,
  org.eclipse.gmf.runtime.diagram.ui,
  org.eclipse.mylyn.modeling.core;bundle-version="0.9.0",
  org.eclipse.mylyn.modeling.ui;bundle-version="0.9.0",
- org.eclipse.mylyn.modeling.emf;bundle-version="0.9.0"
+ org.eclipse.mylyn.modeling.emf.core;bundle-version="0.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.mylyn.modeling.gmf,

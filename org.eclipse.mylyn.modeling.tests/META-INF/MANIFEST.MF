@@ -68,11 +68,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.papyrus.diagram.statemachine,
  org.eclipse.papyrus.diagram.usecase,
  org.eclipse.papyrus.editor,
- org.eclipse.mylyn.modeling.papyrus,
- org.eclipse.mylyn.modeling.gmf,
+ org.eclipse.mylyn.modeling.papyrus.ui,
+ org.eclipse.mylyn.modeling.gmf.ui,
  org.eclipse.mylyn.commons.sdk.util,
- org.eclipse.mylyn.modeling.ecoretools,
- org.eclipse.mylyn.modeling.emf
+ org.eclipse.mylyn.modeling.ecoretools.ui,
+ org.eclipse.mylyn.modeling.emf.core
 Export-Package: org.eclipse.mylyn.modeling.context,
  org.eclipse.mylyn.modeling.tests;x-internal:=true,
  org.eclipse.mylyn.modeling.ui

@@ -41,29 +41,6 @@
     </repository>
   </repositories>
   <modules>
-    <module>org.eclipse.mylyn.examples.monitor.study</module>
-    <module>org.eclipse.mylyn.ide.capabilities</module>
-    <module>org.eclipse.mylyn.ide.dev</module>
-    <module>org.eclipse.mylyn.monitor-feature</module>
-    <module>org.eclipse.mylyn.monitor.reports</module>
-    <module>org.eclipse.mylyn.monitor.usage</module>
-    <module>org.eclipse.mylyn.sandbox.dev</module>
-    <module>org.eclipse.mylyn.sandbox.dev-feature</module>
-    <module>org.eclipse.mylyn.sandbox.tests</module>
-    <module>org.eclipse.mylyn.sandbox.search.ui</module>
-    <module>org.eclipse.mylyn.sandbox.search-feature</module>
-    <module>org.eclipse.mylyn.sandbox.ui</module>
-    <module>org.eclipse.mylyn.sandbox.ui-feature</module>
-<!--
-    <module>org.eclipse.mylyn.tests.ui</module>
--->
-    <module>org.eclipse.mylyn.trac.wiki</module>
-    <module>org.eclipse.mylyn.trac.wiki-feature</module>
-    <module>org.eclipse.mylyn.web.tasks</module>
-    <module>org.eclipse.mylyn.web.tasks-feature</module>
-    <module>org.eclipse.mylyn.wikitext.sandbox-feature</module>
-    <module>org.eclipse.mylyn.wikitext.sandbox.ui</module>
-    <module>org.eclipse.mylyn.experimental-sdk-feature</module>
     <module>org.eclipse.mylyn.incubator-site</module>
   </modules>
 </project>
