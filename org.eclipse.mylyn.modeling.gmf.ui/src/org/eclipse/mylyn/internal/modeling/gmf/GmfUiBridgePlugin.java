@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.internal.gmf;
+package org.eclipse.mylyn.internal.modeling.gmf;
 
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

@@ -12,14 +12,14 @@
 <plugin>
    <extension point="org.eclipse.mylyn.context.ui.bridges">
     <uiBridge
-          class="org.eclipse.mylyn.internal.modeling.papyrus.Uml2UiBridge"
+          class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramUiBridge"
           contentType="uml2"/>
   </extension>
 	
 	     <extension
            point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
         <decoratorProvider
-              class="org.eclipse.mylyn.internal.modeling.papyrus.Uml2DiagramDecoratorProvider">
+              class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramDecoratorProvider">
            <Priority
                  name="Highest">
            </Priority>
@@ -35,28 +35,29 @@
       <extension
             point="org.eclipse.mylyn.context.core.bridges">
          <structureBridge
-               class="org.eclipse.mylyn.internal.modeling.papyrus.Uml2StructureBridge">
+               class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreGmfDomainBridge">
          </structureBridge>
       </extension>
-      <extension
-            point="org.eclipse.mylyn.context.ui.startup">
-         <startup
-               class="org.eclipse.mylyn.internal.modeling.papyrus.Uml2DiagramUiBridgePlugin$UML2DiagramBridgeStartup">
-         </startup>
-      </extension>
+
+   <extension
+         point="org.eclipse.mylyn.context.ui.startup">
+      <startup
+            class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramUiBridgePlugin$EcoreDiagramBridgeStartup">
+      </startup>
+   </extension>
 
      <extension point="org.eclipse.ui.popupMenus"> 
      
      <objectContribution
      	   adaptable="false"
-           id="org.eclipse.mylyn.modeling.uml.ui.interest.landmark.diagram.element"
-           objectClass="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.landmark.diagram.element"
+           objectClass="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
 	    <action
            class="org.eclipse.mylyn.internal.context.ui.actions.InterestIncrementAction"
            definitionId="org.eclipse.mylyn.context.ui.commands.interest.increment"
            enablesFor="*"
            icon="icons/elcl16/interest-increase.gif"
-           id="org.eclipse.mylyn.papyrus.ui.interest.landmark.element"
+           id="org.eclipse.mylyn.ecoretools.ui.interest.landmark.element"
            label="%InterestIncrementAction.label"
            menubarPath="group.reorganize"
            tooltip="%InterestIncrementAction.tooltip">
@@ -68,23 +69,22 @@
     	           value="true">
     	    </systemProperty>
            <objectClass
-                 name="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+                 name="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
            </objectClass>
         </and>
      </visibility>
 	 </objectContribution>
 
-     
      <objectContribution
            adaptable="true"
-           id="org.eclipse.mylyn.modeling.papyrus.ui.interest.remove.element"
-           objectClass="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.diagram.element"
+           objectClass="org.eclipse.emf.ecore.EObject">
      	<action
             class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
             definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
             enablesFor="*"
             icon="icons/elcl16/interest-decrease.gif"
-            id="org.eclipse.mylyn.papyrus.ui.interest.remove.element"
+            id="org.eclipse.mylyn.eobject.ui.interest.remove.element"
             label="%InterestDecrementAction.label"
             menubarPath="group.reorganize"
             overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.remove.element"
@@ -97,7 +97,35 @@
     	           value="true">
       			</systemProperty>
 	               <objectClass
-	                     name="org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart">
+	                     name="org.eclipse.emf.ecore.EObject">
+	               </objectClass>
+      		</and>
+      </visibility>
+     </objectContribution>
+     
+     <objectContribution
+           adaptable="true"
+           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.ecore_diagram.element"
+           objectClass="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
+     	<action
+            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
+            definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
+            enablesFor="*"
+            icon="icons/elcl16/interest-decrease.gif"
+            id="org.eclipse.mylyn.ecoretools.ui.interest.remove.element"
+            label="%InterestDecrementAction.label"
+            menubarPath="group.reorganize"
+            overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.remove.element"
+            tooltip="%InterestDecrementAction.tooltip">
+      </action>
+            <visibility>
+      		<and>
+      			<systemProperty
+	               name="org.eclipse.mylyn.context.core.context.active"
+    	           value="true">
+      			</systemProperty>
+	               <objectClass
+	                     name="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
 	               </objectClass>
       		</and>
       </visibility>

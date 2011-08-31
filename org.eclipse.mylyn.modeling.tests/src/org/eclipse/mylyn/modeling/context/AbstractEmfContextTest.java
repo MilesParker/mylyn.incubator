@@ -14,7 +14,7 @@ package org.eclipse.mylyn.modeling.context;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.mylyn.commons.sdk.util.ResourceTestUtil;
-import org.eclipse.mylyn.modeling.internal.ecoretools.EcoreGmfDomainBridge;
+import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreGmfDomainBridge;
 import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
 
 /**

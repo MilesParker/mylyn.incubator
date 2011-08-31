@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.internal.papyrus;
+package org.eclipse.mylyn.internal.modeling.papyrus;
 
 import javax.management.relation.Relation;
 

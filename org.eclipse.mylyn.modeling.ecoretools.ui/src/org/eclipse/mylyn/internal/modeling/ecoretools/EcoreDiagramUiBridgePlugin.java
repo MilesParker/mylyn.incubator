@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.internal.papyrus;
+package org.eclipse.mylyn.internal.modeling.ecoretools;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,6 +20,7 @@ import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
+import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -27,15 +28,17 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Miles Parker
  */
-public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
+public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
 
-	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.papyrus"; //$NON-NLS-1$
+	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.ecoretools"; //$NON-NLS-1$
 
-	private static Uml2DiagramUiBridgePlugin INSTANCE;
+	private static EcoreDiagramUiBridgePlugin INSTANCE;
 
 	private DiagramUiEditingMonitor diagramMonitor;
 
-	public Uml2DiagramUiBridgePlugin() {
+	private AbstractUserInteractionMonitor navigatorMonitor;
+
+	public EcoreDiagramUiBridgePlugin() {
 	}
 
 	/**
@@ -48,20 +51,25 @@ public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStart() {
-		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(Uml2UiBridge.UML2_CONTENT_TYPE);
+		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(EcoreGmfDomainBridge.ECORE_CONTENT_TYPE);
+		// we'll get resource by default -- shouldn't we get null as failure
+		// case? https://bugs.eclipse.org/bugs/show_bug.cgi?id=353439
 		if (structureBridge instanceof EmfStructureBridge) {
 			EmfStructureBridge bridge = (EmfStructureBridge) structureBridge;
-			diagramMonitor = new DiagramUiEditingMonitor(bridge, Uml2UiBridge.getInstance());
+			diagramMonitor = new DiagramUiEditingMonitor(bridge, EcoreDiagramUiBridge.getInstance());
 			MonitorUi.getSelectionMonitors().add(diagramMonitor);
+			navigatorMonitor = new DiagramUiEditingMonitor(bridge, EcoreToolsNavigatorUiBridge.getInstance());
+			MonitorUi.getSelectionMonitors().add(navigatorMonitor);
 		} else {
 			StatusHandler.log(new Status(IStatus.WARNING, ID_PLUGIN,
-					"Couldn't load Bridge for " + Uml2UiBridge.UML2_CONTENT_TYPE)); //$NON-NLS-1$	
+					"Couldn't load EMFStructure Bridge for " + EcoreGmfDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
 		}
 	}
 
 	private void lazyStop() {
 		if (diagramMonitor != null) {
 			MonitorUi.getSelectionMonitors().remove(diagramMonitor);
+			MonitorUi.getSelectionMonitors().remove(navigatorMonitor);
 		}
 	}
 
@@ -76,7 +84,7 @@ public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the shared instance.
 	 */
-	public static Uml2DiagramUiBridgePlugin getDefault() {
+	public static EcoreDiagramUiBridgePlugin getDefault() {
 		return INSTANCE;
 	}
 
@@ -91,10 +99,10 @@ public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 		return AbstractUIPlugin.imageDescriptorFromPlugin(ID_PLUGIN, path);
 	}
 
-	public static class UML2DiagramBridgeStartup implements IContextUiStartup {
+	public static class EcoreDiagramBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
-			Uml2DiagramUiBridgePlugin.getDefault().lazyStart();
+			EcoreDiagramUiBridgePlugin.getDefault().lazyStart();
 		}
 
 	}
