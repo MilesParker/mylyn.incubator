@@ -11,7 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.monitor.ui,
  org.eclipse.mylyn.monitor.core,
  org.eclipse.jface.text,
- org.eclipse.gef,
  org.eclipse.ui.views,
  org.eclipse.ui.workbench,
  org.eclipse.jface

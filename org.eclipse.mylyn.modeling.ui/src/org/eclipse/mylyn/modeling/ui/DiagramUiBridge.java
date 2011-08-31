@@ -14,7 +14,6 @@ package org.eclipse.mylyn.modeling.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.gef.EditPart;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -78,9 +77,24 @@ public abstract class DiagramUiBridge extends AbstractContextUiBridge {
 		return null;
 	}
 
+	/**
+	 * Does the bridge provide support for the provider part?
+	 * 
+	 * @param part
+	 *            an arbitrary workbench part
+	 * @return
+	 */
 	public abstract boolean acceptsPart(IWorkbenchPart part);
 
-	public abstract boolean acceptsEditPart(Object object, EditPart part);
+	/**
+	 * Is the provided view object appropriate for the given model object? (This is initially intended to support GEF
+	 * Edit Parts but could be used in other circumstances such as by a structured viewer.)
+	 * 
+	 * @param modelObject
+	 * @param viewObject
+	 * @return
+	 */
+	public abstract boolean acceptsViewObject(Object modelObject, Object viewObject);
 
 	@Override
 	public boolean acceptsEditor(IEditorPart editorPart) {

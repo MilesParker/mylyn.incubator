@@ -11,7 +11,7 @@
 
 package org.eclipse.mylyn.internal.modeling.ecoretools;
 
-import org.eclipse.gef.EditPart;
+import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
@@ -29,7 +29,7 @@ public class EcoreToolsNavigatorUiBridge extends DiagramUiBridge {
 	}
 
 	@Override
-	public boolean acceptsEditPart(Object domainObject, EditPart part) {
+	public boolean acceptsViewObject(Object domainObject, Object part) {
 		//We only support views
 		return false;
 	}
@@ -43,6 +43,6 @@ public class EcoreToolsNavigatorUiBridge extends DiagramUiBridge {
 
 	@Override
 	public String getContentType() {
-		return EcoreGmfDomainBridge.ECORE_CONTENT_TYPE;
+		return EcoreDomainBridge.ECORE_CONTENT_TYPE;
 	}
 }

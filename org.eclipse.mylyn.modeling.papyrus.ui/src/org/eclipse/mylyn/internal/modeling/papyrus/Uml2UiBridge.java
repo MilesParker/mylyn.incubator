@@ -11,7 +11,6 @@
 
 package org.eclipse.mylyn.internal.modeling.papyrus;
 
-import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.papyrus.diagram.clazz.edit.parts.ClassEditPart;
@@ -36,7 +35,7 @@ public class Uml2UiBridge extends DiagramUiBridge {
 	}
 
 	@Override
-	public boolean acceptsEditPart(Object domainObject, EditPart part) {
+	public boolean acceptsViewObject(Object domainObject, Object part) {
 		if (domainObject instanceof Classifier) {
 			return part instanceof ClassEditPart;
 		}

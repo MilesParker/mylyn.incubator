@@ -23,7 +23,7 @@ import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackage2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackageEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EReferenceEditPart;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
-import org.eclipse.gef.EditPart;
+import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -40,7 +40,7 @@ public class EcoreDiagramUiBridge extends DiagramUiBridge {
 	}
 
 	@Override
-	public boolean acceptsEditPart(Object domainObject, EditPart part) {
+	public boolean acceptsViewObject(Object domainObject, Object part) {
 		//Nodes
 		if (domainObject instanceof EClass) {
 			return part instanceof EClassEditPart || part instanceof EClass2EditPart;
@@ -68,6 +68,6 @@ public class EcoreDiagramUiBridge extends DiagramUiBridge {
 
 	@Override
 	public String getContentType() {
-		return EcoreGmfDomainBridge.ECORE_CONTENT_TYPE;
+		return EcoreDomainBridge.ECORE_CONTENT_TYPE;
 	}
 }

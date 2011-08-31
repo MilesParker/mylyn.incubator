@@ -125,7 +125,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 			if (candidate instanceof EObject) {
 				EObject domainObject = (EObject) candidate;
 				return getStructure().acceptsObject(domainObject)
-						&& getDomainUIBridge().acceptsEditPart(domainObject, targetPart);
+						&& getDomainUIBridge().acceptsViewObject(domainObject, targetPart);
 			}
 		}
 		return false;
