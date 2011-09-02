@@ -109,15 +109,15 @@
      </repository>
      <repository
             repositoryKind="web"
-            label="SourceForge (Azureus)"
+            label="SourceForge (jCommander)"
             urlRepository="http://sourceforge.net/"
             urlTask="${serverUrl}/tracker/?group_id=${group_id}&amp;func=detail&amp;atid=${atid}&amp;aid="
-            urlNewTask="${serverUrl}/tracker/?group_id=${group_id}&amp;func=add"
-            urlTaskQuery="${serverUrl}/tracker/?group_id=${group_id}&amp;atid=${atid}">
-        <attribute name="param_group_id" value="84122"/>
-        <attribute name="param_atid" value="575154"/>
+            urlNewTask="${serverUrl}/tracker/?func=add&amp;group_id=${group_id}&amp;atid=${atid}"
+            urlTaskQuery="${serverUrl}/tracker/?atid=${atid}&amp;group_id=${group_id}&amp;func=browse">
+        <attribute name="param_group_id" value="35271"/>
+        <attribute name="param_atid" value="413695"/>
         <attribute name="queryPattern"
-                   value="&lt;a href=&quot;/tracker/index.php\?func=detail&amp;amp;aid=(.+?)&amp;amp;group_id=${group_id}&amp;amp;atid=${atid}&quot;&gt;(.+?)&lt;/a&gt;"/>
+                   value="&lt;a href=&quot;/tracker/\?func=detail&amp;aid=({Id}.+?)&amp;group_id=${group_id}&amp;atid=${atid}&quot;&gt;({Description}.+?)&lt;/a&gt;"/>
         <attribute name="loginRequestMethod" value="POST"/>
         <attribute name="loginRequestUrl"
                    value="${serverUrl}/account/login.php?form_loginname=${userId}&amp;form_pw=${password}&amp;login=Login"/>

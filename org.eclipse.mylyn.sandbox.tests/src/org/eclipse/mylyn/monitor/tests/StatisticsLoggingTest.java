@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.mylyn.context.tests.ContextTest;
+import org.eclipse.mylyn.context.sdk.util.AbstractContextTest;
 import org.eclipse.mylyn.internal.monitor.core.collection.IUsageCollector;
 import org.eclipse.mylyn.internal.monitor.core.collection.InteractionEventSummary;
 import org.eclipse.mylyn.internal.monitor.core.collection.SummaryCollector;
@@ -27,7 +27,7 @@ import org.eclipse.mylyn.internal.monitor.usage.ReportGenerator;
 /**
  * @author Mik Kersten
  */
-public class StatisticsLoggingTest extends ContextTest {
+public class StatisticsLoggingTest extends AbstractContextTest {
 
 	private File logFile;
 

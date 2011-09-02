@@ -26,10 +26,19 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="org.eclipse.search.ui.category.search"
-            defaultHandler="org.eclipse.mylyn.internal.sandbox.search.ui.OpenDesktopSearchHandler"
             description="%command.description"
             id="org.eclipse.mylyn.internal.sandbox.search.ui.openDesktopSearchCommand"
             name="%command.name">
+      </command>
+      <command
+            categoryId="org.eclipse.search.ui.category.search"
+            description="Perform a search"
+            id="org.eclipse.mylyn.sandbox.search.ui.performSearchCommand"
+            name="Perform search">
+            <commandParameter
+                  id="org.eclipse.mylyn.sandbox.search.ui.searchText" name="Search Text" optional="false"/>
+            <commandParameter
+                  id="org.eclipse.mylyn.sandbox.search.ui.filenameFilter" name="Filename Filter" optional="true"/>
       </command>
    </extension>
    <extension
@@ -37,6 +46,10 @@
       <handler
             commandId="org.eclipse.mylyn.internal.sandbox.search.ui.openDesktopSearchCommand"
             class="org.eclipse.mylyn.internal.sandbox.search.ui.OpenDesktopSearchHandler">
+      </handler>
+      <handler
+            commandId="org.eclipse.mylyn.sandbox.search.ui.performSearchCommand"
+            class="org.eclipse.mylyn.internal.sandbox.search.ui.PerfomSearchHandler">
       </handler>
    </extension>
    <extension

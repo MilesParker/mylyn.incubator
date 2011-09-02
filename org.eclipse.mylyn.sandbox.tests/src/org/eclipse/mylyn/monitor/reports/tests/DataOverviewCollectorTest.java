@@ -18,7 +18,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
-import org.eclipse.mylyn.commons.tests.support.CommonTestUtil;
+import org.eclipse.mylyn.commons.sdk.util.CommonTestUtil;
 import org.eclipse.mylyn.internal.monitor.core.collection.DataOverviewCollector;
 import org.eclipse.mylyn.internal.monitor.core.collection.IUsageCollector;
 import org.eclipse.mylyn.internal.monitor.usage.InteractionEventLogger;

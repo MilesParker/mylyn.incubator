@@ -48,7 +48,7 @@ class OpenFileAction extends org.eclipse.ui.actions.OpenFileAction {
 
 		List<SearchResult> unopenable = new ArrayList<SearchResult>();
 
-		List selectedNonResources = getSelectedNonResources();
+		List<?> selectedNonResources = getSelectedNonResources();
 		for (Object object : selectedNonResources) {
 			if (object instanceof SearchResult) {
 				SearchResult result = (SearchResult) object;
