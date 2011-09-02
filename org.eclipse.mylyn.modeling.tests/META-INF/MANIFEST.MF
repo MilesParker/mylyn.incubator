@@ -71,7 +71,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.modeling.gmf.ui,
  org.eclipse.mylyn.commons.sdk.util,
  org.eclipse.mylyn.modeling.ecoretools.ui,
- org.eclipse.mylyn.modeling.emf.core
+ org.eclipse.mylyn.modeling.emf.core,
+ org.eclipse.papyrus.outline;bundle-version="0.8.1",
+ org.eclipse.emf.ecoretools.diagram.ui.outline;bundle-version="1.0.0"
 Export-Package: org.eclipse.mylyn.modeling.context,
  org.eclipse.mylyn.modeling.tests;x-internal:=true,
  org.eclipse.mylyn.modeling.ui
