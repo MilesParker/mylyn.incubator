@@ -15,14 +15,15 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramUiBridge;
-import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreGmfDomainBridge;
 import org.eclipse.mylyn.modeling.context.AbstractEmfContextTest;
+import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -66,7 +67,15 @@ public class EmfUIBridgeTest extends AbstractEmfContextTest {
 
 		assertFalse(element.getInterest().isInteresting());
 
-		EPackage p = (EPackage) ed.getEditingDomain().getResourceSet().getResources().get(0).getContents().get(0);
+		EPackage p = null;
+
+		EObject eObject = ed.getEditingDomain().getResourceSet().getResources().get(0).getContents().get(0);
+		if (eObject instanceof EPackage) {
+			p = (EPackage) eObject;
+		} else {
+			eObject = ed.getEditingDomain().getResourceSet().getResources().get(1).getContents().get(0);
+			p = (EPackage) eObject;
+		}
 
 		EClassifier book = p.getEClassifier("Book");
 
@@ -80,7 +89,7 @@ public class EmfUIBridgeTest extends AbstractEmfContextTest {
 				"platform:/resource/org.eclipse.mylyn.emf.tests.library/model/library.ecore#//Book");
 		assertTrue(element2.getInterest().isInteresting());
 
-		assertEquals(element2.getContentType(), EcoreGmfDomainBridge.ECORE_CONTENT_TYPE);
+		assertEquals(element2.getContentType(), EcoreDomainBridge.ECORE_CONTENT_TYPE);
 	}
 
 }
