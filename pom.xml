@@ -58,6 +58,18 @@
 	</profile>
   </profiles>
   <modules>
+	<module>org.eclipse.mylyn.modeling.core</module>
+	<module>org.eclipse.mylyn.modeling.ecoretools-feature</module>
+	<module>org.eclipse.mylyn.modeling.ecoretools.ui</module>
+	<module>org.eclipse.mylyn.modeling.emf.core</module>
+	<module>org.eclipse.mylyn.modeling.emf-feature</module>
+	<module>org.eclipse.mylyn.modeling.gmf-feature</module>
+	<module>org.eclipse.mylyn.modeling.gmf.ui</module>
+	<module>org.eclipse.mylyn.modeling.papyrus-feature</module>
+	<module>org.eclipse.mylyn.modeling.papyrus.ui</module>
+	<module>org.eclipse.mylyn.modeling.tests</module>
+	<module>org.eclipse.mylyn.modeling.ui</module>
+<!--
     <module>org.eclipse.mylyn.examples.monitor.study</module>
     <module>org.eclipse.mylyn.ide.capabilities</module>
     <module>org.eclipse.mylyn.ide.dev</module>
@@ -72,9 +84,11 @@
     <module>org.eclipse.mylyn.sandbox.search-feature</module>
     <module>org.eclipse.mylyn.sandbox.ui</module>
     <module>org.eclipse.mylyn.sandbox.ui-feature</module>
+-->
 <!--
     <module>org.eclipse.mylyn.tests.ui</module>
 -->
+<!--
     <module>org.eclipse.mylyn.trac.wiki</module>
     <module>org.eclipse.mylyn.trac.wiki-feature</module>
     <module>org.eclipse.mylyn.web.tasks</module>
@@ -82,6 +96,7 @@
     <module>org.eclipse.mylyn.wikitext.sandbox-feature</module>
     <module>org.eclipse.mylyn.wikitext.sandbox.ui</module>
     <module>org.eclipse.mylyn.experimental-sdk-feature</module>
+-->
     <module>org.eclipse.mylyn.incubator-site</module>
   </modules>
 </project>
