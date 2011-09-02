@@ -69,8 +69,6 @@ public class PapyrusDiagramEditorUiBridgeTest extends AbstractDiagramContextTest
 
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 
-		Thread.sleep(2000);
-
 		PapyrusMultiDiagramEditor ed = (PapyrusMultiDiagramEditor) page.openEditor(input,
 				"org.eclipse.papyrus.core.papyrusEditor");
 

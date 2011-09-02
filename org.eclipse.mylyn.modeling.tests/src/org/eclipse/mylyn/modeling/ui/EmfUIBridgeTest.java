@@ -53,6 +53,9 @@ public class EmfUIBridgeTest extends AbstractEmfContextTest {
 		FileEditorInput input = new FileEditorInput(file);
 
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+
+		Thread.sleep(2000);
+
 		EcoreDiagramEditor ed = (EcoreDiagramEditor) page.openEditor(input,
 				"org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID");
 
@@ -69,6 +72,7 @@ public class EmfUIBridgeTest extends AbstractEmfContextTest {
 
 		monitor.handleWorkbenchPartSelection(ed, new StructuredSelection(book), true);
 
+		Thread.sleep(5000);
 		assertNotNull(element);
 		assertNotNull(element.getInterest());
 
