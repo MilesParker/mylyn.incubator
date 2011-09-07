@@ -12,6 +12,7 @@
 package org.eclipse.mylyn.modeling.emf.ecore;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
@@ -24,7 +25,8 @@ import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
  */
 public class EcoreDomainBridge extends EmfStructureBridge {
 
-	private static final Class<?>[] NODE_CLASSES = new Class[] { EClass.class, EEnum.class, EPackage.class };
+	private static final Class<?>[] NODE_CLASSES = new Class[] { EClass.class, EEnum.class, EPackage.class,
+			EDataType.class };
 
 	private static final Class<?>[] EDGE_CLASSES = new Class[] { EReference.class };
 
