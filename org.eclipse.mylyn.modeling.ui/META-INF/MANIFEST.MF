@@ -13,9 +13,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface.text,
  org.eclipse.ui.views,
  org.eclipse.ui.workbench,
- org.eclipse.jface
+ org.eclipse.jface,
+ org.eclipse.mylyn.commons.core;bundle-version="3.7.0",
+ org.eclipse.ui
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.eclipse.mylyn.modeling.ui
+Export-Package: org.eclipse.mylyn.internal.modeling.ui,
+ org.eclipse.mylyn.internal.modeling.ui.actions,
+ org.eclipse.mylyn.modeling.ui
 Bundle-Localization: plugin
+Bundle-Activator: org.eclipse.mylyn.internal.modeling.ui.ModelingUiPlugin
 

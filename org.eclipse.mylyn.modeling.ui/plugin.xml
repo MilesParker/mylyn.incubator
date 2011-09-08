@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?><!--
+    Copyright (c) 2011 Tasktop Technologies and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+         Tasktop Technologies - initial API and implementation
+ -->
+
+<plugin> 
+	
+  <extension point="org.eclipse.ui.actionSets">
+	<actionSet
+            id="org.eclipse.mylyn.modeling.actionSet"
+            label="%actionSet.label"
+            visible="false">
+  		<action
+          class="org.eclipse.mylyn.internal.modeling.ui.actions.ToggleModelingEditorFocusingAction"
+          definitionId="org.eclipse.mylyn.context.modeling.ui.focus.enabled"
+          icon="icons/elcl16/model-interest-folding.gif"
+          id="org.eclipse.mylyn.context.modeling.ui.focus.enabled"
+          label="%ToggleFocusAction.label"
+          style="toggle"
+          toolbarPath="org.eclipse.ui.edit.text.actionSet.presentation/Presentation"
+          tooltip="%ToggleFocusAction.tooltip">
+       <enablement>
+           <systemProperty
+                 name="org.eclipse.mylyn.context.core.context.active"
+                 value="true">
+           </systemProperty>
+       </enablement>
+      	</action> 
+    </actionSet>
+   </extension>
+      <extension point="org.eclipse.ui.commands">
+      <category
+            name="%commands.category.name"
+            description="%commands.category.description"
+            id="org.eclipse.mylyn.modeling.ui.commands">
+      </category>
+	  <command
+         categoryId="org.eclipse.mylyn.modeling.ui.commands"
+         description="%command.focus.description"
+         id="org.eclipse.mylyn.context.modeling.ui.focus.enabled"
+         name="%command.focus.name">
+      </command>
+    </extension>
+      <extension
+            point="org.eclipse.core.runtime.preferences">
+         <initializer
+               class="org.eclipse.mylyn.internal.modeling.ui.ModelingPreferencesInitializer">
+         </initializer>
+      </extension>
+</plugin>

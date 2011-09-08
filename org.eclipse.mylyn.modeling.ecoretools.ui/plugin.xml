@@ -131,4 +131,14 @@
       </visibility>
      </objectContribution>
 	</extension>
+	   <extension
+         point="org.eclipse.ui.actionSetPartAssociations">
+      <actionSetPartAssociation
+            targetID="org.eclipse.mylyn.modeling.actionSet">
+         <part
+               id="org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID">
+         </part>
+      </actionSetPartAssociation>
+   </extension>
+	
 </plugin>

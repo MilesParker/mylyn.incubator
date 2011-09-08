@@ -11,7 +11,6 @@
 
 package org.eclipse.mylyn.modeling.gmf;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,15 +31,16 @@ import org.eclipse.gmf.runtime.diagram.ui.services.decorator.CreateDecoratorsOpe
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorProvider;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.mylyn.context.core.AbstractContextListener;
 import org.eclipse.mylyn.context.core.ContextChangeEvent;
 import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
+import org.eclipse.mylyn.internal.modeling.ui.ModelingUiPlugin;
 import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -69,10 +69,23 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 
 	private boolean anyContextActive;
 
+	private boolean enabled;
+
 	private final AbstractContextListener contextListenerAdapter = new AbstractContextListener() {
 		@Override
 		public void contextChanged(ContextChangeEvent event) {
 			ContextDecoratorProvider.this.contextChanged(event);
+		}
+	};
+
+	private final Collection<RootEditPart> diagramParts;
+
+	private final IPropertyChangeListener preferenceListener = new IPropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent event) {
+			if (event.getProperty().equals(ModelingUiPlugin.FOCUSSING_ENABLED)) {
+				enabled = Boolean.parseBoolean(event.getNewValue().toString());
+				refresh();
+			}
 		}
 	};
 
@@ -99,6 +112,10 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 			// Not sure if we'll ever get this situation, but it's worth covering
 			activeWorkbenchWindow.getActivePage().addPartListener(ContextDecoratorProvider.this);
 		}
+		diagramParts = new HashSet<RootEditPart>();
+
+		ModelingUiPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(preferenceListener);
+		enabled = ModelingUiPlugin.getDefault().getPreferenceStore().getBoolean(ModelingUiPlugin.FOCUSSING_ENABLED);
 	}
 
 	public boolean provides(IOperation operation) {
@@ -164,20 +181,8 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 		list.add(mylynDecorator);
 	}
 
-	private Collection<RootEditPart> getRootEditParts() {
-		Collection<RootEditPart> parts = new ArrayList<RootEditPart>();
-		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		if (activeWorkbenchWindow != null) {
-			IEditorReference[] editorReferences = activeWorkbenchWindow.getActivePage().getEditorReferences();
-			for (IEditorReference reference : editorReferences) {
-				IEditorPart editor = reference.getEditor(false);
-				final RootEditPart root = getRootEditPart(editor);
-				if (root != null) {
-					parts.add(root);
-				}
-			}
-		}
-		return parts;
+	public Collection<RootEditPart> getRootEditParts() {
+		return diagramParts;
 	}
 
 	private RootEditPart getRootEditPart(IWorkbenchPart editor) {
@@ -218,30 +223,14 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	 * @return
 	 */
 	public boolean isFocussed() {
-		return anyContextActive;
-	}
-
-	private void deactivate() {
-		anyContextActive = false;
-		for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
-			for (ContextDecorator decorator : values) {
-				decorator.deactivate();
-			}
-		}
-		for (RootEditPart root : getRootEditParts()) {
-			RevealMouseListener revealMouseListener = listenerForRoot.get(root);
-			if (revealMouseListener != null) {
-				root.getViewer().getControl().removeMouseMoveListener(revealMouseListener);
-			}
-			root.refresh();
-		}
-		decoratorsForModel.clear();
-		listenerForRoot.clear();
+		return enabled && anyContextActive;
 	}
 
 	private void deactivate(IWorkbenchPart part) {
 		RootEditPart rootEditPart = getRootEditPart(part);
 		if (rootEditPart != null) {
+			//TODO are we confident that this won't be removed?
+			diagramParts.remove(rootEditPart);
 			for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
 				Collection<ContextDecorator> removedDecorators = new HashSet<ContextDecorator>();
 				for (ContextDecorator decorator : values) {
@@ -258,12 +247,8 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 		}
 	}
 
-	private void activate() {
-		anyContextActive = true;
-		refresh();
-	}
-
 	void refresh(RootEditPart root) {
+		diagramParts.add(root);
 		RevealMouseListener revealMouseListener = listenerForRoot.get(root);
 		if (revealMouseListener == null) {
 			IFigure rootFigure = ((AbstractGraphicalEditPart) root.getViewer().getRootEditPart()).getFigure();
@@ -282,11 +267,28 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	void refresh() {
-		for (RootEditPart root : getRootEditParts()) {
-			refresh(root);
-		}
-		for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
-			refresh(values);
+		if (anyContextActive) {
+			for (RootEditPart root : getRootEditParts()) {
+				refresh(root);
+			}
+			for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
+				refresh(values);
+			}
+		} else {
+			for (Collection<ContextDecorator> values : decoratorsForModel.values()) {
+				for (ContextDecorator decorator : values) {
+					decorator.deactivate();
+				}
+			}
+			for (RootEditPart root : getRootEditParts()) {
+				RevealMouseListener revealMouseListener = listenerForRoot.get(root);
+				if (revealMouseListener != null) {
+					root.getViewer().getControl().removeMouseMoveListener(revealMouseListener);
+				}
+				root.refresh();
+			}
+			decoratorsForModel.clear();
+			listenerForRoot.clear();
 		}
 	}
 
@@ -342,9 +344,11 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 
 	public void contextChanged(ContextChangeEvent event) {
 		if (event.getEventKind() == ContextChangeKind.ACTIVATED) {
-			activate();
+			anyContextActive = true;
+			refresh();
 		} else if (event.getEventKind() == ContextChangeKind.DEACTIVATED) {
-			deactivate();
+			anyContextActive = false;
+			refresh();
 		} else {
 			refresh(event);
 		}

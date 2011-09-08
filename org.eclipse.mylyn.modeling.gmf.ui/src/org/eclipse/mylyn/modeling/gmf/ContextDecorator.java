@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoration;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
@@ -80,6 +81,10 @@ public abstract class ContextDecorator implements IDecorator {
 	protected abstract void createDecoration();
 
 	IDecoration addDecoration(IRevealableFigure decorationFigure) {
+		GraphicalEditPart ownerEditPart = (GraphicalEditPart) getDecoratorTarget().getAdapter(GraphicalEditPart.class);
+		if (ownerEditPart == null) {
+			throw new RuntimeException();
+		}
 		IDecoration decoration = getDecoratorTarget().addDecoration(decorationFigure, decorationFigure, true);
 		decorationFigures.add(decorationFigure);
 		decorations.add(decoration);

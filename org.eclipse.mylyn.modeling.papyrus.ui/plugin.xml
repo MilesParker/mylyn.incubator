@@ -102,5 +102,15 @@
       		</and>
       </visibility>
      </objectContribution>
+     
 	</extension>
+		   <extension
+         point="org.eclipse.ui.actionSetPartAssociations">
+      <actionSetPartAssociation
+            targetID="org.eclipse.mylyn.modeling.actionSet">
+         <part
+               id="org.eclipse.papyrus.core.papyrusEditor">
+         </part>
+      </actionSetPartAssociation>
+   </extension>
 </plugin>
