@@ -21,6 +21,10 @@ import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
 public abstract class GmfStructureBridge extends EmfStructureBridge {
 
 	@Override
+	/**
+	 * Maps the diagram object to the domain object in the most general way possible.
+	 * GMF diagram implementations typically shouldn't need to override this.
+	 */
 	public Object getDomainObject(Object object) {
 		if (object instanceof View) {
 			return ((View) object).getElement();

@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.ENamedElement;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
@@ -39,7 +38,7 @@ public class EcoreDomainBridge extends EmfStructureBridge {
 
 	@Override
 	public Class<?> getDomainBaseNodeClass() {
-		return EObject.class;
+		return ENamedElement.class;
 	}
 
 	@Override
@@ -55,13 +54,5 @@ public class EcoreDomainBridge extends EmfStructureBridge {
 	@Override
 	public Class<?> getDomainBaseEdgeClass() {
 		return EReference.class;
-	}
-
-	@Override
-	public String getLabel(Object object) {
-		if (object instanceof ENamedElement) {
-			return ((ENamedElement) object).getName();
-		}
-		return object.toString();
 	}
 }

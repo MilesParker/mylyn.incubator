@@ -16,7 +16,6 @@ import javax.management.relation.Relation;
 import org.eclipse.mylyn.modeling.gmf.GmfStructureBridge;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.NamedElement;
 
 /**
  * @author Miles Parker
@@ -43,14 +42,6 @@ public class Uml2StructureBridge extends GmfStructureBridge {
 	@Override
 	public Class<?>[] getDomainEdgeClasses() {
 		return new Class[] { Relation.class };
-	}
-
-	@Override
-	public String getLabel(Object object) {
-		if (object instanceof NamedElement) {
-			return ((NamedElement) object).getName();
-		}
-		return null;
 	}
 
 	@Override

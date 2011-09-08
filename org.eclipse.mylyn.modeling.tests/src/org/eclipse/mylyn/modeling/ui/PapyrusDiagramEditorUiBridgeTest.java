@@ -24,7 +24,7 @@ import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.internal.modeling.papyrus.Uml2StructureBridge;
 import org.eclipse.mylyn.internal.modeling.papyrus.Uml2UiBridge;
 import org.eclipse.mylyn.modeling.context.AbstractDiagramContextTest;
-import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
+import org.eclipse.mylyn.modeling.context.DomainModelContextStructureBridge;
 import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
 import org.eclipse.papyrus.diagram.common.editparts.IPapyrusEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
@@ -40,7 +40,7 @@ public class PapyrusDiagramEditorUiBridgeTest extends AbstractDiagramContextTest
 
 	private static final String RESOURCE_URI = "platform:/resource/org.eclipse.mylyn.emf.tests.papyrus/model/model.uml#_xkh2ALJFEeCYupgj-BJj-Q";
 
-	protected DomainDelegatedStructureBridge structureBridge;
+	protected DomainModelContextStructureBridge structureBridge;
 
 	private IJavaProject papyrusProject;
 

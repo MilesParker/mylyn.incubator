@@ -39,7 +39,7 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.internal.modeling.ui.ModelingUiPlugin;
-import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
+import org.eclipse.mylyn.modeling.context.DomainModelContextStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
@@ -65,7 +65,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 
 	private final Map<RootEditPart, RevealMouseListener> listenerForRoot;
 
-	private DomainDelegatedStructureBridge structure;
+	private DomainModelContextStructureBridge structure;
 
 	private boolean anyContextActive;
 
@@ -315,9 +315,9 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 		}
 	}
 
-	public DomainDelegatedStructureBridge getStructure() {
+	public DomainModelContextStructureBridge getStructure() {
 		if (structure == null) {
-			structure = (DomainDelegatedStructureBridge) ContextCore.getStructureBridge(getDomainUIBridge().getContentType());
+			structure = (DomainModelContextStructureBridge) ContextCore.getStructureBridge(getDomainUIBridge().getContentType());
 		}
 		return structure;
 	}

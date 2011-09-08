@@ -22,7 +22,7 @@ import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
  */
 public class AbstractEmfContextTest extends AbstractDiagramContextTest {
 
-	protected DomainDelegatedStructureBridge structureBridge;
+	protected DomainModelContextStructureBridge structureBridge;
 
 	IJavaProject emfProject;
 

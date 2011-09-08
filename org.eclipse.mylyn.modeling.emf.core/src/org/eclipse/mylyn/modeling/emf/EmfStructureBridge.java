@@ -21,14 +21,18 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.mylyn.modeling.context.DomainDelegatedStructureBridge;
+import org.eclipse.mylyn.modeling.context.DomainModelContextStructureBridge;
 
 /**
- * @author Benjamin Muskalla
  * @author Miles Parker
+ * @author Benjamin Muskalla
  */
-public abstract class EmfStructureBridge extends DomainDelegatedStructureBridge {
+public abstract class EmfStructureBridge extends DomainModelContextStructureBridge {
 
+	/**
+	 * Returns a unique path to the object within an actual resource. EMF-based implementations typically shouldn't need
+	 * to override this.
+	 */
 	@Override
 	public String getDomainHandleIdentifier(Object object) {
 		EObject eobject = ((EObject) object);
@@ -39,7 +43,8 @@ public abstract class EmfStructureBridge extends DomainDelegatedStructureBridge 
 	/**
 	 * Must return a class that is an equivalent (e.g. a deep copy) but not necessarily the same object as the original
 	 * mapped object. This allows us to make generic references to objects that might not have equivalent mappings in
-	 * memory, e.g. an EMF object that is loaded from a new resource set.
+	 * memory, e.g. an EMF object that is loaded from a new resource set. EMF-based implementations typically shouldn't
+	 * need to override this.
 	 */
 	@Override
 	public Object getDomainObjectForHandle(String handle) {
@@ -57,6 +62,11 @@ public abstract class EmfStructureBridge extends DomainDelegatedStructureBridge 
 		return null;
 	}
 
+	/**
+	 * Returns all of the "children" that a given object is responsible for. Here we just use EMF containment. This is
+	 * similar to org.eclipse.emf.edit.provider.ITreeItemContentProvider#getChildren. You shouldn't need to override
+	 * this unless you want to use some other references for children.
+	 */
 	@Override
 	public List<String> getChildHandles(String handle) {
 		Object domainObject = getDomainObjectForHandle(handle);
@@ -71,24 +81,9 @@ public abstract class EmfStructureBridge extends DomainDelegatedStructureBridge 
 		return Collections.emptyList();
 	}
 
-	@Override
-	public String getLabel(Object object) {
-		String label = super.getLabel(object);
-		if (label != null) {
-			return label;
-		}
-		if (object instanceof ENamedElement) {
-			return ((ENamedElement) object).getName();
-		}
-		return super.getLabel(object.toString());
-	}
-
-	@Override
-	public boolean isDocument(String handle) {
-		URI uri = URI.createURI(handle);
-		return uri.isFile();
-	}
-
+	/**
+	 * The inverse of {@link #getChildHandles(String)}. Again, you typically don't need to override this.
+	 */
 	@Override
 	public String getParentHandle(String handle) {
 		Object object = getObjectForHandle(handle);
@@ -105,4 +100,21 @@ public abstract class EmfStructureBridge extends DomainDelegatedStructureBridge 
 		return null;
 	}
 
+	/**
+	 * Returns the textual representation for Mylyn editors. We should consider using EMF Item Provider adapters to
+	 * obtain an IItemLabelProvider for some EMF implementations.
+	 */
+	@Override
+	public String getLabel(Object object) {
+		if (object instanceof ENamedElement) {
+			return ((ENamedElement) object).getName();
+		}
+		return super.getLabel(object);
+	}
+
+	@Override
+	public boolean isDocument(String handle) {
+		URI uri = URI.createURI(handle);
+		return uri.isFile();
+	}
 }

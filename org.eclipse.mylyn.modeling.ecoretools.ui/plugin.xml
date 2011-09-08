@@ -23,6 +23,7 @@
            <Priority
                  name="Highest">
            </Priority>
+           <!--Warning is expected here.-->
            <object
                  class="org.eclipse.gmf.runtime.notation.Node(org.eclipse.gmf.runtime.notation)"
                  id="NODE">
@@ -46,91 +47,6 @@
       </startup>
    </extension>
 
-     <extension point="org.eclipse.ui.popupMenus"> 
-     
-     <objectContribution
-     	   adaptable="false"
-           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.landmark.diagram.element"
-           objectClass="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
-	    <action
-           class="org.eclipse.mylyn.internal.context.ui.actions.InterestIncrementAction"
-           definitionId="org.eclipse.mylyn.context.ui.commands.interest.increment"
-           enablesFor="*"
-           icon="icons/elcl16/interest-increase.gif"
-           id="org.eclipse.mylyn.ecoretools.ui.interest.landmark.element"
-           label="%InterestIncrementAction.label"
-           menubarPath="group.reorganize"
-           tooltip="%InterestIncrementAction.tooltip">
-     </action>
-     <visibility>
-     	<and>
-	     	<systemProperty
-	               name="org.eclipse.mylyn.context.core.context.active"
-    	           value="true">
-    	    </systemProperty>
-           <objectClass
-                 name="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
-           </objectClass>
-        </and>
-     </visibility>
-	 </objectContribution>
-
-     <objectContribution
-           adaptable="true"
-           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.diagram.element"
-           objectClass="org.eclipse.emf.ecore.EObject">
-     	<action
-            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
-            definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
-            enablesFor="*"
-            icon="icons/elcl16/interest-decrease.gif"
-            id="org.eclipse.mylyn.eobject.ui.interest.remove.element"
-            label="%InterestDecrementAction.label"
-            menubarPath="group.reorganize"
-            overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.remove.element"
-            tooltip="%InterestDecrementAction.tooltip">
-      </action>
-            <visibility>
-      		<and>
-      			<systemProperty
-	               name="org.eclipse.mylyn.context.core.context.active"
-    	           value="true">
-      			</systemProperty>
-	               <objectClass
-	                     name="org.eclipse.emf.ecore.EObject">
-	               </objectClass>
-      		</and>
-      </visibility>
-     </objectContribution>
-     
-     <objectContribution
-           adaptable="true"
-           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.ecore_diagram.element"
-           objectClass="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
-     	<action
-            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
-            definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
-            enablesFor="*"
-            icon="icons/elcl16/interest-decrease.gif"
-            id="org.eclipse.mylyn.ecoretools.ui.interest.remove.element"
-            label="%InterestDecrementAction.label"
-            menubarPath="group.reorganize"
-            overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.remove.element"
-            tooltip="%InterestDecrementAction.tooltip">
-      </action>
-            <visibility>
-      		<and>
-      			<systemProperty
-	               name="org.eclipse.mylyn.context.core.context.active"
-    	           value="true">
-      			</systemProperty>
-	               <objectClass
-	                     name="org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart">
-	               </objectClass>
-      		</and>
-      </visibility>
-     </objectContribution>
-	</extension>
 	   <extension
          point="org.eclipse.ui.actionSetPartAssociations">
       <actionSetPartAssociation
