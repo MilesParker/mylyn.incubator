@@ -14,7 +14,7 @@ package org.eclipse.mylyn.modeling.emf.ecore;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
@@ -38,7 +38,8 @@ public class EcoreDomainBridge extends EmfStructureBridge {
 
 	@Override
 	public Class<?> getDomainBaseNodeClass() {
-		return ENamedElement.class;
+		//We need to "share" this with Ecore tools, so we use a more base-most class rather than ENamedElement
+		return EObject.class;
 	}
 
 	@Override
