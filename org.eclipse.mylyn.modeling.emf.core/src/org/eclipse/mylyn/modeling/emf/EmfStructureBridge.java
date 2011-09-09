@@ -15,12 +15,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
+import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.modeling.context.DomainModelContextStructureBridge;
 
 /**
@@ -35,9 +42,62 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	 */
 	@Override
 	public String getDomainHandleIdentifier(Object object) {
-		EObject eobject = ((EObject) object);
-		URI uri = EcoreUtil.getURI(eobject);
-		return uri.toString();
+		if (object instanceof EObject) {
+			EObject eobject = ((EObject) object);
+			URI uri = EcoreUtil.getURI(eobject);
+			if (eobject instanceof EPackage) {
+				EPackage pack = (EPackage) eobject;
+				if (pack.eResource() != null) {
+					IFile file = getFile(pack.eResource());
+					if (file != null && file.exists()) {
+						AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
+						return parentBridge.getHandleIdentifier(file);
+					}
+
+				}
+			}
+			return uri.toString();
+		}
+		return null;
+	}
+
+	@Override
+	public String getHandleIdentifier(Object object) {
+		if (object instanceof Resource) {
+			Resource resource = (Resource) object;
+			IFile file = getFile(resource);
+			if (file != null && file.exists()) {
+				AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
+				return parentBridge.getHandleIdentifier(file);
+			}
+		}
+		return super.getHandleIdentifier(object);
+	}
+
+	/**
+	 * If it's a domain object, we accept it. Implementors generally should not override.
+	 */
+	@Override
+	public boolean acceptsObject(Object object) {
+		return object instanceof IFile && ((IFile) object).getFileExtension().equals("ecore")
+				|| getDomainObject(object) != null;
+	}
+
+	@Override
+	public Object getObjectForHandle(String handle) {
+		if (isDocument(handle)) {
+			AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
+			Object objectForHandle = parentBridge.getObjectForHandle(handle);
+			if (objectForHandle instanceof IFile) {
+				IFile file = (IFile) objectForHandle;
+				ResourceSetImpl rs = new ResourceSetImpl();
+				URI createFileURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+				Resource createResource = rs.getResource(createFileURI, true);
+				return createResource;
+			}
+			return null;
+		}
+		return super.getObjectForHandle(handle);
 	}
 
 	/**
@@ -84,6 +144,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	/**
 	 * The inverse of {@link #getChildHandles(String)}. Again, you typically don't need to override this.
 	 */
+	@SuppressWarnings("nls")
 	@Override
 	public String getParentHandle(String handle) {
 		Object object = getObjectForHandle(handle);
@@ -95,8 +156,35 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 				//must be base package
 				return getHandleIdentifier(eObject.eResource());
 			}
+		} else if (object instanceof Resource) {
+			Resource resource = (Resource) object;
+			IFile file = getFile(resource);
+			if (file != null && file.exists()) {
+				AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
+				return parentBridge.getHandleIdentifier(file);
+			}
+		} else if (object instanceof IFile) {
+			// String fileHandle = parentBridge.getParentHandle(handle);
+			AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
+			return parentBridge.getParentHandle(handle);
 		}
 		//Resources don't have parents, unless we want to get the file hierarchy, which probably isn't what we want.
+		return null;
+	}
+
+	public IFile getFile(Resource resource) {
+		URI uri = resource.getURI();
+		uri = resource.getResourceSet().getURIConverter().normalize(uri);
+		String scheme = uri.scheme();
+		if ("platform".equals(scheme) && uri.segmentCount() > 1 && "resource".equals(uri.segment(0))) {
+			StringBuffer platformResourcePath = new StringBuffer();
+			for (int j = 1, size = uri.segmentCount(); j < size; ++j) {
+				platformResourcePath.append('/');
+				platformResourcePath.append(uri.segment(j));
+			}
+			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(platformResourcePath.toString()));
+			return file;
+		}
 		return null;
 	}
 
@@ -110,6 +198,15 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 			return ((ENamedElement) object).getName();
 		}
 		return super.getLabel(object);
+	}
+
+	@Override
+	public String getContentType(String handle) {
+		Object objectForHandle = getObjectForHandle(handle);
+		if (objectForHandle instanceof Resource) {
+			return parentContentType;
+		}
+		return getContentType();
 	}
 
 	@Override
