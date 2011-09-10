@@ -79,8 +79,17 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	 */
 	@Override
 	public boolean acceptsObject(Object object) {
-		return object instanceof IFile && ((IFile) object).getFileExtension().equals("ecore")
-				|| getDomainObject(object) != null;
+		if (object instanceof IFile) {
+			IFile file = (IFile) object;
+			for (String ext : getFileExtensions()) {
+				if (ext.equals(file.getFileExtension())) {
+					return true;
+				}
+			}
+		} else {
+			return getDomainObject(object) != null;
+		}
+		return false;
 	}
 
 	@Override
@@ -144,7 +153,6 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	/**
 	 * The inverse of {@link #getChildHandles(String)}. Again, you typically don't need to override this.
 	 */
-	@SuppressWarnings("nls")
 	@Override
 	public String getParentHandle(String handle) {
 		Object object = getObjectForHandle(handle);
@@ -176,7 +184,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 		URI uri = resource.getURI();
 		uri = resource.getResourceSet().getURIConverter().normalize(uri);
 		String scheme = uri.scheme();
-		if ("platform".equals(scheme) && uri.segmentCount() > 1 && "resource".equals(uri.segment(0))) {
+		if ("platform".equals(scheme) && uri.segmentCount() > 1 && "resource".equals(uri.segment(0))) { //$NON-NLS-1$//$NON-NLS-2$
 			StringBuffer platformResourcePath = new StringBuffer();
 			for (int j = 1, size = uri.segmentCount(); j < size; ++j) {
 				platformResourcePath.append('/');
@@ -202,16 +210,20 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 
 	@Override
 	public String getContentType(String handle) {
-		Object objectForHandle = getObjectForHandle(handle);
-		if (objectForHandle instanceof Resource) {
-			return parentContentType;
-		}
+//		Object objectForHandle = getObjectForHandle(handle);
+//		if (objectForHandle instanceof Resource) {
+//			return parentContentType;
+//		}
 		return getContentType();
+	}
+
+	public String[] getFileExtensions() {
+		return new String[] { getContentType() };
 	}
 
 	@Override
 	public boolean isDocument(String handle) {
 		URI uri = URI.createURI(handle);
-		return uri.isFile();
+		return uri.isFile() && !uri.toString().isEmpty();
 	}
 }

@@ -11,11 +11,10 @@
 
 package org.eclipse.mylyn.internal.modeling.papyrus;
 
-import javax.management.relation.Relation;
-
 import org.eclipse.mylyn.modeling.gmf.GmfStructureBridge;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Relationship;
 
 /**
  * @author Miles Parker
@@ -36,16 +35,21 @@ public class Uml2StructureBridge extends GmfStructureBridge {
 
 	@Override
 	public Class<?> getDomainBaseEdgeClass() {
-		return Relation.class;
+		return Relationship.class;
 	}
 
 	@Override
 	public Class<?>[] getDomainEdgeClasses() {
-		return new Class[] { Relation.class };
+		return new Class[] { Relationship.class };
 	}
 
 	@Override
 	public String getContentType() {
 		return UML2_CONTENT_TYPE;
+	}
+
+	@Override
+	public String[] getFileExtensions() {
+		return new String[] {};
 	}
 }

@@ -64,9 +64,7 @@
 			viewerId="org.eclipse.mylyn.context.ui.navigator.context">
 			<includes>
 				<contentExtension pattern="org.eclipse.emf.ecoretools.diagram.resourceContent" />
-    <contentExtension
-          pattern="org.eclipse.emf.ecoretools.diagram.domainResourceContent">
-    </contentExtension>	
+			    <contentExtension pattern="org.eclipse.emf.ecoretools.diagram.domainResourceContent"/>
 			</includes>
 		</viewerContentBinding>
 	</extension>

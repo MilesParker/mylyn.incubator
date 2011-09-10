@@ -26,5 +26,4 @@ public class EcoreGmfDomainBridge extends EcoreDomainBridge {
 		}
 		return super.getDomainObject(object);
 	}
-
 }
