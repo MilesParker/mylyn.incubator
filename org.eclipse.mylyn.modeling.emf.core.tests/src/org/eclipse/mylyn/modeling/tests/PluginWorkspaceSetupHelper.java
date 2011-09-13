@@ -16,7 +16,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -27,10 +26,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.mylyn.commons.sdk.util.CommonTestUtil;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.internal.context.core.InteractionContext;
 import org.eclipse.mylyn.internal.context.core.InteractionContextScaling;
@@ -38,9 +36,11 @@ import org.eclipse.pde.internal.core.natures.PDE;
 import org.eclipse.pde.internal.core.natures.PluginProject;
 
 /**
+ * Portions copied from org.eclipse.mylyn.java.tests.search.WorkspaceSetup
+ * 
  * @author Miles Parker
  */
-public class WorkspaceSetupHelper {
+public class PluginWorkspaceSetupHelper {
 
 	private static final String HELPER_CONTEXT_ID = "helper-context";
 
@@ -50,10 +50,9 @@ public class WorkspaceSetupHelper {
 
 	private static IWorkspaceRoot workspaceRoot;
 
-	public static void clearWorkspace() throws CoreException, IOException {
-		isSetup = false;
-		ResourcesPlugin.getWorkspace().getRoot().delete(true, true, new NullProgressMonitor());
-		clearDoiModel();
+	public static void clearDoiModel() throws CoreException {
+		ContextCore.getContextManager().deleteContext(HELPER_CONTEXT_ID);
+		taskscape = new InteractionContext(HELPER_CONTEXT_ID, new InteractionContextScaling());
 	}
 
 	public static IWorkspaceRoot setupWorkspace() throws CoreException, IOException, InvocationTargetException,
@@ -70,25 +69,18 @@ public class WorkspaceSetupHelper {
 		return workspaceRoot;
 	}
 
-	public static void clearDoiModel() throws CoreException {
-		ContextCore.getContextManager().deleteContext(HELPER_CONTEXT_ID);
-		taskscape = new InteractionContext(HELPER_CONTEXT_ID, new InteractionContextScaling());
-	}
+	public static IJavaProject createJavaPluginProjectFromZip(String projectName, String zipFileName)
+			throws CoreException, ZipException, IOException {
+		IProject project = createProject(projectName);
+		ZipFile zip = new ZipFile(CommonTestUtil.getFile(PluginWorkspaceSetupHelper.class, "testdata/projects/"
+				+ zipFileName));
 
-	public static InteractionContext getContext() throws CoreException, IOException, InvocationTargetException,
-			InterruptedException {
-		if (!isSetup) {
-			setupWorkspace();
-		}
-		return taskscape;
-	}
+		CommonTestUtil.unzip(zip, project.getLocation().toFile());
 
-	public static IWorkspaceRoot getWorkspaceRoot() throws CoreException, IOException, InvocationTargetException,
-			InterruptedException {
-		if (!isSetup) {
-			setupWorkspace();
-		}
-		return workspaceRoot;
+		project.refreshLocal(IResource.DEPTH_INFINITE, null);
+
+		IJavaProject javaProject = createPluginProject(project);
+		return javaProject;
 	}
 
 	private static IProject createProject(String projectName) throws CoreException {
@@ -106,20 +98,6 @@ public class WorkspaceSetupHelper {
 		}
 
 		return project;
-	}
-
-	public static IJavaProject createJavaPluginProjectFromZip(String projectName, String zipFileName)
-			throws CoreException, ZipException, IOException {
-		IProject project = createProject(projectName);
-		ZipFile zip = new ZipFile(
-				CommonTestUtil.getFile(WorkspaceSetupHelper.class, "testdata/projects/" + zipFileName));
-
-		CommonTestUtil.unzip(zip, project.getLocation().toFile());
-
-		project.refreshLocal(IResource.DEPTH_INFINITE, null);
-
-		IJavaProject javaProject = createPluginProject(project);
-		return javaProject;
 	}
 
 	private static IJavaProject createPluginProject(IProject project) throws CoreException, JavaModelException {
@@ -150,34 +128,6 @@ public class WorkspaceSetupHelper {
 		pluginProject.configure();
 
 		return javaProject;
-	}
-
-	public static IFile getFile(IJavaProject jp, String name) throws JavaModelException {
-		if (jp == null || name == null) {
-			return null;
-		}
-		Object[] files = jp.getNonJavaResources();
-		for (Object o : files) {
-			if (o instanceof IFile && ((IFile) o).getName().equals(name)) {
-				return (IFile) o;
-			}
-		}
-		return null;
-	}
-
-	public static IType getType(IJavaProject jp, String fullyQualifiedName) throws JavaModelException {
-		if (jp == null || fullyQualifiedName == null) {
-			return null;
-		}
-		IType t = jp.findType(fullyQualifiedName);
-		return t;
-	}
-
-	public static IMethod getMethod(IType t, String methodName, String[] params) {
-		if (t == null || methodName == null || params == null) {
-			return null;
-		}
-		return t.getMethod(methodName, params);
 	}
 
 }

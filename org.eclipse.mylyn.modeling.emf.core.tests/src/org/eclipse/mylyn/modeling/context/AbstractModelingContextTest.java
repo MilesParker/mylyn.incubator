@@ -18,7 +18,7 @@ import org.eclipse.mylyn.internal.context.core.InteractionContext;
 import org.eclipse.mylyn.internal.context.core.InteractionContextManager;
 import org.eclipse.mylyn.internal.context.core.InteractionContextScaling;
 import org.eclipse.mylyn.internal.context.ui.ContextUiPlugin;
-import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
+import org.eclipse.mylyn.modeling.tests.PluginWorkspaceSetupHelper;
 
 /**
  * @author Miles Parker
@@ -38,7 +38,7 @@ public class AbstractModelingContextTest extends AbstractContextTest {
 	@Override
 	protected void setUp() throws Exception {
 
-		WorkspaceSetupHelper.setupWorkspace();
+		PluginWorkspaceSetupHelper.setupWorkspace();
 
 		context = new InteractionContext(taskId, scaling);
 		context.reset();

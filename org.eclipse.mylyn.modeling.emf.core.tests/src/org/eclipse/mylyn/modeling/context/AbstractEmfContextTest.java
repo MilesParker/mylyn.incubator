@@ -14,7 +14,7 @@ package org.eclipse.mylyn.modeling.context;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.mylyn.commons.sdk.util.ResourceTestUtil;
-import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
+import org.eclipse.mylyn.modeling.tests.PluginWorkspaceSetupHelper;
 
 /**
  * @author Miles Parker
@@ -27,7 +27,7 @@ public class AbstractEmfContextTest extends AbstractModelingContextTest {
 	protected void setUp() throws Exception {
 		super.setUp();
 		//ecore diagram project is used for this test, even for non-diagram cases.
-		emfProject = WorkspaceSetupHelper.createJavaPluginProjectFromZip(
+		emfProject = PluginWorkspaceSetupHelper.createJavaPluginProjectFromZip(
 				"org.eclipse.mylyn.modeling.tests.ecorediagram", "ecorediagram.zip");
 		emfProject.open(new NullProgressMonitor());
 	}

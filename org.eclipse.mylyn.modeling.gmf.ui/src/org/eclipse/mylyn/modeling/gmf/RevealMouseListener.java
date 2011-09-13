@@ -110,7 +110,7 @@ public class RevealMouseListener implements MouseMoveListener {
 			Collection<IRevealableFigure> removedFigures = new HashSet<IRevealableFigure>(lastDecorations);
 			removedFigures.removeAll(newDecorations);
 			for (IRevealableFigure removedFigure : removedFigures) {
-				if (removedFigure.getParent() != null & removedFigure.getParent().getParent() != null) {
+				if (removedFigure.getParent() != null && removedFigure.getParent().getParent() != null) {
 					removedFigure.unreveal();
 				}
 			}

@@ -34,8 +34,6 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
  */
 public abstract class DiagramUiBridge extends AbstractContextUiBridge {
 
-	boolean initialized;
-
 	/**
 	 * Shouldn't need to override.
 	 */

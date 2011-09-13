@@ -35,8 +35,6 @@ public abstract class ContextDecorator implements IDecorator {
 
 	boolean wasFocussed;
 
-	private IFigure decoratedFigure;
-
 	boolean initialized;
 
 	private final List<IRevealableFigure> decorationFigures;
@@ -133,10 +131,10 @@ public abstract class ContextDecorator implements IDecorator {
 	 * @return
 	 */
 	public IFigure getDecoratedFigure() {
-		if (decoratedFigure == null && getEditPart() != null) {
+		if (getEditPart() != null) {
 			return getEditPart().getFigure();
 		}
-		return decoratedFigure;
+		return null;
 	}
 
 	public List<IRevealableFigure> getDecorationFigures() {

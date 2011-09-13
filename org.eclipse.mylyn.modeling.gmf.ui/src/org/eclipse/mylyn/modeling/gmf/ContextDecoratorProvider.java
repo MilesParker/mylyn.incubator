@@ -332,7 +332,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void notifyChanged(Notification notification) {
-		if (notification.getFeature() == getStructure()) {
+		if (notification.getFeature() == getStructure().getNameFeature(notification.getNotifier())) {
 			EObject eo = (EObject) notification.getNotifier();
 			String newHandleID = structure.getHandleIdentifier(eo);
 			String oldHandleID = newHandleID.replaceFirst(notification.getNewStringValue(),
