@@ -129,6 +129,7 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 		Command changeName = SetCommand.create(domain, book, EcorePackage.Literals.ENAMED_ELEMENT__NAME, "Livre"); //$NON-NLS-1$
 		domain.getCommandStack().execute(changeName);
 
+		assertEquals(activeContext.getAllElements().size(), 2);
 		assertEquals(book.getName(), "Livre"); //$NON-NLS-1$
 		assertTrue(checkInterest(activeContext,
 				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre")); //$NON-NLS-1$
@@ -137,6 +138,7 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 
 		domain.getCommandStack().undo();
 
+		assertEquals(activeContext.getAllElements().size(), 2);
 		assertFalse(checkInterest(activeContext,
 				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre")); //$NON-NLS-1$
 		assertTrue(checkInterest(activeContext,
