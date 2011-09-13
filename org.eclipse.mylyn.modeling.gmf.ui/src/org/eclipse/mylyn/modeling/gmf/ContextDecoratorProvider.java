@@ -17,8 +17,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
@@ -341,15 +349,41 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	public void partOpened(IWorkbenchPart part) {
 		if (getDomainUIBridge().acceptsPart(part) && part instanceof IEditorPart) {
 			IEditorPart ep = (IEditorPart) part;
-//			if (ep instanceof IEditingDomainProvider) {
-//				IEditingDomainProvider edp = (IEditingDomainProvider) ep;
-//				EditingDomain editingDomain = edp.getEditingDomain();
-//				if (editingDomain instanceof AdapterFactoryEditingDomain) {
-//					AdapterFactory adapterFactory = ((AdapterFactoryEditingDomain) editingDomain).getAdapterFactory();
-//					System.err.println(adapterFactory);
-//				}
-//			}
+			AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) getEditingDomain(ep);
+			ComposedAdapterFactory caf = (ComposedAdapterFactory) domain.getAdapterFactory();
+			caf.addListener(new INotifyChangedListener() {
+
+				public void notifyChanged(Notification notification) {
+					if (notification.getFeature() == EcorePackage.Literals.ENAMED_ELEMENT__NAME) {
+						EObject eo = (EObject) notification.getNotifier();
+						String newHandleID = structure.getHandleIdentifier(eo);
+						String oldHandleID = newHandleID.replaceFirst(notification.getNewStringValue(),
+								notification.getOldStringValue());
+						IInteractionElement oldElement = ContextCore.getContextManager().getElement(oldHandleID);
+						ContextCore.getContextManager().updateHandle(oldElement, newHandleID);
+					}
+				}
+			});
+
 		}
+	}
+
+	public static EditingDomain getEditingDomain(Object object) {
+		if (object instanceof IEditingDomainProvider) {
+			return ((IEditingDomainProvider) object).getEditingDomain();
+		}
+		if (object instanceof IAdaptable) {
+			IAdaptable adapt = (IAdaptable) object;
+			Object candidate = adapt.getAdapter(EditingDomain.class);
+			if (candidate instanceof EditingDomain) {
+				return (EditingDomain) candidate;
+			}
+			candidate = adapt.getAdapter(IEditingDomainProvider.class);
+			if (candidate instanceof IEditingDomainProvider) {
+				return ((IEditingDomainProvider) candidate).getEditingDomain();
+			}
+		}
+		return null;
 	}
 
 	public void contextChanged(ContextChangeEvent event) {

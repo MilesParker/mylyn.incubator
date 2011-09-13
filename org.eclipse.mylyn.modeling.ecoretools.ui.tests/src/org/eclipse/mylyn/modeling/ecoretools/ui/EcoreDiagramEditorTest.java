@@ -16,17 +16,22 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
+import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramUiBridge;
 import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreGmfDomainBridge;
@@ -66,7 +71,7 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 		}
 
@@ -76,9 +81,19 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 		String elemURI = "platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecorediag#//Diagram";
 
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 		}
+
+		IInteractionContext activeContext = ContextCore.getContextManager().getActiveContext();
+
+		assertNotNull(activeContext);
+		assertEquals(activeContext.getAllElements().size(), 1);
+		//should this be resource type?
+		assertEquals(activeContext.getAllElements().get(0).getContentType(), "ecore");
+		assertEquals(activeContext.getAllElements().get(0).getHandleIdentifier(),
+				"/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore");
+		assertTrue(activeContext.getAllElements().get(0).getInterest().isInteresting());
 
 		IInteractionElement element = ContextCore.getContextManager().getElement(elemURI);
 		assertNotNull(element);
@@ -102,19 +117,41 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 		monitor.handleWorkbenchPartSelection(ed, selection, true);
 
 		//TODO why doesn't this work?
-		ed.getDiagramGraphicalViewer().setSelection(selection);
+		EditPart editpart = (EditPart) findEditPartsForElement.get(0);
+		ed.getDiagramGraphicalViewer().getSelectionManager().appendSelection(editpart);
 		ed.getDiagramGraphicalViewer().getRootEditPart().refresh();
-		assertTrue(ed.getDiagramGraphicalViewer().getSelectedEditParts().get(0) instanceof EClassEditPart);
+		assertTrue(ed.getDiagramGraphicalViewer().getSelectedEditParts().get(0) == editpart);
 
-		assertNotNull(element);
-		assertNotNull(element.getInterest());
+		assertEquals(activeContext.getAllElements().size(), 2);
+		assertTrue(checkInterest(activeContext,
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book")); //$NON-NLS-1$
 
-//		Command create = SetCommand.create(domain, book, EcorePackage.Literals.ENAMED_ELEMENT__NAME, "Livre"); //$NON-NLS-1$
-//		//TODO this test doesn't work, not clear why -- the functionality is fine at runtime
-//
-//		element = ContextCore.getContextManager().getElement(elemURI);
-//		assertTrue(element.getInterest().isInteresting());
+		Command changeName = SetCommand.create(domain, book, EcorePackage.Literals.ENAMED_ELEMENT__NAME, "Livre"); //$NON-NLS-1$
+		domain.getCommandStack().execute(changeName);
 
+		assertEquals(book.getName(), "Livre"); //$NON-NLS-1$
+		assertTrue(checkInterest(activeContext,
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre")); //$NON-NLS-1$
+		assertFalse(checkInterest(activeContext,
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book")); //$NON-NLS-1$
+
+		domain.getCommandStack().undo();
+
+		assertFalse(checkInterest(activeContext,
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre")); //$NON-NLS-1$
+		assertTrue(checkInterest(activeContext,
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book")); //$NON-NLS-1$
 	}
 
+	private boolean checkInterest(IInteractionContext activeContext, String id) {
+		boolean found = false;
+		for (IInteractionElement elem : activeContext.getAllElements()) {
+			assertEquals(elem.getContentType(), "ecore"); //$NON-NLS-1$
+			if (elem.getHandleIdentifier().equals(id)) {
+				found = true;
+			}
+			assertTrue(elem.getInterest().isInteresting());
+		}
+		return found;
+	}
 }
