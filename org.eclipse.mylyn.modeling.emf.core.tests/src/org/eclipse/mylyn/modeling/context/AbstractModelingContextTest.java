@@ -11,6 +11,7 @@
 
 package org.eclipse.mylyn.modeling.context;
 
+import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.tests.AbstractContextTest;
 import org.eclipse.mylyn.internal.context.core.ContextCorePlugin;
 import org.eclipse.mylyn.internal.context.core.InteractionContext;
@@ -23,6 +24,8 @@ import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
  * @author Miles Parker
  */
 public class AbstractModelingContextTest extends AbstractContextTest {
+
+	protected AbstractContextStructureBridge structureModelBridge;
 
 	protected InteractionContextManager manager = ContextCorePlugin.getContextManager();
 

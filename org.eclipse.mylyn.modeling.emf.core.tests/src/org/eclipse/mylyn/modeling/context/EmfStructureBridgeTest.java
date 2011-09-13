@@ -19,15 +19,22 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 
 /**
  * @author Miles Parker
  */
 public class EmfStructureBridgeTest extends AbstractEmfContextTest {
 
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		structureModelBridge = new EcoreDomainBridge();
+	}
+
 	public void testSimpleHandle() {
 		String elementHandle = "platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book";
-		Object objectForHandle = structureBridge.getObjectForHandle(elementHandle);
+		Object objectForHandle = structureModelBridge.getObjectForHandle(elementHandle);
 		assertTrue(objectForHandle instanceof EClass);
 		assertEquals(((EClass) objectForHandle).getName(), "Book");
 //		Resource res = structureBridge.getUniqueResourceForHandle(elementHandle);
@@ -44,8 +51,8 @@ public class EmfStructureBridgeTest extends AbstractEmfContextTest {
 		EObject eObject = resource.getEObject("//Book");
 		EClass fragmentClass = (EClass) eObject;
 		assertTrue(eObject instanceof EClass);
-		String handleIdentifier = structureBridge.getHandleIdentifier(eObject);
-		Object objectForHandle = structureBridge.getObjectForHandle(handleIdentifier);
+		String handleIdentifier = structureModelBridge.getHandleIdentifier(eObject);
+		Object objectForHandle = structureModelBridge.getObjectForHandle(handleIdentifier);
 		EClass obtainedClass = (EClass) objectForHandle;
 		assertTrue("Same eobject", !eObject.equals(objectForHandle));
 		assertEquals(fragmentClass.getClassifierID(), obtainedClass.getClassifierID());

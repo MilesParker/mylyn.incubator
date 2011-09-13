@@ -22,6 +22,7 @@ import org.eclipse.mylyn.internal.resources.ui.ResourceInteractionMonitor;
 import org.eclipse.mylyn.internal.resources.ui.ResourceStructureBridge;
 import org.eclipse.mylyn.internal.resources.ui.ResourcesUiBridgePlugin;
 import org.eclipse.mylyn.internal.resources.ui.ResourcesUiPreferenceInitializer;
+import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 
 /**
  * @author Miles Parker
@@ -36,6 +37,7 @@ public class BasicEmfResourceTest extends AbstractEmfContextTest {
 	protected void setUp() throws Exception {
 		// ignore
 		super.setUp();
+		structureModelBridge = new EcoreDomainBridge();
 		ResourcesUiBridgePlugin.getInterestUpdater().setSyncExec(true);
 
 		ContextTestUtil.triggerContextUiLazyStart();

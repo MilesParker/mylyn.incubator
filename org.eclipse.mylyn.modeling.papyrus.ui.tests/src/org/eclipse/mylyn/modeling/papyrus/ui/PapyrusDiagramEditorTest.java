@@ -9,7 +9,7 @@
  *     Tasktop Technologies - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.modeling.ui;
+package org.eclipse.mylyn.modeling.papyrus.ui;
 
 import java.util.List;
 
@@ -26,6 +26,7 @@ import org.eclipse.mylyn.internal.modeling.papyrus.Uml2UiBridge;
 import org.eclipse.mylyn.modeling.context.AbstractEmfContextTest;
 import org.eclipse.mylyn.modeling.context.DomainModelContextStructureBridge;
 import org.eclipse.mylyn.modeling.tests.WorkspaceSetupHelper;
+import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
 import org.eclipse.papyrus.diagram.common.editparts.IPapyrusEditPart;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -36,7 +37,7 @@ import org.eclipse.uml2.uml.internal.impl.ClassImpl;
 /**
  * @author Miles Parker
  */
-public class PapyrusDiagramEditorUiBridgeTest extends AbstractEmfContextTest {
+public class PapyrusDiagramEditorTest extends AbstractEmfContextTest {
 
 	private static final String RESOURCE_URI = "platform:/resource/org.eclipse.mylyn.emf.tests.papyrus/model/model.uml#_xkh2ALJFEeCYupgj-BJj-Q";
 
