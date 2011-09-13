@@ -61,13 +61,15 @@
 	<module>org.eclipse.mylyn.modeling.core</module>
 	<module>org.eclipse.mylyn.modeling.ecoretools-feature</module>
 	<module>org.eclipse.mylyn.modeling.ecoretools.ui</module>
+	<module>org.eclipse.mylyn.modeling.ecoretools.ui.tests</module>
 	<module>org.eclipse.mylyn.modeling.emf.core</module>
+	<module>org.eclipse.mylyn.modeling.emf.core.tests</module>
 	<module>org.eclipse.mylyn.modeling.emf-feature</module>
 	<module>org.eclipse.mylyn.modeling.gmf-feature</module>
 	<module>org.eclipse.mylyn.modeling.gmf.ui</module>
 	<module>org.eclipse.mylyn.modeling.papyrus-feature</module>
 	<module>org.eclipse.mylyn.modeling.papyrus.ui</module>
-	<module>org.eclipse.mylyn.modeling.tests</module>
+	<module>org.eclipse.mylyn.modeling.papyrus.ui.tests</module>
 	<module>org.eclipse.mylyn.modeling.ui</module>
 <!--
     <module>org.eclipse.mylyn.examples.monitor.study</module>
