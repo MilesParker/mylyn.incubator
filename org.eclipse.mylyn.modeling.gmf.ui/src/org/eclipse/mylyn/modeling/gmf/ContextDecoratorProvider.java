@@ -327,6 +327,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void partBroughtToTop(IWorkbenchPart part) {
+		refresh(part);
 	}
 
 	public void partClosed(IWorkbenchPart part) {
@@ -334,12 +335,10 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void partDeactivated(IWorkbenchPart part) {
-//		deactivate(part);
-		// deactivate(part);
 	}
 
 	public void partOpened(IWorkbenchPart part) {
-		refresh(part);
+//		refresh(part);
 	}
 
 	public void contextChanged(ContextChangeEvent event) {

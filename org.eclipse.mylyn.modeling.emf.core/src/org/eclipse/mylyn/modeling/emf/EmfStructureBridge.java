@@ -63,13 +63,15 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 
 	@Override
 	public String getHandleIdentifier(Object object) {
-		if (object instanceof Resource) {
-			Resource resource = (Resource) object;
-			IFile file = getFile(resource);
+		if (object instanceof IFile) {
+			IFile file = (IFile) object;
 			if (file != null && file.exists()) {
 				AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
 				return parentBridge.getHandleIdentifier(file);
 			}
+		} else if (object instanceof Resource) {
+			Resource resource = (Resource) object;
+			return getHandleIdentifier(getFile(resource));
 		}
 		return super.getHandleIdentifier(object);
 	}
@@ -210,10 +212,10 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 
 	@Override
 	public String getContentType(String handle) {
-//		Object objectForHandle = getObjectForHandle(handle);
-//		if (objectForHandle instanceof Resource) {
-//			return parentContentType;
-//		}
+		Object objectForHandle = getObjectForHandle(handle);
+		if (objectForHandle instanceof Resource) {
+			return parentContentType;
+		}
 		return getContentType();
 	}
 
