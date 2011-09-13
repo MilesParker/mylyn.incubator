@@ -18,7 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
@@ -41,6 +45,7 @@ import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.internal.modeling.ui.ModelingUiPlugin;
 import org.eclipse.mylyn.modeling.context.DomainModelContextStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -338,7 +343,17 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void partOpened(IWorkbenchPart part) {
-//		refresh(part);
+		if (getDomainUIBridge().acceptsPart(part) && part instanceof IEditorPart) {
+			IEditorPart ep = (IEditorPart) part;
+//			if (ep instanceof IEditingDomainProvider) {
+//				IEditingDomainProvider edp = (IEditingDomainProvider) ep;
+//				EditingDomain editingDomain = edp.getEditingDomain();
+//				if (editingDomain instanceof AdapterFactoryEditingDomain) {
+//					AdapterFactory adapterFactory = ((AdapterFactoryEditingDomain) editingDomain).getAdapterFactory();
+//					System.err.println(adapterFactory);
+//				}
+//			}
+		}
 	}
 
 	public void contextChanged(ContextChangeEvent event) {

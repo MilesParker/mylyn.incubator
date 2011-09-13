@@ -16,9 +16,13 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -35,7 +39,7 @@ import org.eclipse.ui.part.FileEditorInput;
 /**
  * @author Miles Parker
  */
-public class EcoreDiagramEditorUiBridgeTest extends AbstractEmfContextTest {
+public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 
 	protected DiagramUiEditingMonitor monitor;
 
@@ -46,7 +50,7 @@ public class EcoreDiagramEditorUiBridgeTest extends AbstractEmfContextTest {
 		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 
-	public void test() throws Exception {
+	public void testSelection() throws Exception {
 
 		getEmfProject().open(new NullProgressMonitor());
 		IProject project = getEmfProject().getProject();
@@ -67,18 +71,18 @@ public class EcoreDiagramEditorUiBridgeTest extends AbstractEmfContextTest {
 				"org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID");
 
 		String elemURI = "platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecorediag#//Diagram";
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+		}
+
 		IInteractionElement element = ContextCore.getContextManager().getElement(elemURI);
 		assertNotNull(element);
 		assertFalse(element.getInterest().isInteresting());
 
-		Node p = (Node) ed.getEditingDomain()
-				.getResourceSet()
-				.getResources()
-				.get(0)
-				.getContents()
-				.get(0)
-				.eContents()
-				.get(0);
+		TransactionalEditingDomain domain = ed.getEditingDomain();
+		Node p = (Node) domain.getResourceSet().getResources().get(0).getContents().get(0).eContents().get(0);
 
 		EClass book = (EClass) p.getElement();
 
@@ -100,12 +104,12 @@ public class EcoreDiagramEditorUiBridgeTest extends AbstractEmfContextTest {
 		assertNotNull(element);
 		assertNotNull(element.getInterest());
 
-		IInteractionElement element2 = ContextCore.getContextManager().getElement(elemURI);
-
+		Command create = SetCommand.create(domain, book, EcorePackage.Literals.ENAMED_ELEMENT__NAME, "Livre"); //$NON-NLS-1$
 		//TODO this test doesn't work, not clear why -- the functionality is fine at runtime
-//		assertTrue(element2.getInterest().isInteresting());
-//
-//		assertEquals(element2.getContentType(), EcoreDomainBridge.ECORE_CONTENT_TYPE);
+
+		element = ContextCore.getContextManager().getElement(elemURI);
+		assertTrue(element.getInterest().isInteresting());
+
 	}
 
 }

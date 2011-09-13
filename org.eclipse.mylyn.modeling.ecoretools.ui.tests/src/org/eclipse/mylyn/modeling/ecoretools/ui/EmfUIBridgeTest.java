@@ -67,8 +67,6 @@ public class EmfUIBridgeTest extends AbstractModelingContextTest {
 
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 
-		Thread.sleep(2000);
-
 		EcoreDiagramEditor ed = (EcoreDiagramEditor) page.openEditor(input,
 				"org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID");
 
