@@ -29,7 +29,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Uml2DiagramUiBridgePlugin extends AbstractUIPlugin {
 
-	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.papyrus"; //$NON-NLS-1$
+	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.papyrus.ui"; //$NON-NLS-1$
 
 	private static Uml2DiagramUiBridgePlugin INSTANCE;
 

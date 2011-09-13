@@ -11,10 +11,12 @@
 
 package org.eclipse.mylyn.internal.modeling.papyrus;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.mylyn.modeling.gmf.GmfStructureBridge;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Relationship;
+import org.eclipse.uml2.uml.UMLPackage;
 
 /**
  * @author Miles Parker
@@ -51,5 +53,10 @@ public class Uml2StructureBridge extends GmfStructureBridge {
 	@Override
 	public String[] getFileExtensions() {
 		return new String[] {};
+	}
+
+	@Override
+	public EAttribute getNameFeature(Object object) {
+		return UMLPackage.Literals.NAMED_ELEMENT__NAME;
 	}
 }

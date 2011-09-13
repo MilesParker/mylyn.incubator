@@ -20,9 +20,10 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
-import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -199,13 +200,24 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	}
 
 	/**
-	 * Returns the textual representation for Mylyn editors. We should consider using EMF Item Provider adapters to
-	 * obtain an IItemLabelProvider for some EMF implementations.
+	 * Override to specify a feature giving a unique name for the given object.
+	 * 
+	 * @return
+	 */
+	public EAttribute getNameFeature(Object object) {
+		return EcorePackage.Literals.ENAMED_ELEMENT__NAME;
+	}
+
+	/**
+	 * Returns the textual representation for Mylyn editors. Uses the feature specified by getNameFeature, so shouldn't
+	 * need to override this directly. We should consider using EMF Item Provider adapters to obtain an
+	 * IItemLabelProvider for some EMF implementations.
 	 */
 	@Override
 	public String getLabel(Object object) {
-		if (object instanceof ENamedElement) {
-			return ((ENamedElement) object).getName();
+		if (object instanceof EObject) {
+			EObject eo = (EObject) object;
+			return (String) eo.eGet(getNameFeature(object));
 		}
 		return super.getLabel(object);
 	}

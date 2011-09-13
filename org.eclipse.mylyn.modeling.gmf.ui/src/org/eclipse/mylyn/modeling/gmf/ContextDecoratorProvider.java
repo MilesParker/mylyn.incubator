@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -47,7 +46,7 @@ import org.eclipse.mylyn.context.core.ContextChangeEvent.ContextChangeKind;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.internal.modeling.ui.ModelingUiPlugin;
-import org.eclipse.mylyn.modeling.context.DomainModelContextStructureBridge;
+import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageListener;
@@ -60,7 +59,8 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author Miles Parker
  */
-public abstract class ContextDecoratorProvider extends AbstractProvider implements IDecoratorProvider, IPartListener {
+public abstract class ContextDecoratorProvider extends AbstractProvider implements IDecoratorProvider, IPartListener,
+		INotifyChangedListener {
 
 	public static final String MYLYN_MARKER = "mylyn-marker"; //$NON-NLS-1$
 
@@ -74,7 +74,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 
 	private final Map<RootEditPart, RevealMouseListener> listenerForRoot;
 
-	private DomainModelContextStructureBridge structure;
+	private EmfStructureBridge structure;
 
 	private boolean anyContextActive;
 
@@ -324,11 +324,24 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 		}
 	}
 
-	public DomainModelContextStructureBridge getStructure() {
+	public EmfStructureBridge getStructure() {
 		if (structure == null) {
-			structure = (DomainModelContextStructureBridge) ContextCore.getStructureBridge(getDomainUIBridge().getContentType());
+			structure = (EmfStructureBridge) ContextCore.getStructureBridge(getDomainUIBridge().getContentType());
 		}
 		return structure;
+	}
+
+	public void notifyChanged(Notification notification) {
+		if (notification.getFeature() == getStructure()) {
+			EObject eo = (EObject) notification.getNotifier();
+			String newHandleID = structure.getHandleIdentifier(eo);
+			String oldHandleID = newHandleID.replaceFirst(notification.getNewStringValue(),
+					notification.getOldStringValue());
+			IInteractionElement oldElement = ContextCore.getContextManager().getElement(oldHandleID);
+			if (oldElement != null) {
+				ContextCore.getContextManager().updateHandle(oldElement, newHandleID);
+			}
+		}
 	}
 
 	public void partActivated(IWorkbenchPart part) {
@@ -347,24 +360,12 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void partOpened(IWorkbenchPart part) {
+		//Listen for changes in the model
 		if (getDomainUIBridge().acceptsPart(part) && part instanceof IEditorPart) {
 			IEditorPart ep = (IEditorPart) part;
 			AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) getEditingDomain(ep);
 			ComposedAdapterFactory caf = (ComposedAdapterFactory) domain.getAdapterFactory();
-			caf.addListener(new INotifyChangedListener() {
-
-				public void notifyChanged(Notification notification) {
-					if (notification.getFeature() == EcorePackage.Literals.ENAMED_ELEMENT__NAME) {
-						EObject eo = (EObject) notification.getNotifier();
-						String newHandleID = structure.getHandleIdentifier(eo);
-						String oldHandleID = newHandleID.replaceFirst(notification.getNewStringValue(),
-								notification.getOldStringValue());
-						IInteractionElement oldElement = ContextCore.getContextManager().getElement(oldHandleID);
-						ContextCore.getContextManager().updateHandle(oldElement, newHandleID);
-					}
-				}
-			});
-
+			caf.addListener(this);
 		}
 	}
 
