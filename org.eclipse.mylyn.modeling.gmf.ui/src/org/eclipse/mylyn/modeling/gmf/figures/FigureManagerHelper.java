@@ -34,7 +34,10 @@ public class FigureManagerHelper {
 	// if that is the case. Also, we need to be sure to dispose these properly.
 	protected Map<RGB, Color> colorCache = new HashMap<RGB, Color>();
 
-	public FigureManagerHelper() {
+	/**
+	 * Private to ensure that we can only access through singleton.
+	 */
+	private FigureManagerHelper() {
 	}
 
 	/**
@@ -68,7 +71,7 @@ public class FigureManagerHelper {
 		} else {
 			// We don't actually want to fully reveal.
 			nearness *= .75;
-			figure.setForegroundColor(getColor(color1, color2, (float) nearness));
+			figure.setForegroundColor(GradiatedColorRegistry.INSTANCE.getColor(color1, color2, (float) nearness));
 		}
 	}
 
@@ -88,28 +91,4 @@ public class FigureManagerHelper {
 			figure.setForegroundColor(maskingColor);
 		}
 	}
-
-	public final Color create(RGB rgb) {
-		Color color = colorCache.get(rgb);
-		if (color == null) {
-			color = new Color(org.eclipse.swt.widgets.Display.getCurrent(), rgb.red, rgb.green, rgb.blue);
-			colorCache.put(rgb, color);
-		}
-		return color;
-	}
-
-	public Color getColor(Color color1, Color color2, float distance) {
-		RGB rgb1 = new RGB(color1.getRed(), color1.getGreen(), color1.getBlue());
-		float[] hsb1 = rgb1.getHSB();
-		RGB rgb2 = new RGB(color2.getRed(), color2.getGreen(), color2.getBlue());
-		float[] hsb2 = rgb2.getHSB();
-
-		float[] hsb = new float[3];
-
-		for (int i = 0; i < hsb.length; i++) {
-			hsb[i] = hsb1[i] + (((hsb2[i] - hsb1[i]) * distance));
-		}
-		return create(new RGB(hsb[0], hsb[1], hsb[2]));
-	}
-
 }
