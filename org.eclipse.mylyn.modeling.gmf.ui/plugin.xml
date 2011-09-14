@@ -47,7 +47,7 @@
            id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.diagram.element"
            objectClass="org.eclipse.emf.ecore.EObject">
      	<action
-            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
+            class="org.eclipse.mylyn.internal.modeling.gmf.ui.RemoveModelFromContextAction"
             definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
             enablesFor="*"
             icon="icons/elcl16/interest-decrease.gif"
@@ -75,7 +75,7 @@
            id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.ecore_diagram.element"
            objectClass="org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart">
      	<action
-            class="org.eclipse.mylyn.internal.context.ui.actions.InterestDecrementAction"
+            class="org.eclipse.mylyn.internal.modeling.gmf.ui.RemoveModelFromContextAction"
             definitionId="org.eclipse.mylyn.context.ui.commands.interest.decrement"
             enablesFor="*"
             icon="icons/elcl16/interest-decrease.gif"

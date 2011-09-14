@@ -15,7 +15,6 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
 
 /**
- * @author Benjamin Muskalla
  * @author Miles Parker
  */
 public abstract class GmfStructureBridge extends EmfStructureBridge {

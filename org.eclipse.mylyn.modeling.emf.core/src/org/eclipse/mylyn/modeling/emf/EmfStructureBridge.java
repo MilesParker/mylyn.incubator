@@ -43,6 +43,17 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	 */
 	@Override
 	public String getDomainHandleIdentifier(Object object) {
+		return getGenericDomainHandleIdentifier(object, parentContentType);
+	}
+
+	/**
+	 * Made static so we can reuse generic functionality.
+	 * 
+	 * @param object
+	 * @param parentContentType
+	 * @return
+	 */
+	public static String getGenericDomainHandleIdentifier(Object object, String parentContentType) {
 		if (object instanceof EObject) {
 			EObject eobject = ((EObject) object);
 			URI uri = EcoreUtil.getURI(eobject);
@@ -183,7 +194,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 		return null;
 	}
 
-	public IFile getFile(Resource resource) {
+	public static IFile getFile(Resource resource) {
 		URI uri = resource.getURI();
 		uri = resource.getResourceSet().getURIConverter().normalize(uri);
 		String scheme = uri.scheme();
