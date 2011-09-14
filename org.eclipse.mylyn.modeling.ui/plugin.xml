@@ -20,7 +20,7 @@
   		<action
           class="org.eclipse.mylyn.internal.modeling.ui.actions.ToggleModelingEditorFocusingAction"
           definitionId="org.eclipse.mylyn.context.modeling.ui.focus.enabled"
-          icon="icons/elcl16/model-interest-folding.gif"
+          icon="icons/elcl16/interest-folding.gif"
           id="org.eclipse.mylyn.context.modeling.ui.focus.enabled"
           label="%ToggleFocusAction.label"
           style="toggle"
