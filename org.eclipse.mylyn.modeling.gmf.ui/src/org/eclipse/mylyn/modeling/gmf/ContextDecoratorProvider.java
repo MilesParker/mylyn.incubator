@@ -125,6 +125,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 
 		ModelingUiPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(preferenceListener);
 		enabled = ModelingUiPlugin.getDefault().getPreferenceStore().getBoolean(ModelingUiPlugin.FOCUSSING_ENABLED);
+		anyContextActive = ContextCore.getContextManager().isContextActive();
 	}
 
 	public boolean provides(IOperation operation) {
@@ -158,6 +159,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 	}
 
 	public void createDecorators(IDecoratorTarget target) {
+
 		IGraphicalEditPart targetPart = (IGraphicalEditPart) target.getAdapter(IGraphicalEditPart.class);
 		if (targetPart instanceof ConnectionEditPart) {
 			ConnectionEditPart connectionPart = (ConnectionEditPart) targetPart;
