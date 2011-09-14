@@ -47,7 +47,7 @@ public class EdgeDecorator extends ContextDecorator {
 
 	/**
 	 * These really aren't masks per se, they're just invisible figures that we can use as handle to get to the figure
-	 * parts we're actually itnerested in.
+	 * parts we're actually interested in.
 	 * 
 	 * @author Miles Parker
 	 */

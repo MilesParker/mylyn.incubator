@@ -44,8 +44,8 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 		setOpaque(false);
 		setFill(false);
 		setOutline(true);
-		setForegroundColor(ColorConstants.black);
-		setSize(decorated.getSize().expand(BORDER_SIZE * 2, BORDER_SIZE * 2));
+		setForegroundColor(ColorConstants.gray);
+//		setSize(decorated.getSize().expand(BORDER_SIZE, 0));
 		setLineWidth(BORDER_SIZE);
 		setAlpha(255);
 	}
@@ -53,7 +53,10 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 	public void relocate(IFigure target) {
 		if (target instanceof Decoration) {
 			//bounds may be returned by reference
-			Rectangle borderBounds = decorated.getBounds().getCopy().translate(-BORDER_SIZE + 1, -BORDER_SIZE + 1);
+			Rectangle borderBounds = decorated.getBounds().getCopy();
+
+			borderBounds = new Rectangle(borderBounds.x - BORDER_SIZE / 2, borderBounds.y - BORDER_SIZE,
+					borderBounds.width, BORDER_SIZE);
 			target.setBounds(borderBounds);
 			((IFigure) target.getChildren().get(0)).setBounds(borderBounds);
 		}
@@ -65,7 +68,6 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 	}
 
 	public void reveal(double nearness) {
-		//noop, landmarks are never hidden
 	}
 
 	public void unreveal() {
@@ -74,6 +76,9 @@ public class NodeLandmarkFigure extends RectangleFigure implements IRevealableFi
 
 	public void restore() {
 		//noop, landmarks are never hidden
+	}
+
+	public void revealUI() {
 	}
 
 }
