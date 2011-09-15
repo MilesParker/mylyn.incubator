@@ -61,7 +61,7 @@ public class GradiatedColorRegistry {
 						"Color cache limit of " //$NON-NLS-1$
 								+ COLOR_REPORT_THRESHOLD
 								+ " exceeded. Please report to Mylyn Context project bugzilla. (This message will appear only once.)"); //$NON-NLS-1$
-				StatusManager.getManager().handle(status, StatusManager.SHOW | StatusManager.LOG | StatusManager.BLOCK);
+				StatusManager.getManager().handle(status, StatusManager.LOG);
 			}
 		}
 		return color;

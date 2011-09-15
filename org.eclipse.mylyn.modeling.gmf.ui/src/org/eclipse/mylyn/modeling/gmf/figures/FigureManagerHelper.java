@@ -11,14 +11,10 @@
 
 package org.eclipse.mylyn.modeling.gmf.figures;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
 
 /**
  * Allows us to handle all of the various combinations of figures in a consistent way.
@@ -28,11 +24,6 @@ import org.eclipse.swt.graphics.RGB;
 public class FigureManagerHelper {
 
 	public static FigureManagerHelper INSTANCE = new FigureManagerHelper();
-
-	// TODO We need to revisit to make sure that we're not creating a bazillion colors here. We can do an indexed
-	// version
-	// if that is the case. Also, we need to be sure to dispose these properly.
-	protected Map<RGB, Color> colorCache = new HashMap<RGB, Color>();
 
 	/**
 	 * Private to ensure that we can only access through singleton.
