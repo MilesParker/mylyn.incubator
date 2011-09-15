@@ -249,6 +249,6 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	@Override
 	public boolean isDocument(String handle) {
 		URI uri = URI.createURI(handle);
-		return uri.isFile() && !uri.toString().isEmpty();
+		return uri.isFile() && !uri.isEmpty();
 	}
 }
