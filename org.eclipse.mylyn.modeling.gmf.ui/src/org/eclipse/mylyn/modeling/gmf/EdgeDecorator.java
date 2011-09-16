@@ -181,6 +181,9 @@ public class EdgeDecorator extends ContextDecorator {
 		if (backgroundFigure.getParent() != null) {
 			backgroundFigure = backgroundFigure.getParent();
 		}
+		if (backgroundFigure.getParent() != null) {
+			backgroundFigure = backgroundFigure.getParent();
+		}
 		return backgroundFigure.getBackgroundColor();
 	}
 

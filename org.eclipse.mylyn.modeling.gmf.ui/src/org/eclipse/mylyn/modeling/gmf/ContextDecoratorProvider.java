@@ -227,6 +227,16 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 		return interation != null && interation.getInterest().isLandmark();
 	}
 
+	public boolean isInteresting(IGraphicalEditPart editPart) {
+		Object domainObject = getStructure().getDomainObject(editPart.getModel());
+		return domainObject instanceof EObject && getDomainUIBridge().acceptsViewObject(domainObject, editPart)
+				&& isInteresting((EObject) domainObject);
+	}
+
+	public Object getDomainObject(IGraphicalEditPart editPart) {
+		return getStructure().getDomainObject(editPart.getModel());
+	}
+
 	/**
 	 * Should Mylyn manage this object?
 	 * 
