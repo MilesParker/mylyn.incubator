@@ -11,17 +11,21 @@
 
 package org.eclipse.mylyn.internal.modeling.ecoretools;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EAttributeEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EClass2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EDataType2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EDataTypeEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EEnum2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EEnumEditPart;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EOperationEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackage2EditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackageEditPart;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EReferenceEditPart;
@@ -53,6 +57,12 @@ public class EcoreDiagramUiBridge extends DiagramUiBridge {
 		}
 		if (domainObject instanceof EDataType) {
 			return part instanceof EDataTypeEditPart || part instanceof EDataType2EditPart;
+		}
+		if (domainObject instanceof EAttribute) {
+			return part instanceof EAttributeEditPart;
+		}
+		if (domainObject instanceof EOperation) {
+			return part instanceof EOperationEditPart;
 		}
 		//We don't want the root-most package or we'll get the whole diagram!
 		if (domainObject instanceof EPackage && ((EPackage) domainObject).eContainer() != null) {
