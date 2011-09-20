@@ -22,11 +22,12 @@ import org.eclipse.gmf.runtime.diagram.ui.services.decorator.Decoration;
 import org.eclipse.mylyn.modeling.gmf.figures.IRevealableFigure;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
 
 /**
  * @author Miles Parker
  */
-public class RevealMouseListener implements MouseMoveListener {
+public class RevealMouseListener implements MouseMoveListener, MouseTrackListener {
 
 	private static final int REVEAL_DISTANCE = 180;
 
@@ -59,6 +60,17 @@ public class RevealMouseListener implements MouseMoveListener {
 				}
 				findChildFigure(child, revealBounds, found);
 			}
+		}
+	}
+
+	private void findAllChildFigures(IFigure parent, HashSet<IRevealableFigure> found) {
+		for (Object object : parent.getChildren()) {
+			IFigure child = (IFigure) object;
+			IRevealableFigure figure = getRevealableMember(child);
+			if (figure != null) {
+				found.add(figure);
+			}
+			findAllChildFigures(child, found);
 		}
 	}
 
@@ -124,6 +136,22 @@ public class RevealMouseListener implements MouseMoveListener {
 
 	public void removeDecoration(IFigure decoration) {
 		lastDecorations.remove(decoration);
+	}
+
+	public void mouseEnter(MouseEvent e) {
+	}
+
+	public void mouseExit(MouseEvent e) {
+		HashSet<IRevealableFigure> allFigures = new HashSet<IRevealableFigure>();
+		findAllChildFigures(layer, allFigures);
+		for (IRevealableFigure revealableFigure : allFigures) {
+			revealableFigure.unreveal();
+		}
+	}
+
+	public void mouseHover(MouseEvent e) {
+		// ignore
+
 	}
 
 }

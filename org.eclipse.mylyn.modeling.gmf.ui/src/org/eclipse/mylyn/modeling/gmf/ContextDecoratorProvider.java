@@ -276,6 +276,7 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 			revealMouseListener = new RevealMouseListener(rootFigure);
 			listenerForRoot.put(root, revealMouseListener);
 			root.getViewer().getControl().addMouseMoveListener(revealMouseListener);
+			root.getViewer().getControl().addMouseTrackListener(revealMouseListener);
 		}
 		root.refresh();
 	}
