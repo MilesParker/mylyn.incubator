@@ -17,14 +17,42 @@
      
      <objectContribution
      	   adaptable="false"
-           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.landmark.diagram.element"
-           objectClass="org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart">
+           id="org.eclipse.mylyn.modeling.emf.ui.interest.landmark.eobject.element"
+           objectClass="org.eclipse.emf.ecore.EObject">
 	    <action
-           class="org.eclipse.mylyn.internal.context.ui.actions.InterestIncrementAction"
+           class="org.eclipse.mylyn.internal.modeling.gmf.ui.InterestIncrementAction"
            definitionId="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
            enablesFor="*"
            icon="icons/elcl16/interest-increase.gif"
-           id="org.eclipse.mylyn.ecoretools.ui.interest.landmark.element"
+           id="org.eclipse.mylyn.emf.ui.interest.landmark.element"
+           label="%InterestIncrementAction.label"
+           menubarPath="group.reorganize"
+           overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.increase.element"
+           tooltip="%InterestIncrementAction.tooltip">
+     </action>
+     <visibility>
+     	<and>
+	     	<systemProperty
+	               name="org.eclipse.mylyn.context.core.context.active"
+    	           value="true">
+    	    </systemProperty>
+           <objectClass
+                 name="org.eclipse.emf.ecore.EObject">
+           </objectClass>
+        </and>
+     </visibility>
+	 </objectContribution>
+
+     <objectContribution
+     	   adaptable="false"
+           id="org.eclipse.mylyn.modeling.gmf.ui.interest.landmark.diagram.element"
+           objectClass="org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart">
+	    <action
+           class="org.eclipse.mylyn.internal.modeling.gmf.ui.InterestIncrementAction"
+           definitionId="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
+           enablesFor="*"
+           icon="icons/elcl16/interest-increase.gif"
+           id="org.eclipse.mylyn.gmf.ui.interest.landmark.element"
            label="%InterestIncrementAction.label"
            menubarPath="group.reorganize"
            overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.increase.element"
@@ -42,17 +70,17 @@
         </and>
      </visibility>
 	 </objectContribution>
-
+	 
      <objectContribution
            adaptable="true"
-           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.diagram.element"
+           id="org.eclipse.mylyn.modeling.emf.ui.interest.remove.eobject.element"
            objectClass="org.eclipse.emf.ecore.EObject">
      	<action
             class="org.eclipse.mylyn.internal.modeling.gmf.ui.RemoveModelFromContextAction"
             definitionId="org.eclipse.mylyn.context.modeling.ui.commands.interest.decrement"
             enablesFor="*"
             icon="icons/elcl16/interest-decrease.gif"
-            id="org.eclipse.mylyn.eobject.ui.interest.remove.element"
+            id="org.eclipse.mylyn.emf.ui.interest.remove.element"
             label="%InterestDecrementAction.label"
             menubarPath="group.reorganize"
             overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.remove.element"
@@ -73,14 +101,14 @@
      
      <objectContribution
            adaptable="true"
-           id="org.eclipse.mylyn.modeling.ecoretools.ui.interest.remove.ecore_diagram.element"
+           id="org.eclipse.mylyn.modeling.gmf.ui.interest.remove.diagram.element"
            objectClass="org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart">
      	<action
             class="org.eclipse.mylyn.internal.modeling.gmf.ui.RemoveModelFromContextAction"
             definitionId="org.eclipse.mylyn.context.modeling.ui.commands.interest.decrement"
             enablesFor="*"
             icon="icons/elcl16/interest-decrease.gif"
-            id="org.eclipse.mylyn.ecoretools.ui.interest.remove.element"
+            id="org.eclipse.mylyn.gmf.ui.interest.remove.element"
             label="%InterestDecrementAction.label"
             menubarPath="group.reorganize"
             overrideActionId="org.eclipse.mylyn.resources.ui.ui.interest.remove.element"
@@ -100,7 +128,7 @@
      </objectContribution>
 	</extension>
 	
-	   <extension point="org.eclipse.ui.bindings">     
+<!--	   <extension point="org.eclipse.ui.bindings">     
       <key
             sequence="M1+M2+M3+ARROW_UP"
             commandId="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
@@ -111,13 +139,13 @@
             commandId="org.eclipse.mylyn.context.modeling.ui.commands.interest.decrement"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
-   </extension>    
+   </extension>    -->
       <extension point="org.eclipse.ui.commands">
       <command
             name="%commands.interest.increment.name"
             description="%commands.interest.increment.description"
             id="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
-            defaultHandler="org.eclipse.mylyn.internal.context.ui.actions.MarkAsLandmarkCommandHandler"
+            defaultHandler="org.eclipse.mylyn.internal.modeling.gmf.ui.MarkAsLandmarkCommandHandler"
             categoryId="org.eclipse.mylyn.context.ui.commands">
       </command>
       <command

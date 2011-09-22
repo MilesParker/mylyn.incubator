@@ -101,15 +101,16 @@ public abstract class DomainModelContextStructureBridge extends AbstractContextS
 	 */
 	@Override
 	public boolean canBeLandmark(String handle) {
-		Object object = getObjectForHandle(handle);
-		if (object != null) {
-			for (Class<?> domainClass : getDomainNodeClasses()) {
-				if (domainClass.isAssignableFrom(object.getClass())) {
-					return true;
-				}
-			}
-		}
-		return false;
+//		Object object = getObjectForHandle(handle);
+//		if (object != null) {
+//			for (Class<?> domainClass : getDomainNodeClasses()) {
+//				if (domainClass.isAssignableFrom(object.getClass())) {
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
+		return true;
 	}
 
 	/**

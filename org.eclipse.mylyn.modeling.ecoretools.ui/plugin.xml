@@ -13,7 +13,7 @@
    <extension point="org.eclipse.mylyn.context.ui.bridges">
     <uiBridge
           class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramUiBridge"
-          contentType="uml2"/>
+          contentType="ecore"/>
   </extension>
 	
 	     <extension
@@ -37,7 +37,8 @@
             point="org.eclipse.mylyn.context.core.bridges">
          <structureBridge
                class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreGmfDomainBridge"
-               name="%EcoreStructureBridge.name">
+               name="%EcoreStructureBridge.name"
+               parentContentType="resource">
          </structureBridge>
       </extension>
 

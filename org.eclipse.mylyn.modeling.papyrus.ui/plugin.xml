@@ -35,7 +35,8 @@
       <extension
             point="org.eclipse.mylyn.context.core.bridges">
          <structureBridge
-               class="org.eclipse.mylyn.internal.modeling.papyrus.Uml2StructureBridge">
+               class="org.eclipse.mylyn.internal.modeling.papyrus.Uml2StructureBridge"
+               parentContentType="resource">
          </structureBridge>
       </extension>
       <extension

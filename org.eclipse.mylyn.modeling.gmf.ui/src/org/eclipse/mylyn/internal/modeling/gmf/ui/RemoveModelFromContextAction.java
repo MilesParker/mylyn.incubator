@@ -35,6 +35,7 @@ public class RemoveModelFromContextAction extends InterestDecrementAction {
 	//We have to shadow selection here see https://bugs.eclipse.org/bugs/show_bug.cgi?id=357544
 	ISelection selection;
 
+	//TODO We need to move support for the non diagram elements from GMF
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void run(IAction action) {

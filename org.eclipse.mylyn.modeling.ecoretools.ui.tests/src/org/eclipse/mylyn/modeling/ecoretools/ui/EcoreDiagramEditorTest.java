@@ -116,7 +116,6 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 		StructuredSelection selection = new StructuredSelection(findEditPartsForElement);
 		monitor.handleWorkbenchPartSelection(ed, selection, true);
 
-		//TODO why doesn't this work?
 		EditPart editpart = (EditPart) findEditPartsForElement.get(0);
 		ed.getDiagramGraphicalViewer().getSelectionManager().appendSelection(editpart);
 		ed.getDiagramGraphicalViewer().getRootEditPart().refresh();
@@ -124,7 +123,7 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 
 		assertEquals(activeContext.getAllElements().size(), 2);
 		assertTrue(checkInterest(activeContext,
-				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book")); //$NON-NLS-1$
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book", "ecore")); //$NON-NLS-1$
 
 		Command changeName = SetCommand.create(domain, book, EcorePackage.Literals.ENAMED_ELEMENT__NAME, "Livre"); //$NON-NLS-1$
 		domain.getCommandStack().execute(changeName);
@@ -132,23 +131,23 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 		assertEquals(activeContext.getAllElements().size(), 2);
 		assertEquals(book.getName(), "Livre"); //$NON-NLS-1$
 		assertTrue(checkInterest(activeContext,
-				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre")); //$NON-NLS-1$
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre", "ecore")); //$NON-NLS-1$
 		assertFalse(checkInterest(activeContext,
-				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book")); //$NON-NLS-1$
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book", "ecore")); //$NON-NLS-1$
 
 		domain.getCommandStack().undo();
 
 		assertEquals(activeContext.getAllElements().size(), 2);
 		assertFalse(checkInterest(activeContext,
-				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre")); //$NON-NLS-1$
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Livre", "ecore")); //$NON-NLS-1$
 		assertTrue(checkInterest(activeContext,
-				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book")); //$NON-NLS-1$
+				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book", "ecore")); //$NON-NLS-1$
 	}
 
-	private boolean checkInterest(IInteractionContext activeContext, String id) {
+	private boolean checkInterest(IInteractionContext activeContext, String id, String type) {
 		boolean found = false;
 		for (IInteractionElement elem : activeContext.getAllElements()) {
-			assertEquals(elem.getContentType(), "ecore"); //$NON-NLS-1$
+			assertEquals(elem.getContentType(), type);
 			if (elem.getHandleIdentifier().equals(id)) {
 				found = true;
 			}

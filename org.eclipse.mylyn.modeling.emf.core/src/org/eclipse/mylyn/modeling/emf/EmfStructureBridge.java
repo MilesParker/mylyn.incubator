@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -57,17 +56,17 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 		if (object instanceof EObject) {
 			EObject eobject = ((EObject) object);
 			URI uri = EcoreUtil.getURI(eobject);
-			if (eobject instanceof EPackage) {
-				EPackage pack = (EPackage) eobject;
-				if (pack.eResource() != null) {
-					IFile file = getFile(pack.eResource());
-					if (file != null && file.exists()) {
-						AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
-						return parentBridge.getHandleIdentifier(file);
-					}
-
-				}
-			}
+//			if (eobject instanceof EPackage) {
+//				EPackage pack = (EPackage) eobject;
+//				if (pack.eResource() != null) {
+//					IFile file = getFile(pack.eResource());
+//					if (file != null && file.exists()) {
+//						AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
+//						return parentBridge.getHandleIdentifier(file);
+//					}
+//
+//				}
+//			}
 			return uri.toString();
 		}
 		return null;
@@ -134,7 +133,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 		URI uri = URI.createURI(handle);
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 		try {
-			EObject eObject = resourceSetImpl.getEObject(uri, true);
+			EObject eObject = resourceSetImpl.getEObject(uri, false);
 			if (eObject != null) {
 				return eObject;
 			}
