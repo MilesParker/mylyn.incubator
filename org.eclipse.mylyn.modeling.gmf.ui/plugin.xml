@@ -128,18 +128,18 @@
      </objectContribution>
 	</extension>
 	
-<!--	   <extension point="org.eclipse.ui.bindings">     
+	   <extension point="org.eclipse.ui.bindings">     
       <key
-            sequence="M1+M2+M3+ARROW_UP"
+            sequence="M1+M2+M3+SHIFT+ARROW_UP"
             commandId="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
             schemeId ="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
       <key
-            sequence="M1+M2+M3+ARROW_DOWN"
+            sequence="M1+M2+M3+SHIFT+ARROW_DOWN"
             commandId="org.eclipse.mylyn.context.modeling.ui.commands.interest.decrement"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
-   </extension>    -->
+   </extension>
       <extension point="org.eclipse.ui.commands">
       <command
             name="%commands.interest.increment.name"
