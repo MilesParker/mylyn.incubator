@@ -28,7 +28,9 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
  * Provides support for defining Mylyn views, editors and their components for arbitrary model implementations.
- * Consumers should typically only need to override abstract methods.
+ * Consumers should typically only need to override abstract methods. <i>Important</i> Implementors should be careful
+ * not have include state if they are following the same patterns as the ecore tools and papyrus implementations. This
+ * API is likely to change.</i>
  * 
  * @author Miles Parker
  */
