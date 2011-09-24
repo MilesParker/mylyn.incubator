@@ -146,7 +146,8 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 			IGraphicalEditPart connectionSource = (IGraphicalEditPart) connection.getSource();
 			IGraphicalEditPart connectionTarget = (IGraphicalEditPart) connection.getTarget();
 			// Only care if we care about sources and target
-			return accepts(connectionSource) && accepts(connectionTarget);
+			return connectionSource != null && connectionTarget != null && accepts(connectionSource)
+					&& accepts(connectionTarget);
 		} else {
 			Object candidate = getStructure().getDomainObject(targetPart.getModel());
 			if (candidate instanceof EObject) {
