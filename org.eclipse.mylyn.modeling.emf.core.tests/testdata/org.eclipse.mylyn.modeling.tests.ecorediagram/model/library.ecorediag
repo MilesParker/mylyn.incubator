@@ -104,6 +104,34 @@
     <element xmi:type="ecore:EClass" href="library.ecore#//SpecialistBookWriter"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SN-ytMe2EeC3dI0KaH8YQQ" x="342" y="109"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_CeBOgeZCEeCxYeUdwkTQXw" type="1002">
+    <children xmi:type="notation:Node" xmi:id="_CeDqwOZCEeCxYeUdwkTQXw" type="4006"/>
+    <children xmi:type="notation:Node" xmi:id="_CeDqweZCEeCxYeUdwkTQXw" type="5003">
+      <children xmi:type="notation:Node" xmi:id="_Ey3mAOZCEeCxYeUdwkTQXw" type="2003">
+        <children xmi:type="notation:Node" xmi:id="_Ey4NEOZCEeCxYeUdwkTQXw" type="4002"/>
+        <children xmi:type="notation:Node" xmi:id="_Ey40IOZCEeCxYeUdwkTQXw" type="5004">
+          <styles xmi:type="notation:DrawerStyle" xmi:id="_Ey40IeZCEeCxYeUdwkTQXw"/>
+          <styles xmi:type="notation:SortingStyle" xmi:id="_Ey40IuZCEeCxYeUdwkTQXw"/>
+          <styles xmi:type="notation:FilteringStyle" xmi:id="_Ey40I-ZCEeCxYeUdwkTQXw"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_Ey5bMOZCEeCxYeUdwkTQXw" type="5005">
+          <styles xmi:type="notation:DrawerStyle" xmi:id="_Ey5bMeZCEeCxYeUdwkTQXw"/>
+          <styles xmi:type="notation:SortingStyle" xmi:id="_Ey5bMuZCEeCxYeUdwkTQXw"/>
+          <styles xmi:type="notation:FilteringStyle" xmi:id="_Ey5bM-ZCEeCxYeUdwkTQXw"/>
+        </children>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_Ey3mAeZCEeCxYeUdwkTQXw" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+        <element xmi:type="ecore:EClass" href="library.ecore#//Lending/CheckoutActivity"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ey3mAuZCEeCxYeUdwkTQXw" x="40" y="22" width="190" height="73"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_CeDqwuZCEeCxYeUdwkTQXw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_CeDqw-ZCEeCxYeUdwkTQXw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_CeDqxOZCEeCxYeUdwkTQXw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_CeBOguZCEeCxYeUdwkTQXw" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13150135" lineColor="4210752"/>
+    <styles xmi:type="notation:MultiDiagramLinkStyle" xmi:id="_CeBOg-ZCEeCxYeUdwkTQXw"/>
+    <element xmi:type="ecore:EPackage" href="library.ecore#//Lending"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CeBOhOZCEeCxYeUdwkTQXw" x="306" y="270" width="514" height="307"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_SNdOQse2EeC3dI0KaH8YQQ"/>
   <element xmi:type="ecore:EPackage" href="library.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_SOAn4Me2EeC3dI0KaH8YQQ" type="3002" source="_SN2P0Me2EeC3dI0KaH8YQQ" target="_SN7IUse2EeC3dI0KaH8YQQ">

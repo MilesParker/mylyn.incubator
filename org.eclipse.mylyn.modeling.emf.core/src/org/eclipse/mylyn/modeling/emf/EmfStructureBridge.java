@@ -72,20 +72,22 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 		return null;
 	}
 
-	@Override
-	public String getHandleIdentifier(Object object) {
-		if (object instanceof IFile) {
-			IFile file = (IFile) object;
-			if (file != null && file.exists()) {
-				AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
-				return parentBridge.getHandleIdentifier(file);
-			}
-		} else if (object instanceof Resource) {
-			Resource resource = (Resource) object;
-			return getHandleIdentifier(getFile(resource));
-		}
-		return super.getHandleIdentifier(object);
-	}
+//
+//	@Override
+//	public String getHandleIdentifier(Object object) {
+//		if (object instanceof IFile) {
+////			IFile file = (IFile) object;
+////			if (file != null && file.exists()) {
+////				AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
+////				return parentBridge.getHandleIdentifier(file);
+////			}
+//		} else if (object instanceof Resource) {
+//			System.err.println("!!!!");
+//			Resource resource = (Resource) object;
+//			return getHandleIdentifier(getFile(resource));
+//		}
+//		return super.getHandleIdentifier(object);
+//	}
 
 	/**
 	 * If it's a domain object, we accept it. Implementors generally should not override.

@@ -61,4 +61,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="SpecialistBookWriter" eSuperTypes="#//Writer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="subject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eSubpackages name="Lending">
+    <eClassifiers xsi:type="ecore:EClass" name="CheckoutActivity"/>
+  </eSubpackages>
 </ecore:EPackage>
