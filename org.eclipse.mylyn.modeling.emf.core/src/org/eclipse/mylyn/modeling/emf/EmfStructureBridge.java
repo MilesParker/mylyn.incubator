@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -73,21 +74,15 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	}
 
 //
-//	@Override
-//	public String getHandleIdentifier(Object object) {
-//		if (object instanceof IFile) {
-////			IFile file = (IFile) object;
-////			if (file != null && file.exists()) {
-////				AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
-////				return parentBridge.getHandleIdentifier(file);
-////			}
-//		} else if (object instanceof Resource) {
-//			System.err.println("!!!!");
-//			Resource resource = (Resource) object;
-//			return getHandleIdentifier(getFile(resource));
-//		}
-//		return super.getHandleIdentifier(object);
-//	}
+	@Override
+	public String getHandleIdentifier(Object object) {
+		if (object instanceof Resource) {
+			Resource resource = (Resource) object;
+			URI uri = resource.getResourceSet().getURIConverter().normalize(resource.getURI());
+			return uri.toString();
+		}
+		return super.getHandleIdentifier(object);
+	}
 
 	/**
 	 * If it's a domain object, we accept it. Implementors generally should not override.
@@ -134,8 +129,13 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	public Object getDomainObjectForHandle(String handle) {
 		URI uri = URI.createURI(handle);
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
+		String fragment = uri.fragment();
+		if (fragment.equals("/")) {
+			Resource resource = resourceSetImpl.getResource(uri, true);
+			return resource;
+		}
 		try {
-			EObject eObject = resourceSetImpl.getEObject(uri, false);
+			EObject eObject = resourceSetImpl.getEObject(uri, true);
 			if (eObject != null) {
 				return eObject;
 			}
@@ -185,6 +185,11 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 			if (file != null && file.exists()) {
 				AbstractContextStructureBridge parentBridge = ContextCore.getStructureBridge(parentContentType);
 				return parentBridge.getHandleIdentifier(file);
+			}
+		} else if (object instanceof EPackage) {
+			EPackage pack = (EPackage) object;
+			if (pack.eContainer() == null && pack.eResource() != null) {
+				return getDomainHandleIdentifier(pack.eContainer());
 			}
 		} else if (object instanceof IFile) {
 			// String fileHandle = parentBridge.getParentHandle(handle);

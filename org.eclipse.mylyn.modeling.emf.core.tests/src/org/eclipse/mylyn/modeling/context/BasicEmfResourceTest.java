@@ -16,13 +16,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
+import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionElement;
 import org.eclipse.mylyn.context.tests.support.ContextTestUtil;
 import org.eclipse.mylyn.internal.resources.ui.ResourceInteractionMonitor;
 import org.eclipse.mylyn.internal.resources.ui.ResourceStructureBridge;
 import org.eclipse.mylyn.internal.resources.ui.ResourcesUiBridgePlugin;
 import org.eclipse.mylyn.internal.resources.ui.ResourcesUiPreferenceInitializer;
-import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 
 /**
  * @author Miles Parker
@@ -37,7 +37,7 @@ public class BasicEmfResourceTest extends AbstractEmfContextTest {
 	protected void setUp() throws Exception {
 		// ignore
 		super.setUp();
-		structureModelBridge = new EcoreDomainBridge();
+//		resourceModelBridge = new EcoreDomainBridge();
 		ResourcesUiBridgePlugin.getInterestUpdater().setSyncExec(true);
 
 		ContextTestUtil.triggerContextUiLazyStart();
@@ -52,17 +52,26 @@ public class BasicEmfResourceTest extends AbstractEmfContextTest {
 		IFile file = getEmfProject().getProject().getFile("model/library.ecore");
 		assertTrue(file.exists());
 
-		IInteractionElement element = ContextCore.getContextManager().getElement(
-				resourceBridge.getHandleIdentifier(file));
+		String handleIdentifier = resourceBridge.getHandleIdentifier(file);
+		IInteractionElement element = ContextCore.getContextManager().getElement(handleIdentifier);
 		assertNotNull(element);
 		assertNotNull(element.getInterest());
 		assertFalse(element.getInterest().isInteresting());
 		ContextCore.getContextManager().setContextCapturePaused(false);
 
 		PackageExplorerPart pe = PackageExplorerPart.openInActivePerspective();
+		printContext(ContextCore.getContextManager().getActiveContext());
 		resmonitor.selectionChanged(pe, new StructuredSelection(file));
-		element = ContextCore.getContextManager().getElement(resourceBridge.getHandleIdentifier(file));
-		assertTrue(element.getInterest().isInteresting());
+		printContext(ContextCore.getContextManager().getActiveContext());
+		element = ContextCore.getContextManager().getElement(handleIdentifier);
+		assertNotNull(element);
+	}
+
+	public static void printContext(IInteractionContext activeContext) {
+		//sure diagnostics already exist somewhere, too lazy to find it..
+		for (IInteractionElement elem : activeContext.getAllElements()) {
+			System.err.println(elem + " " + elem.getContentType());
+		}
 	}
 
 	@Override
