@@ -12,11 +12,11 @@
 package org.eclipse.mylyn.modeling.ecoretools.ui;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.context.core.IInteractionElement;
+import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramUiBridge;
 import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreGmfDomainBridge;
 import org.eclipse.mylyn.internal.modeling.ecoretools.EcoreToolsNavigatorUiBridge;
 import org.eclipse.mylyn.modeling.context.AbstractEmfContextTest;
@@ -31,6 +31,8 @@ import org.eclipse.ui.navigator.resources.ProjectExplorer;
  */
 public class EcoreProjectExplorerTest extends AbstractEmfContextTest {
 
+	private IInteractionContext activeContext;
+
 	protected DiagramUiEditingMonitor monitor;
 
 	@Override
@@ -44,36 +46,34 @@ public class EcoreProjectExplorerTest extends AbstractEmfContextTest {
 
 	public void testSelection() throws Exception {
 
-		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		structureModelBridge = new EcoreGmfDomainBridge();
+
+		activeContext = ContextCore.getContextManager().getActiveContext();
+		assertNotNull(activeContext);
+
+		monitor = new DiagramUiEditingMonitor(structureModelBridge, EcoreDiagramUiBridge.getInstance());
+		MonitorUi.getSelectionMonitors().add(monitor);
 
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 		}
 
-		ProjectExplorer pe = (ProjectExplorer) page.showView("org.eclipse.ui.navigator.ProjectExplorer");
-
-		getEmfProject().open(new NullProgressMonitor());
-		IProject project = getEmfProject().getProject();
-		IFile file = project.getFile("model/library.ecorediag");
+		IFile file = getEmfProject().getProject().getFile("model/library.ecorediag");
 		assertNotNull(file);
-
-		assertTrue(file.exists());
-
-		String elemURI = "platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecorediag#//Diagram";
 
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 		}
 
-		IInteractionContext activeContext = ContextCore.getContextManager().getActiveContext();
+		StructuredSelection selection = new StructuredSelection(file);
 
-		//TODO..we probably need SWTBot to really excercise this well..sigh.
-//		StructuredSelection selection = new StructuredSelection(file);
-//		pe.getCommonViewer().setSelection(selection);
-//		monitor.handleWorkbenchPartSelection(pe, selection, true);
-//
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		ProjectExplorer pe = (ProjectExplorer) page.showView("org.eclipse.ui.navigator.ProjectExplorer");
+		pe.getCommonViewer().setSelection(selection);
+		monitor.handleWorkbenchPartSelection(pe, selection, true);
+
 //		assertNotNull(activeContext);
 //		assertEquals(activeContext.getAllElements().size(), 1);
 //		//should this be resource type?

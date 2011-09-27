@@ -30,6 +30,7 @@ public class AbstractEmfContextTest extends AbstractModelingContextTest {
 		emfProject = PluginWorkspaceSetupHelper.createJavaPluginProjectFromZip(
 				"org.eclipse.mylyn.modeling.tests.ecorediagram", "ecorediagram.zip");
 		emfProject.open(new NullProgressMonitor());
+		assertTrue(emfProject.isOpen());
 	}
 
 	@Override

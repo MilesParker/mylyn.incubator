@@ -153,7 +153,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	 */
 	@Override
 	public List<String> getChildHandles(String handle) {
-		Object domainObject = getDomainObjectForHandle(handle);
+		Object domainObject = getObjectForHandle(handle);
 		if (domainObject instanceof EObject) {
 			List<String> childHandles = new ArrayList<String>();
 			EObject eo = (EObject) domainObject;
@@ -254,6 +254,9 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 
 	@Override
 	public boolean isDocument(String handle) {
+		if (handle == null || handle.isEmpty()) {
+			return false;
+		}
 		URI uri = URI.createURI(handle);
 		return uri.isFile() && !uri.isEmpty();
 	}

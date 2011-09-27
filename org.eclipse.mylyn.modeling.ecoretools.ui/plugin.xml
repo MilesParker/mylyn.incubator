@@ -45,7 +45,7 @@
    <extension
          point="org.eclipse.mylyn.context.ui.startup">
       <startup
-            class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreDiagramUiBridgePlugin$EcoreDiagramBridgeStartup">
+            class="org.eclipse.mylyn.internal.modeling.ecoretools.EcoreUiBridgePlugin$EcoreDiagramBridgeStartup">
       </startup>
    </extension>
 

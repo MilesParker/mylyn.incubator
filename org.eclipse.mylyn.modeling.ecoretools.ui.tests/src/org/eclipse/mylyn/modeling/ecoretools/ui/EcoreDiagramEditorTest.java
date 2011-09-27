@@ -15,8 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -59,39 +57,39 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 
 	private Resource diagramResource;
 
+	private TransactionalEditingDomain domain;
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		structureModelBridge = new EcoreGmfDomainBridge();
 
-		monitor = new DiagramUiEditingMonitor(structureModelBridge, EcoreDiagramUiBridge.getInstance());
-		MonitorUi.getSelectionMonitors().add(monitor);
 	}
 
 	@SuppressWarnings("nls")
 	public void testSelection() throws Exception {
 
-		getEmfProject().open(new NullProgressMonitor());
-		IProject project = getEmfProject().getProject();
-		IFile file = project.getFile("model/library.ecorediag");
-		assertNotNull(file);
-
-		assertTrue(file.exists());
-		FileEditorInput input = new FileEditorInput(file);
+		structureModelBridge = new EcoreGmfDomainBridge();
 
 		activeContext = ContextCore.getContextManager().getActiveContext();
 		assertNotNull(activeContext);
 
-		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		monitor = new DiagramUiEditingMonitor(structureModelBridge, EcoreDiagramUiBridge.getInstance());
+		MonitorUi.getSelectionMonitors().add(monitor);
 
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 		}
 
+		IFile file = getEmfProject().getProject().getFile("model/library.ecorediag");
+		assertNotNull(file);
+
+		assertTrue(file.exists());
+		FileEditorInput input = new FileEditorInput(file);
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		editor = (EcoreDiagramEditor) page.openEditor(input,
 				"org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID");
-		TransactionalEditingDomain domain = editor.getEditingDomain();
+		domain = editor.getEditingDomain();
 		EList<Resource> resources = domain.getResourceSet().getResources();
 		diagramResource = resources.get(0);
 
@@ -100,16 +98,15 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 		} catch (InterruptedException e) {
 		}
 
-		subTestDiagramOpen(activeContext);
+		subTestDiagramOpen();
 
 		subTestSelectDiagramElement();
 
-		subtestChangeName(domain);
+		subtestChangeName();
 
 		subtestRemoveContext();
 
 		subtestSubpackage();
-
 	}
 
 	@SuppressWarnings("nls")
@@ -194,7 +191,7 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book", "ecore");
 	}
 
-	private void subtestChangeName(TransactionalEditingDomain domain) {
+	private void subtestChangeName() {
 		EClass book = (EClass) ((Node) diagramResource.getContents().get(0).eContents().get(0)).getElement();
 		Command changeName = SetCommand.create(domain, book, EcorePackage.Literals.ENAMED_ELEMENT__NAME, "Livre");
 		domain.getCommandStack().execute(changeName);
@@ -215,7 +212,7 @@ public class EcoreDiagramEditorTest extends AbstractEmfContextTest {
 				"platform:/resource/org.eclipse.mylyn.modeling.tests.ecorediagram/model/library.ecore#//Book", "ecore");
 	}
 
-	private void subTestDiagramOpen(IInteractionContext activeContext) {
+	private void subTestDiagramOpen() {
 		//Ensure that we're getting the right context types for everything
 		assertEquals(activeContext.getAllElements().size(), 7);
 		assertExists(activeContext, "/", "resource");

@@ -19,6 +19,7 @@ import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.ui.IContextUiStartup;
 import org.eclipse.mylyn.modeling.emf.EmfStructureBridge;
+import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiEditingMonitor;
 import org.eclipse.mylyn.monitor.ui.AbstractUserInteractionMonitor;
 import org.eclipse.mylyn.monitor.ui.MonitorUi;
@@ -28,17 +29,17 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Miles Parker
  */
-public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
+public class EcoreUiBridgePlugin extends AbstractUIPlugin {
 
 	public static final String ID_PLUGIN = "org.eclipse.mylyn.modeling.ecoretools"; //$NON-NLS-1$
 
-	private static EcoreDiagramUiBridgePlugin INSTANCE;
+	private static EcoreUiBridgePlugin INSTANCE;
 
 	private DiagramUiEditingMonitor diagramMonitor;
 
 	private AbstractUserInteractionMonitor navigatorMonitor;
 
-	public EcoreDiagramUiBridgePlugin() {
+	public EcoreUiBridgePlugin() {
 	}
 
 	/**
@@ -51,7 +52,7 @@ public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
 	}
 
 	private void lazyStart() {
-		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(EcoreGmfDomainBridge.ECORE_CONTENT_TYPE);
+		AbstractContextStructureBridge structureBridge = ContextCore.getStructureBridge(EcoreDomainBridge.ECORE_CONTENT_TYPE);
 		// we'll get resource by default -- shouldn't we get null as failure
 		// case? https://bugs.eclipse.org/bugs/show_bug.cgi?id=353439
 		if (structureBridge instanceof EmfStructureBridge) {
@@ -62,7 +63,7 @@ public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
 			MonitorUi.getSelectionMonitors().add(navigatorMonitor);
 		} else {
 			StatusHandler.log(new Status(IStatus.WARNING, ID_PLUGIN,
-					"Couldn't load EMFStructure Bridge for " + EcoreGmfDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
+					"Couldn't load EMFStructure Bridge for " + EcoreDomainBridge.ECORE_CONTENT_TYPE)); //$NON-NLS-1$	
 		}
 	}
 
@@ -84,7 +85,7 @@ public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the shared instance.
 	 */
-	public static EcoreDiagramUiBridgePlugin getDefault() {
+	public static EcoreUiBridgePlugin getDefault() {
 		return INSTANCE;
 	}
 
@@ -102,7 +103,7 @@ public class EcoreDiagramUiBridgePlugin extends AbstractUIPlugin {
 	public static class EcoreDiagramBridgeStartup implements IContextUiStartup {
 
 		public void lazyStartup() {
-			EcoreDiagramUiBridgePlugin.getDefault().lazyStart();
+			EcoreUiBridgePlugin.getDefault().lazyStart();
 		}
 
 	}
