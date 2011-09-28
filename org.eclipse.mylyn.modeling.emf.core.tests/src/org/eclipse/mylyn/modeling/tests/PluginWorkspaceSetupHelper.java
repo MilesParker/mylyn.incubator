@@ -36,8 +36,6 @@ import org.eclipse.pde.internal.core.natures.PDE;
 import org.eclipse.pde.internal.core.natures.PluginProject;
 
 /**
- * Portions copied from org.eclipse.mylyn.java.tests.search.WorkspaceSetup
- * 
  * @author Miles Parker
  */
 public class PluginWorkspaceSetupHelper {
@@ -83,6 +81,8 @@ public class PluginWorkspaceSetupHelper {
 		return javaProject;
 	}
 
+	//Copied from org.eclipse.mylyn.context.tests.support.ContextTestUtil
+
 	private static IProject createProject(String projectName) throws CoreException {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -99,6 +99,8 @@ public class PluginWorkspaceSetupHelper {
 
 		return project;
 	}
+
+	//Copied from org.eclipse.mylyn.context.tests.support.ContextTestUtil
 
 	private static IJavaProject createPluginProject(IProject project) throws CoreException, JavaModelException {
 
