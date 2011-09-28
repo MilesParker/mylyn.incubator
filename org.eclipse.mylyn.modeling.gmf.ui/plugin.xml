@@ -16,11 +16,11 @@
      <extension point="org.eclipse.ui.popupMenus"> 
      
      <objectContribution
-     	   adaptable="false"
+     	   adaptable="true"
            id="org.eclipse.mylyn.modeling.emf.ui.interest.landmark.eobject.element"
            objectClass="org.eclipse.emf.ecore.EObject">
 	    <action
-           class="org.eclipse.mylyn.internal.modeling.gmf.ui.InterestIncrementAction"
+           class="org.eclipse.mylyn.internal.context.ui.actions.InterestIncrementAction"
            definitionId="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
            enablesFor="*"
            icon="icons/elcl16/interest-increase.gif"
@@ -44,11 +44,11 @@
 	 </objectContribution>
 
      <objectContribution
-     	   adaptable="false"
+     	   adaptable="true"
            id="org.eclipse.mylyn.modeling.gmf.ui.interest.landmark.diagram.element"
            objectClass="org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart">
 	    <action
-           class="org.eclipse.mylyn.internal.modeling.gmf.ui.InterestIncrementAction"
+           class="org.eclipse.mylyn.internal.context.ui.actions.InterestIncrementAction"
            definitionId="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
            enablesFor="*"
            icon="icons/elcl16/interest-increase.gif"
@@ -147,14 +147,14 @@
             name="%commands.interest.increment.name"
             description="%commands.interest.increment.description"
             id="org.eclipse.mylyn.context.modeling.ui.commands.interest.increment"
-            defaultHandler="org.eclipse.mylyn.internal.modeling.gmf.ui.MarkAsLandmarkCommandHandler"
+            defaultHandler="org.eclipse.mylyn.internal.context.ui.actions.MarkAsLandmarkCommandHandler"
             categoryId="org.eclipse.mylyn.context.ui.commands">
       </command>
       <command
             name="%commands.interest.decrement.name"
             description="%commands.interest.decrement.description"
             id="org.eclipse.mylyn.context.modeling.ui.commands.interest.decrement"
-            defaultHandler="org.eclipse.mylyn.internal.modeling.gmf.ui.RemoveFromContextCommandHandler"
+            defaultHandler="org.eclipse.mylyn.internal.modeling.gmf.ui.RemoveModelFromContextCommandHandler"
             categoryId="org.eclipse.mylyn.context.ui.commands">
             
       </command>

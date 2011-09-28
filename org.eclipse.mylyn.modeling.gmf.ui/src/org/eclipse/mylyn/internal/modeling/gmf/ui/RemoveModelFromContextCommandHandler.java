@@ -17,10 +17,11 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Shawn Minto
+ * @author Miles Parker
  */
-public class MarkAsLandmarkCommandHandler extends AbstractHandler {
+public class RemoveModelFromContextCommandHandler extends AbstractHandler {
 
-	private final InterestIncrementAction action = new InterestIncrementAction();
+	private final RemoveModelFromContextAction action = new RemoveModelFromContextAction();
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		action.selectionChanged(null, HandlerUtil.getCurrentSelection(event));
