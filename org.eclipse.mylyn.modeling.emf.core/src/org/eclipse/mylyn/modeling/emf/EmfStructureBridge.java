@@ -130,7 +130,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 		URI uri = URI.createURI(handle);
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 		String fragment = uri.fragment();
-		if (fragment.equals("/")) {
+		if (fragment.equals("/")) { //$NON-NLS-1$
 			Resource resource = resourceSetImpl.getResource(uri, true);
 			return resource;
 		}
@@ -254,7 +254,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 
 	@Override
 	public boolean isDocument(String handle) {
-		if (handle == null || handle.isEmpty()) {
+		if (handle == null || handle.equals("")) { //$NON-NLS-1$
 			return false;
 		}
 		URI uri = URI.createURI(handle);
