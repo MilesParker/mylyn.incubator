@@ -214,16 +214,16 @@ public abstract class ContextDecoratorProvider extends AbstractProvider implemen
 		return null;
 	}
 
-	private IInteractionElement getRecentInteraction(EObject object) {
+	private IInteractionElement getRecentInteraction(Object object) {
 		return ContextCore.getContextManager().getActiveContext().get(getStructure().getHandleIdentifier(object));
 	}
 
-	public boolean isInteresting(EObject object) {
+	public boolean isInteresting(Object object) {
 		IInteractionElement interation = getRecentInteraction(object);
 		return interation != null && interation.getInterest().isInteresting();
 	}
 
-	public boolean isLandmark(EObject object) {
+	public boolean isLandmark(Object object) {
 		IInteractionElement interation = getRecentInteraction(object);
 		return interation != null && interation.getInterest().isLandmark();
 	}

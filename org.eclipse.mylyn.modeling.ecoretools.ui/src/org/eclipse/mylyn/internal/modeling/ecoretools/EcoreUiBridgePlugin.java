@@ -49,6 +49,7 @@ public class EcoreUiBridgePlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		INSTANCE = this;
+
 	}
 
 	private void lazyStart() {
