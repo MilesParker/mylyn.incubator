@@ -53,6 +53,7 @@ public class PluginWorkspaceSetupHelper {
 		taskscape = new InteractionContext(HELPER_CONTEXT_ID, new InteractionContextScaling());
 	}
 
+	//TODO replace with org.eclipse.mylyn.context.tests.support.ContextTestUtil methods as available in targeted version of Mylyn Context build API
 	public static IWorkspaceRoot setupWorkspace() throws CoreException, IOException, InvocationTargetException,
 			InterruptedException {
 		if (isSetup) {
