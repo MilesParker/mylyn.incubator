@@ -89,17 +89,7 @@ public abstract class EmfStructureBridge extends DomainModelContextStructureBrid
 	 */
 	@Override
 	public boolean acceptsObject(Object object) {
-		if (object instanceof IFile) {
-			IFile file = (IFile) object;
-			for (String ext : getFileExtensions()) {
-				if (ext.equals(file.getFileExtension())) {
-					return true;
-				}
-			}
-		} else {
-			return getDomainObject(object) != null;
-		}
-		return false;
+		return getDomainObject(object) != null;
 	}
 
 	@Override

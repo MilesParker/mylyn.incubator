@@ -11,6 +11,7 @@
 
 package org.eclipse.mylyn.internal.modeling.ecoretools;
 
+import org.eclipse.emf.ecore.presentation.EcoreEditor;
 import org.eclipse.mylyn.modeling.emf.ecore.EcoreDomainBridge;
 import org.eclipse.mylyn.modeling.ui.DiagramUiBridge;
 import org.eclipse.ui.IWorkbenchPart;
@@ -25,7 +26,7 @@ public class EcoreToolsNavigatorUiBridge extends DiagramUiBridge {
 
 	@Override
 	public boolean acceptsPart(IWorkbenchPart part) {
-		return part instanceof ProjectExplorer;
+		return part instanceof ProjectExplorer || part instanceof EcoreEditor;
 	}
 
 	@Override

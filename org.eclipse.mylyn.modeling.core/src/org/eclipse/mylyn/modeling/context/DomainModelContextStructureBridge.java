@@ -75,7 +75,7 @@ public abstract class DomainModelContextStructureBridge extends AbstractContextS
 	 */
 	@Override
 	public Object getObjectForHandle(String handle) {
-		if (handle == null) {
+		if (handle == null || handle.equals("")) { //$NON-NLS-1$
 			return null;
 		}
 		// We're simply calling this delegated method but renaming to clarify
